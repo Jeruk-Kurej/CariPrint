@@ -48,6 +48,7 @@ DB_URL="postgresql://postgres.<project-ref>:<password>@<host-pooler>:5432/postgr
 ```
 
 Pakai **Session pooler**, bukan Direct connection atau Transaction pooler:
+
 - Direct connection Supabase hanya lewat IPv6, sedangkan banyak jaringan (termasuk server kampus) hanya IPv4.
 - Transaction pooler (port 6543) tidak cocok dengan prepared statements yang dipakai Laravel.
 

@@ -21,33 +21,33 @@ Sementara itu database memakai **SQLite** (bawaan starter kit). Karena schema di
 
 Urutan H1–H5 = hari kerja. Geser sesuai tanggal presentasi.
 
-| Hari | Bryan | Hanzelius | Mario |
-|---|---|---|---|
-| H1 | 0.1 init + push GitHub, 0.2 schema | Survei 2 shop. Mulai komponen kartu shop dengan data hardcode | Survei 2 shop. Siapkan format data survei |
-| H2 | 0.3 seeder, 0.4 layout publik + design tokens | 1.1 OpeningStatus, 1.2 home list | 5.1 Filament, 5.2 CRUD shop |
-| H3 | 0.5 deploy pertama | 1.3 peta | 5.3 CRUD harga |
-| H4 | Stretch: 3.1 + 4.1 prototype AI Agent | 1.4 halaman detail | 5.6 input data survei |
-| H5 | Merge semua, update README progress, deploy final, gladi presentasi | Fix tampilan di HP | Cek data + bantu gladi |
+| Hari | Bryan                                                               | Hanzelius                                                     | Mario                                     |
+| ---- | ------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------- |
+| H1   | 0.1 init + push GitHub, 0.2 schema                                  | Survei 2 shop. Mulai komponen kartu shop dengan data hardcode | Survei 2 shop. Siapkan format data survei |
+| H2   | 0.3 seeder, 0.4 layout publik + design tokens                       | 1.1 OpeningStatus, 1.2 home list                              | 5.1 Filament, 5.2 CRUD shop               |
+| H3   | 0.5 deploy pertama                                                  | 1.3 peta                                                      | 5.3 CRUD harga                            |
+| H4   | Stretch: 3.1 + 4.1 prototype AI Agent                               | 1.4 halaman detail                                            | 5.6 input data survei                     |
+| H5   | Merge semua, update README progress, deploy final, gladi presentasi | Fix tampilan di HP                                            | Cek data + bantu gladi                    |
 
 **Batas aman:** semua task [M1] (kecuali stretch) sudah masuk `main` di akhir H4, supaya H5 cuma untuk deploy dan latihan.
 
 ## Pembagian kerja
 
-| Orang | Area | Alasan |
-|---|---|---|
-| **Bryan** | Phase 0 (fondasi), Auth & quota, Smart File Check, AI Print Agent, migrasi Supabase | Fondasi harus dikerjakan satu orang supaya schema dan struktur konsisten. File Check dan AI Agent memakai pipeline yang sama (PDF, PriceCalculator, Gemini), jadi lebih aman satu pemilik |
-| **Hanzelius** | Directory: home, peta, detail shop, status buka, jarak | Fitur inti dan paling sering dibuka user. Hasilnya (`OpeningStatus`) juga dipakai AI Agent |
-| **Mario** | Admin panel (Filament), fitur laporan, input data survei | Bisa jalan paralel setelah schema jadi, dan langsung terhubung dengan data hasil survei |
+| Orang         | Area                                                                                | Alasan                                                                                                                                                                                    |
+| ------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Bryan**     | Phase 0 (fondasi), Auth & quota, Smart File Check, AI Print Agent, migrasi Supabase | Fondasi harus dikerjakan satu orang supaya schema dan struktur konsisten. File Check dan AI Agent memakai pipeline yang sama (PDF, PriceCalculator, Gemini), jadi lebih aman satu pemilik |
+| **Hanzelius** | Directory: home, peta, detail shop, status buka, jarak                              | Fitur inti dan paling sering dibuka user. Hasilnya (`OpeningStatus`) juga dipakai AI Agent                                                                                                |
+| **Mario**     | Admin panel (Filament), fitur laporan, input data survei                            | Bisa jalan paralel setelah schema jadi, dan langsung terhubung dengan data hasil survei                                                                                                   |
 
 Survei tempat printing dikerjakan bertiga.
 
 ### Kontrak bersama (jangan diubah tanpa kabar ke pemiliknya)
 
-| Kontrak | Pemilik | Dipakai oleh |
-|---|---|---|
-| Migrations dan models inti | Bryan | Semua |
-| `Shops/OpeningStatus` | Hanzelius | Directory, AI Agent |
-| `Pricing/PriceCalculator`, `PrintSpec` | Bryan | File Check, AI Agent |
+| Kontrak                                | Pemilik   | Dipakai oleh         |
+| -------------------------------------- | --------- | -------------------- |
+| Migrations dan models inti             | Bryan     | Semua                |
+| `Shops/OpeningStatus`                  | Hanzelius | Directory, AI Agent  |
+| `Pricing/PriceCalculator`, `PrintSpec` | Bryan     | File Check, AI Agent |
 
 Perubahan schema setelah Phase 0 dibuat lewat migration baru di branch masing-masing, lalu kabari tim.
 
