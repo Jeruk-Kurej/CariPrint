@@ -18,7 +18,7 @@ Status: ✅ selesai · 🚧 dikerjakan · ⏳ belum dimulai
 
 | Fitur                                    | Status | Keterangan                                       |
 | ---------------------------------------- | ------ | ------------------------------------------------ |
-| Fondasi project (schema, layout, deploy) | ⏳     |                                                  |
+| Fondasi project (schema, layout, deploy) | 🚧     | Aturan project dan schema database selesai       |
 | Printing Shop Directory                  | ⏳     | List, peta, detail shop, status buka, urut jarak |
 | Admin Panel                              | ⏳     | Kelola data tempat printing dan harga            |
 | Data survei tempat printing              | ⏳     | 0 tempat tersurvei                               |

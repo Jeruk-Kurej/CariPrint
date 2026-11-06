@@ -53,8 +53,8 @@ Perubahan schema setelah Phase 0 dibuat lewat migration baru di branch masing-ma
 
 ## Phase 0 — Fondasi (Bryan, wajib selesai dulu)
 
-- [ ] 0.1 **[M1]** Setup aturan project (bootstrap prompt): file aturan dan docs dibuat, guidelines masuk ke CLAUDE.md/AGENTS.md lewat Boost, `.gitignore` dicek, commit pertama, push ke GitHub
-- [ ] 0.2 **[M1]** Schema: usulan ERD → approve → migrations (database-agnostic), models, factories, enums (`shops`, `price_lists`, `print_checks`, `reports`, kolom `role` dan `google_id` di `users`)
+- [x] 0.1 **[M1]** Setup aturan project (bootstrap prompt): file aturan dan docs dibuat, guidelines masuk ke CLAUDE.md/AGENTS.md lewat Boost, `.gitignore` dicek, commit pertama, push ke GitHub
+- [x] 0.2 **[M1]** Schema: usulan ERD → approve → migrations (database-agnostic), models, factories, enums (`shops`, `price_lists`, `print_checks`, `reports`, kolom `role` dan `google_id` di `users`)
 - [ ] 0.3 **[M1]** Seeder: akun admin dari `ADMIN_EMAIL`/`ADMIN_PASSWORD` di `.env`, plus data shop contoh
 - [ ] 0.4 **[M1]** `config/cariprint.php`, layout publik (terpisah dari layout dashboard starter kit), design tokens dan arah visual dengan rationale
 - [ ] 0.5 **[M1]** Deploy versi awal ke `cariprint.lius.my.id` sesuai `docs/DEPLOY.md` (SQLite), SSL aktif, `scripts/deploy.sh` dibuat
