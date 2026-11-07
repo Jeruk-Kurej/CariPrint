@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\UserRole;
-use App\Models\User;
+use App\Services\Admin\AdminAccount;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -22,10 +21,7 @@ class CreateAdmin extends Command
             return self::FAILURE;
         }
 
-        User::updateOrCreate(
-            ['email' => $this->argument('email')],
-            ['name' => 'Admin CariPrint', 'password' => $password, 'role' => UserRole::Admin, 'email_verified_at' => now()],
-        );
+        AdminAccount::save($this->argument('email'), $password);
 
         $this->info('Admin account saved.');
 

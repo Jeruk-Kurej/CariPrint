@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserRole;
-use App\Models\User;
+use App\Services\Admin\AdminAccount;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -19,14 +18,6 @@ class AdminSeeder extends Seeder
             return;
         }
 
-        User::updateOrCreate(
-            ['email' => $email],
-            [
-                'name' => 'Admin CariPrint',
-                'password' => $password,
-                'role' => UserRole::Admin,
-                'email_verified_at' => now(),
-            ],
-        );
+        AdminAccount::save($email, $password);
     }
 }
