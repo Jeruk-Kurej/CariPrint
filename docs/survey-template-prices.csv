@@ -1,0 +1,4 @@
+shop_slug,service,paper_size,color_mode,price,unit
+print-sejahtera,print,a4,bw,500,page
+print-sejahtera,print,a4,color,1500,page
+print-sejahtera,spiral_binding,,,7000,item
