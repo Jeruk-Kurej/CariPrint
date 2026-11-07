@@ -4,6 +4,7 @@ namespace App\Services\Shops;
 
 use App\Enums\OpenState;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Collection;
 
 /**
  * Works out whether a shop is open right now, from its surveyed opening hours.
@@ -26,7 +27,8 @@ class OpeningStatus
             return new OpeningResult(OpenState::Closed, opensAt: $this->nextOpening($openingHours, $now));
         }
 
-        $closingSoon = $now->diffInMinutes($current['end']) <= config('cariprint.directory.closing_soon_minutes');
+        $closingSoon = ! $current['always_open']
+            && $now->diffInMinutes($current['end']) <= config('cariprint.directory.closing_soon_minutes');
 
         return new OpeningResult(
             $closingSoon ? OpenState::ClosingSoon : OpenState::Open,
@@ -38,9 +40,9 @@ class OpeningStatus
      * Intervals from yesterday (to catch overnight hours) through tomorrow, as absolute times.
      *
      * @param  array<string, list<array{open: string, close: string}>>  $openingHours
-     * @return \Illuminate\Support\Collection<int, array{start: CarbonImmutable, end: CarbonImmutable}>
+     * @return Collection<int, array{start: CarbonImmutable, end: CarbonImmutable, always_open: bool}>
      */
-    private function intervalsAround(array $openingHours, CarbonImmutable $now): \Illuminate\Support\Collection
+    private function intervalsAround(array $openingHours, CarbonImmutable $now): Collection
     {
         return collect([-1, 0, 1])
             ->flatMap(fn (int $offset) => $this->intervalsOn($openingHours, $now->startOfDay()->addDays($offset)));
@@ -48,15 +50,16 @@ class OpeningStatus
 
     /**
      * @param  array<string, list<array{open: string, close: string}>>  $openingHours
-     * @return \Illuminate\Support\Collection<int, array{start: CarbonImmutable, end: CarbonImmutable}>
+     * @return Collection<int, array{start: CarbonImmutable, end: CarbonImmutable, always_open: bool}>
      */
-    private function intervalsOn(array $openingHours, CarbonImmutable $day): \Illuminate\Support\Collection
+    private function intervalsOn(array $openingHours, CarbonImmutable $day): Collection
     {
         $key = self::DAYS[$day->dayOfWeekIso - 1];
 
         return collect($openingHours[$key] ?? [])->map(function (array $slot) use ($day) {
             $start = $day->setTimeFromTimeString($slot['open']);
-            $end = $slot['close'] === '24:00'
+            $alwaysOpen = $slot['close'] === '24:00';
+            $end = $alwaysOpen
                 ? $day->addDay()->startOfDay()
                 : $day->setTimeFromTimeString($slot['close']);
 
@@ -65,7 +68,7 @@ class OpeningStatus
                 $end = $end->addDay();
             }
 
-            return ['start' => $start, 'end' => $end];
+            return ['start' => $start, 'end' => $end, 'always_open' => $alwaysOpen];
         });
     }
 
