@@ -118,4 +118,4 @@ Putuskan bersama sebelum task terkait dikerjakan.
 - Format file selain PDF (docx/pptx)? Usulan MVP: PDF saja.
 - Batas ukuran file dan jumlah halaman.
 - Batas area CitraLand (radius atau polygon).
-- Daftar layanan baku (jilid spiral, laminating, dll.) dan cara survei mencatat aturan "halaman warna" tiap shop. **Perlu diputuskan sebelum survei H1.**
+- ~~Daftar layanan baku dan cara survei mencatat aturan "halaman warna" tiap shop.~~ Diputuskan: lihat [docs/SURVEY.md](SURVEY.md).
