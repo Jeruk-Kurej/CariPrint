@@ -31,7 +31,7 @@ use Illuminate\Support\Carbon;
  */
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -46,6 +46,14 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === UserRole::Admin;
+    }
+
+    /**
+     * Only admins may open the Filament panel at /admin.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->isAdmin();
     }
 
     /**
