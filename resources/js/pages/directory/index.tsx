@@ -1,53 +1,42 @@
-import { Head } from '@inertiajs/react';
-import { ShopCard } from '@/components/directory/shop-card';
+import { Head, router } from '@inertiajs/react';
+import { useEffect } from 'react';
+import { ShopList } from '@/components/directory/shop-list';
+import { useGeolocation } from '@/hooks/use-geolocation';
+import { nearby } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
 
-const sampleShops: ShopSummary[] = [
-    {
-        id: 1,
-        slug: 'contoh-print-a',
-        name: 'Contoh Print A',
-        address: 'Jl. Contoh No. 1, CitraLand',
-        whatsapp: '6281234567890',
-        openState: 'open',
-        distanceKm: 0.4,
-        startingPrice: 300,
-    },
-    {
-        id: 2,
-        slug: 'contoh-print-b',
-        name: 'Contoh Print B',
-        address: 'Jl. Contoh No. 2, CitraLand',
-        whatsapp: null,
-        openState: 'closing_soon',
-        distanceKm: 1.2,
-        startingPrice: 500,
-    },
-    {
-        id: 3,
-        slug: 'contoh-print-c',
-        name: 'Contoh Print C',
-        address: 'Jl. Contoh No. 3, CitraLand',
-        whatsapp: '6281234567891',
-        openState: 'closed',
-        distanceKm: null,
-        startingPrice: null,
-    },
-];
+export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
+    const location = useGeolocation();
 
-export default function DirectoryIndex() {
+    useEffect(() => {
+        if (location.status !== 'granted') {
+            return;
+        }
+
+        router.post(
+            nearby().url,
+            { latitude: location.latitude, longitude: location.longitude },
+            { preserveState: true, preserveScroll: true, only: ['shops'] },
+        );
+    }, [location]);
+
+    const sorted = location.status === 'granted';
+
     return (
         <>
             <Head title="Cari tempat printing" />
             <main className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-4">
-                <h1 className="text-xl font-semibold">
-                    Tempat printing di sekitar CitraLand
-                </h1>
-                <div className="grid gap-3 sm:grid-cols-2">
-                    {sampleShops.map((shop) => (
-                        <ShopCard key={shop.id} shop={shop} />
-                    ))}
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h1 className="text-xl font-semibold">
+                        Tempat printing di sekitar CitraLand
+                    </h1>
+                    <p className="text-xs text-muted-foreground">
+                        {sorted
+                            ? 'Urut dari yang terdekat'
+                            : 'Urut nama. Izinkan lokasi untuk urut jarak.'}
+                    </p>
                 </div>
+                <ShopList shops={shops} />
             </main>
         </>
     );
