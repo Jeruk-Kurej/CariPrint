@@ -92,7 +92,7 @@ Setelah 0.2 masuk `main`, Hanzelius dan Mario mulai mengerjakan task yang butuh 
 ## Phase 5 — Admin dan laporan (Mario)
 
 - [x] 5.1 **[M1]** Filament di `/admin`, hanya role admin
-- [ ] 5.2 **[M1]** CRUD shop (jam, layanan, koordinat, `place_id`, aturan hitung halaman warna)
+- [x] 5.2 **[M1]** CRUD shop (jam, layanan, koordinat, `place_id`, aturan hitung halaman warna)
 - [ ] 5.3 **[M1]** CRUD price list per shop
 - [ ] 5.4 Form laporan untuk user login (dari halaman detail shop)
 - [ ] 5.5 Review laporan di admin (pending / resolved / rejected)
