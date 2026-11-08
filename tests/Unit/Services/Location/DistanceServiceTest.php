@@ -6,11 +6,10 @@ test('distance between the same point is zero', function () {
     expect((new DistanceService)->kilometers(-7.2875, 112.6370, -7.2875, 112.6370))->toEqualWithDelta(0.0, 0.0001);
 });
 
-test('distance between two known points in Surabaya is about right', function () {
-    // Tunjungan Plaza to Stasiun Gubeng, roughly 2.5 km straight-line
-    $km = (new DistanceService)->kilometers(-7.2627, 112.7383, -7.2653, 112.7513);
+test('one degree of latitude is about 111 km', function () {
+    $km = (new DistanceService)->kilometers(0.0, 112.0, 1.0, 112.0);
 
-    expect($km)->toBeGreaterThan(0.9)->toBeLessThan(1.3);
+    expect($km)->toEqualWithDelta(111.19, 0.05);
 });
 
 test('distance is symmetric', function () {
