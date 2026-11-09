@@ -1,12 +1,15 @@
 import { Head, router } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { ShopList } from '@/components/directory/shop-list';
+import { ShopMap } from '@/components/directory/shop-map';
+import { useSelectedShop } from '@/hooks/use-selected-shop';
 import { useGeolocation } from '@/hooks/use-geolocation';
 import { nearby } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
 
 export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
     const location = useGeolocation();
+    const { selectedId, select } = useSelectedShop();
 
     useEffect(() => {
         if (location.status !== 'granted') {
@@ -36,7 +39,18 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                             : 'Urut nama. Izinkan lokasi untuk urut jarak.'}
                     </p>
                 </div>
-                <ShopList shops={shops} />
+                <div className="grid gap-4 sm:grid-cols-2">
+                    <ShopList
+                        shops={shops}
+                        selectedId={selectedId}
+                        onSelect={select}
+                    />
+                    <ShopMap
+                        shops={shops}
+                        selectedId={selectedId}
+                        onSelect={select}
+                    />
+                </div>
             </main>
         </>
     );

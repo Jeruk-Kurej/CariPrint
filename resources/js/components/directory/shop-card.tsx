@@ -1,12 +1,21 @@
 import { MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { WhatsAppButton } from '@/components/directory/whatsapp-button';
 import { formatDistance, formatRupiah } from '@/lib/format';
 import type { ShopSummary } from '@/types';
 
-export function ShopCard({ shop }: { shop: ShopSummary }) {
+type Props = {
+    shop: ShopSummary;
+    selected?: boolean;
+    onSelect?: () => void;
+};
+
+export function ShopCard({ shop, selected = false, onSelect }: Props) {
     return (
-        <article className="flex flex-col gap-3 rounded-xl border bg-card p-4 text-card-foreground shadow-sm">
+        <article
+            className={`flex flex-col gap-3 rounded-xl border bg-card p-4 text-card-foreground shadow-sm ${selected ? 'ring-2 ring-brand' : ''}`}
+        >
             <header className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                     <h2 className="truncate font-semibold">{shop.name}</h2>
@@ -37,11 +46,14 @@ export function ShopCard({ shop }: { shop: ShopSummary }) {
                 )}
             </dl>
 
-            {shop.whatsapp && (
-                <footer className="flex justify-end">
-                    <WhatsAppButton phone={shop.whatsapp} />
-                </footer>
-            )}
+            <footer className="flex justify-end gap-2">
+                {onSelect && (
+                    <Button size="sm" variant="ghost" onClick={onSelect}>
+                        Lihat di peta
+                    </Button>
+                )}
+                {shop.whatsapp && <WhatsAppButton phone={shop.whatsapp} />}
+            </footer>
         </article>
     );
 }
