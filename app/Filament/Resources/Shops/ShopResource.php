@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Shops;
 use App\Filament\Resources\Shops\Pages\CreateShop;
 use App\Filament\Resources\Shops\Pages\EditShop;
 use App\Filament\Resources\Shops\Pages\ListShops;
+use App\Filament\Resources\Shops\RelationManagers\PriceListsRelationManager;
 use App\Filament\Resources\Shops\Schemas\ShopForm;
 use App\Filament\Resources\Shops\Tables\ShopsTable;
 use App\Models\Shop;
@@ -33,7 +34,7 @@ class ShopResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PriceListsRelationManager::class,
         ];
     }
 
