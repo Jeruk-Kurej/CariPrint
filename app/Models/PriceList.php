@@ -7,8 +7,10 @@ use App\Enums\PaperSize;
 use App\Enums\PriceSource;
 use App\Enums\PriceUnit;
 use App\Enums\ShopService;
+use App\Observers\PriceListObserver;
 use Database\Factories\PriceListFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +31,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  */
 #[Fillable(['service', 'paper_size', 'color_mode', 'price', 'unit', 'source'])]
+#[ObservedBy(PriceListObserver::class)]
 class PriceList extends Model
 {
     /** @use HasFactory<PriceListFactory> */
