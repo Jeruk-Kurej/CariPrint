@@ -111,7 +111,7 @@ npm ci && npm run build
 php artisan optimize:clear && php artisan optimize
 ```
 
-Perintah ini nanti dijadikan `scripts/deploy.sh` (ROADMAP task 0.5).
+Perintah ini sekarang ada di `scripts/deploy.sh`. Jalankan dari folder site di server: `bash scripts/deploy.sh`.
 
 ## C. Kalau error
 
