@@ -5,6 +5,8 @@ export type ShopSummary = {
     slug: string;
     name: string;
     address: string;
+    latitude: number;
+    longitude: number;
     whatsapp: string | null;
     openState: OpenState;
     distanceKm: number | null;

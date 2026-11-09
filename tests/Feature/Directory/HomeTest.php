@@ -28,6 +28,13 @@ test('nearby sorts shops from the closest to the farthest', function () {
             ->whereType('shops.0.distanceKm', 'double'));
 });
 
+test('each shop card includes its coordinates for the map', function () {
+    $this->get('/')
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('shops.0.latitude', -7.3100)
+            ->where('shops.0.longitude', 112.6700));
+});
+
 test('nearby rejects invalid coordinates', function () {
     $this->postJson('/shops/nearby', ['latitude' => 200, 'longitude' => 112.6])
         ->assertUnprocessable()

@@ -31,6 +31,8 @@ class ShopDirectory
                 'slug' => $shop->slug,
                 'name' => $shop->name,
                 'address' => $shop->address,
+                'latitude' => $shop->latitude,
+                'longitude' => $shop->longitude,
                 'whatsapp' => $shop->whatsapp,
                 'openState' => $this->openingStatus->evaluate($shop->opening_hours, $now)->state->value,
                 'distanceKm' => $latitude === null || $longitude === null
