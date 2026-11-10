@@ -66,7 +66,7 @@ Setelah 0.2 masuk `main`, Hanzelius dan Mario mulai mengerjakan task yang butuh 
 - [x] 1.1 **[M1]** Service `OpeningStatus` (buka/tutup/segera tutup) + unit test
 - [ ] 1.2 **[M1]** Home: list shop dengan status buka, urut jarak garis lurus (Haversine) dari lokasi browser. Kalau izin lokasi ditolak, urut nama
 - [x] 1.3 **[M1]** Peta (`@vis.gl/react-google-maps`), marker sinkron dengan list
-- [ ] 1.4 **[M1]** Detail shop: jam, layanan, daftar harga, tombol WhatsApp, badge terverifikasi/perkiraan, tanggal update
+- [x] 1.4 **[M1]** Detail shop: jam, layanan, daftar harga, tombol WhatsApp, badge terverifikasi/perkiraan, tanggal update
 - [ ] 1.5 Jarak dan waktu tempuh via Routes API dari backend, dengan cache singkat
 
 ## Phase 2 — Migrasi ke Supabase (Bryan, setelah materi tutor)
