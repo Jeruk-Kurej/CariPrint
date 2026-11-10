@@ -2,6 +2,7 @@
 
 namespace App\Services\Directory;
 
+use App\Models\PriceList;
 use App\Models\Shop;
 use App\Services\Location\DistanceService;
 use App\Services\Shops\OpeningStatus;
@@ -45,5 +46,37 @@ class ShopDirectory
         return $latitude === null || $longitude === null
             ? $cards
             : $cards->sortBy('distanceKm')->values();
+    }
+
+    /**
+     * Full detail for the shop page: hours, services, prices with their source, and when the data was last updated.
+     *
+     * @return array<string, mixed>
+     */
+    public function detail(Shop $shop): array
+    {
+        $now = CarbonImmutable::now('Asia/Jakarta');
+        $status = $this->openingStatus->evaluate($shop->opening_hours, $now);
+
+        return [
+            'name' => $shop->name,
+            'slug' => $shop->slug,
+            'address' => $shop->address,
+            'whatsapp' => $shop->whatsapp,
+            'openState' => $status->state->value,
+            'closesAt' => $status->closesAt?->format('H:i'),
+            'opensAt' => $status->opensAt?->format('D H:i'),
+            'openingHours' => $shop->opening_hours,
+            'services' => $shop->services->map(fn ($service) => $service->name)->values(),
+            'prices' => $shop->priceLists->map(fn (PriceList $p) => [
+                'service' => $p->service->name,
+                'paperSize' => $p->paper_size?->value,
+                'colorMode' => $p->color_mode?->value,
+                'price' => $p->price,
+                'unit' => $p->unit->value,
+                'source' => $p->source->value,
+            ])->values(),
+            'updatedAt' => $shop->updated_at?->format('d M Y'),
+        ];
     }
 }
