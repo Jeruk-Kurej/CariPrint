@@ -1,5 +1,7 @@
 import { MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { show } from '@/routes/directory';
+import { Link } from '@inertiajs/react';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { WhatsAppButton } from '@/components/directory/whatsapp-button';
 import { formatDistance, formatRupiah } from '@/lib/format';
@@ -52,6 +54,9 @@ export function ShopCard({ shop, selected = false, onSelect }: Props) {
                         Lihat di peta
                     </Button>
                 )}
+                <Button asChild size="sm" variant="outline">
+                    <Link href={show({ shop: shop.slug }).url}>Detail</Link>
+                </Button>
                 {shop.whatsapp && <WhatsAppButton phone={shop.whatsapp} />}
             </footer>
         </article>
