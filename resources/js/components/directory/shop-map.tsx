@@ -1,12 +1,13 @@
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
-import { MapPlaceholder } from '@/components/directory/map-placeholder';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { useEffect, useRef } from 'react';
 import { CITRALAND_CENTER } from '@/lib/map';
 import type { OpenState, ShopSummary } from '@/types';
 
 const markerColor: Record<OpenState, string> = {
-    open: '#16a34a',
-    closing_soon: '#ca8a04',
-    closed: '#dc2626',
+    open: '#1f7a4d',
+    closing_soon: '#a15c07',
+    closed: '#5e6170',
 };
 
 type Props = {
@@ -15,47 +16,77 @@ type Props = {
     onSelect: (id: number) => void;
 };
 
+/** Peta OpenStreetMap (Leaflet): gratis dan tanpa API key. */
 export function ShopMap({ shops, selectedId, onSelect }: Props) {
-    if (!import.meta.env.VITE_GOOGLE_MAPS_API_KEY) {
-        return <MapPlaceholder />;
-    }
+    const containerRef = useRef<HTMLDivElement>(null);
+    const mapRef = useRef<L.Map | null>(null);
 
-    const selected = shops.find((shop) => shop.id === selectedId);
-    const center = selected
-        ? { lat: selected.latitude, lng: selected.longitude }
-        : CITRALAND_CENTER;
+    useEffect(() => {
+        if (!containerRef.current) {
+            return;
+        }
+
+        const map = L.map(containerRef.current, {
+            center: [CITRALAND_CENTER.lat, CITRALAND_CENTER.lng],
+            zoom: 15,
+            scrollWheelZoom: false,
+        });
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(map);
+
+        mapRef.current = map;
+
+        return () => {
+            map.remove();
+            mapRef.current = null;
+        };
+    }, []);
+
+    useEffect(() => {
+        const map = mapRef.current;
+        const selected = shops.find((shop) => shop.id === selectedId);
+
+        if (map && selected) {
+            map.setView([selected.latitude, selected.longitude], 16);
+        }
+    }, [selectedId, shops]);
+
+    useEffect(() => {
+        const map = mapRef.current;
+
+        if (!map) {
+            return;
+        }
+
+        const markers = L.layerGroup().addTo(map);
+
+        shops.forEach((shop) => {
+            const isSelected = shop.id === selectedId;
+
+            L.circleMarker([shop.latitude, shop.longitude], {
+                radius: isSelected ? 9 : 7,
+                color: '#ffffff',
+                weight: isSelected ? 3 : 2,
+                fillColor: markerColor[shop.openState],
+                fillOpacity: 1,
+            })
+                .bindTooltip(shop.name)
+                .on('click', () => onSelect(shop.id))
+                .addTo(markers);
+        });
+
+        return () => {
+            markers.remove();
+        };
+    }, [shops, selectedId, onSelect]);
 
     return (
-        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? ''}>
-            <div className="h-72 w-full overflow-hidden rounded-xl border sm:h-full sm:min-h-96">
-                <Map
-                    center={center}
-                    zoom={selected ? 16 : 15}
-                    gestureHandling="greedy"
-                    disableDefaultUI
-                    style={{ width: '100%', height: '100%' }}
-                >
-                    {shops.map((shop) => (
-                        <Marker
-                            key={shop.id}
-                            position={{
-                                lat: shop.latitude,
-                                lng: shop.longitude,
-                            }}
-                            title={shop.name}
-                            onClick={() => onSelect(shop.id)}
-                            icon={{
-                                path: 'M 0,0 m -8,0 a 8,8 0 1,0 16,0 a 8,8 0 1,0 -16,0',
-                                fillColor: markerColor[shop.openState],
-                                fillOpacity: 1,
-                                strokeColor: '#ffffff',
-                                strokeWeight: shop.id === selectedId ? 4 : 2,
-                                scale: 1,
-                            }}
-                        />
-                    ))}
-                </Map>
-            </div>
-        </APIProvider>
+        <div className="relative isolate h-72 w-full overflow-hidden rounded-lg border lg:h-[30rem]">
+            <div ref={containerRef} className="absolute inset-0" />
+        </div>
     );
 }
