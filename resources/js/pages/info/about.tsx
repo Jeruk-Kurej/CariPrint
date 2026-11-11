@@ -41,10 +41,11 @@ export default function About() {
                 <Section title="Status proyek">
                     <p>
                         CariPrint adalah proyek mahasiswa Universitas Ciputra
-                        dan sedang berada di Milestone 1. Data tempat di website
-                        ini masih contoh untuk pengembangan, dan akan diganti
-                        dengan hasil survei langsung oleh tim ke tiap tempat.
-                        Harga hasil survei akan bertanda Terverifikasi.
+                        dan sedang berada di Milestone 1. Nama, alamat, lokasi,
+                        dan jam buka tempat print dikumpulkan dari Google Maps.
+                        Harga baru ditampilkan setelah dikonfirmasi langsung
+                        oleh pemilik tempat, dan hanya harga yang sudah
+                        dikonfirmasi yang bertanda Terverifikasi.
                     </p>
                 </Section>
 

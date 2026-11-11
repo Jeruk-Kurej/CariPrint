@@ -29,7 +29,7 @@ const questions: { question: string; answer: string }[] = [
     },
     {
         question: 'Dari mana data tempatnya?',
-        answer: 'Dari survei langsung tim CariPrint ke tiap tempat. Selama survei berjalan, sebagian data di website ini masih contoh dan ditandai sebagai contoh.',
+        answer: 'Nama, alamat, lokasi, dan jam buka diambil dari Google Maps. Harga ditanyakan langsung ke pemilik tempat, dan baru ditampilkan setelah mereka mengonfirmasinya. Karena itu sebagian tempat belum punya harga.',
     },
     {
         question: 'Apakah memakai CariPrint berbayar?',
