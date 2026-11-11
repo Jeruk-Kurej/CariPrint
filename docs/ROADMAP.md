@@ -55,8 +55,8 @@ Perubahan schema setelah Phase 0 dibuat lewat migration baru di branch masing-ma
 
 - [x] 0.1 **[M1]** Setup aturan project (bootstrap prompt): file aturan dan docs dibuat, guidelines masuk ke CLAUDE.md/AGENTS.md lewat Boost, `.gitignore` dicek, commit pertama, push ke GitHub
 - [x] 0.2 **[M1]** Schema: usulan ERD → approve → migrations (database-agnostic), models, factories, enums (`shops`, `price_lists`, `print_checks`, `reports`, kolom `role` dan `google_id` di `users`)
-- [ ] 0.3 **[M1]** Seeder: akun admin dari `ADMIN_EMAIL`/`ADMIN_PASSWORD` di `.env`, plus data shop contoh
-- [ ] 0.4 **[M1]** `config/cariprint.php`, layout publik (terpisah dari layout dashboard starter kit), design tokens dan arah visual dengan rationale
+- [x] 0.3 **[M1]** Seeder: akun admin dari `ADMIN_EMAIL`/`ADMIN_PASSWORD` di `.env`, plus data shop contoh
+- [x] 0.4 **[M1]** `config/cariprint.php`, layout publik (terpisah dari layout dashboard starter kit), design tokens dan arah visual dengan rationale
 - [ ] 0.5 **[M1]** Deploy versi awal ke `cariprint.lius.my.id` sesuai `docs/DEPLOY.md` (SQLite), SSL aktif, `scripts/deploy.sh` dibuat
 
 Setelah 0.2 masuk `main`, Hanzelius dan Mario mulai mengerjakan task yang butuh database.
@@ -64,7 +64,7 @@ Setelah 0.2 masuk `main`, Hanzelius dan Mario mulai mengerjakan task yang butuh 
 ## Phase 1 — Directory (Hanzelius)
 
 - [x] 1.1 **[M1]** Service `OpeningStatus` (buka/tutup/segera tutup) + unit test
-- [ ] 1.2 **[M1]** Home: list shop dengan status buka, urut jarak garis lurus (Haversine) dari lokasi browser. Kalau izin lokasi ditolak, urut nama
+- [x] 1.2 **[M1]** Home: list shop dengan status buka, urut jarak garis lurus (Haversine) dari lokasi browser. Kalau izin lokasi ditolak, urut nama
 - [x] 1.3 **[M1]** Peta (`@vis.gl/react-google-maps`), marker sinkron dengan list
 - [x] 1.4 **[M1]** Detail shop: jam, layanan, daftar harga, tombol WhatsApp, badge terverifikasi/perkiraan, tanggal update
 - [ ] 1.5 Jarak dan waktu tempuh via Routes API dari backend, dengan cache singkat
