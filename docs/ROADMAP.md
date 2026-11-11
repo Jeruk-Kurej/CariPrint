@@ -85,7 +85,7 @@ Setelah 0.2 masuk `main`, Hanzelius dan Mario mulai mengerjakan task yang butuh 
 ## Phase 4 — AI Print Agent (Bryan)
 
 - [x] 4.1 **[M1 stretch]** `PrintSpec` + `PriceCalculator` + unit test
-- [ ] 4.2 **[M1 stretch]** Prototype agent: kalimat user → `PrintSpec` (structured output Gemini), tampilkan hasil parsing + estimasi biaya
+- [x] 4.2 **[M1 stretch]** Prototype agent: kalimat user → `PrintSpec` (structured output Gemini), tampilkan hasil parsing + estimasi biaya
 - [ ] 4.3 Rekomendasi: hitung biaya tiap shop, filter buka/preferensi, urutkan
 - [ ] 4.4 Template pesan WhatsApp (link `wa.me`)
 
