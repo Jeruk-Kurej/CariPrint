@@ -13,8 +13,7 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
     --font-display:
-        'Bricolage Grotesque', 'Instrument Sans', ui-sans-serif, system-ui,
-        sans-serif;
+        'Gabarito', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -65,6 +64,10 @@
 
     --color-brand: var(--brand);
     --color-brand-foreground: var(--brand-foreground);
+    --color-note-yellow: var(--note-yellow);
+    --color-note-pink: var(--note-pink);
+    --color-note-mint: var(--note-mint);
+    --color-note-sky: var(--note-sky);
     --color-highlight: var(--highlight);
     --color-highlight-foreground: var(--highlight-foreground);
     --color-status-open: var(--status-open);
@@ -75,48 +78,52 @@
 }
 
 :root {
-    --background: #f3f6fd;
-    --foreground: #0f1535;
+    --background: #fcfdff;
+    --foreground: #1d2147;
     --card: #ffffff;
-    --card-foreground: #0f1535;
+    --card-foreground: #1d2147;
     --popover: #ffffff;
-    --popover-foreground: #0f1535;
-    --primary: #1e2a78;
+    --popover-foreground: #1d2147;
+    --primary: #3558f0;
     --primary-foreground: #ffffff;
-    --secondary: #e4eafb;
-    --secondary-foreground: #0f1535;
-    --muted: #e8edfa;
-    --muted-foreground: #4f5a85;
-    --accent: #dbe5ff;
-    --accent-foreground: #0f1535;
+    --secondary: #eef1fb;
+    --secondary-foreground: #1d2147;
+    --muted: #eef1fb;
+    --muted-foreground: #55597e;
+    --accent: #e4eaff;
+    --accent-foreground: #1d2147;
     --destructive: #b42318;
     --destructive-foreground: #ffffff;
-    --border: #d3dbf2;
-    --input: #d3dbf2;
-    --ring: #2b63e0;
-    --chart-1: #2b63e0;
+    --border: #dfe3f5;
+    --input: #dfe3f5;
+    --ring: #3558f0;
+    --chart-1: #3558f0;
     --chart-2: #137a4a;
-    --chart-3: #9a5b00;
-    --chart-4: #5b6488;
-    --chart-5: #1e2a78;
+    --chart-3: #ffd84d;
+    --chart-4: #55597e;
+    --chart-5: #1d2147;
     --sidebar: #ffffff;
-    --sidebar-foreground: #0f1535;
-    --sidebar-primary: #1e2a78;
+    --sidebar-foreground: #1d2147;
+    --sidebar-primary: #3558f0;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #e4eafb;
-    --sidebar-accent-foreground: #0f1535;
-    --sidebar-border: #d3dbf2;
-    --sidebar-ring: #2b63e0;
-    --brand: #2b63e0;
+    --sidebar-accent: #eef1fb;
+    --sidebar-accent-foreground: #1d2147;
+    --sidebar-border: #dfe3f5;
+    --sidebar-ring: #3558f0;
+    --brand: #3558f0;
     --brand-foreground: #ffffff;
-    --highlight: #ffd60a;
-    --highlight-foreground: #0f1535;
+    --highlight: #ffd84d;
+    --highlight-foreground: #1d2147;
+    --note-yellow: #fff1a6;
+    --note-pink: #ffd5e3;
+    --note-mint: #c8f1dc;
+    --note-sky: #d3e4ff;
     --status-open: #137a4a;
     --status-closing: #9a5b00;
-    --status-closed: #5b6488;
-    --price-verified: #1e2a78;
-    --price-estimated: #5b6488;
-    --radius: 0.5rem;
+    --status-closed: #55597e;
+    --price-verified: #1d2147;
+    --price-estimated: #55597e;
+    --radius: 0.75rem;
 }
 
 @layer base {
@@ -127,4 +134,13 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+/* Latar kertas buku bergaris kotak, tipis supaya isi halaman tetap terbaca. */
+@utility bg-notebook {
+    background-color: var(--background);
+    background-image:
+        linear-gradient(rgba(53, 88, 240, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53, 88, 240, 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
 }

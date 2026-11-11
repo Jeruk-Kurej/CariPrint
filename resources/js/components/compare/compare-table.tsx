@@ -89,7 +89,7 @@ export function CompareTable({
                                         </span>
                                     ) : (
                                         <span
-                                            className={`inline-block rounded-sm px-1.5 font-display font-bold ${row.cheapest.includes(column) ? 'bg-highlight text-highlight-foreground' : ''}`}
+                                            className={`inline-block rounded-sm px-1.5 font-display text-lg font-bold ${row.cheapest.includes(column) ? 'bg-highlight text-highlight-foreground' : ''}`}
                                         >
                                             {formatRupiah(price)}
                                             {row.cheapest.includes(column) && (

@@ -7,7 +7,7 @@ import type { OpenState, ShopSummary } from '@/types';
 const markerColor: Record<OpenState, string> = {
     open: '#137a4a',
     closing_soon: '#9a5b00',
-    closed: '#5b6488',
+    closed: '#55597e',
 };
 
 type Props = {

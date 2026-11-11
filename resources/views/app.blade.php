@@ -6,7 +6,7 @@
 
         <style>
             html {
-                background-color: #f3f6fd;
+                background-color: #fcfdff;
             }
         </style>
 
@@ -16,7 +16,7 @@
 
         @fonts
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=bricolage-grotesque:600,700,800&display=swap" rel="stylesheet">
+        <link href="https://fonts.bunny.net/css?family=gabarito:600,700,800,900&display=swap" rel="stylesheet">
 
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
