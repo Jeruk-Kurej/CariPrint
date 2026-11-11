@@ -40,6 +40,7 @@ class ShopDirectory
                     ? null
                     : round($this->distance->kilometers($latitude, $longitude, $shop->latitude, $shop->longitude), 2),
                 'startingPrice' => $shop->priceLists->min('price'),
+                'services' => $shop->services->map(fn ($service) => $service->name)->values(),
             ];
         });
 

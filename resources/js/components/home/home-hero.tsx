@@ -1,9 +1,8 @@
-import { router } from '@inertiajs/react';
-import { Paperclip, Search } from 'lucide-react';
+import { Link, router } from '@inertiajs/react';
+import { Search } from 'lucide-react';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { FlyerCard } from '@/components/directory/flyer-card';
-import { FilterChip } from '@/components/filter-chip';
 import { Button } from '@/components/ui/button';
 import { index as directoryIndex } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
@@ -12,12 +11,6 @@ const chips = [
     { label: 'Masih buka', query: { buka: 1 } },
     { label: 'Termurah', query: { urut: 'price' } },
     { label: 'Terdekat', query: { urut: 'distance' } },
-];
-
-const dropDelays = [
-    '[animation-delay:300ms]',
-    '[animation-delay:480ms]',
-    '[animation-delay:660ms]',
 ];
 
 const stackPlaces = [
@@ -30,16 +23,14 @@ const stackPlaces = [
 function PinnedStack({ shops }: { shops: ShopSummary[] }) {
     return (
         <div className="relative hidden h-[34rem] lg:block" aria-hidden>
-            <div className="absolute inset-x-2 top-16 bottom-10 -rotate-3 rounded-[2.5rem] bg-highlight/70" />
             {shops.map((shop, index) => (
                 <div
                     key={shop.id}
-                    className={`absolute w-72 ${dropDelays[index]} motion-safe:animate-in motion-safe:duration-700 motion-safe:fill-mode-backwards motion-safe:fade-in motion-safe:slide-in-from-top-8 ${stackPlaces[index]}`}
+                    className={`absolute w-72 ${stackPlaces[index]}`}
                 >
                     <FlyerCard shop={shop} tilted={false} />
                 </div>
             ))}
-            <Paperclip className="absolute top-[5.1rem] right-10 z-10 size-12 rotate-[20deg] text-foreground/70" />
         </div>
     );
 }
@@ -67,7 +58,7 @@ export function HomeHero({
     return (
         <section className="grid items-center gap-10 px-4 py-10 sm:py-16 lg:grid-cols-[1.1fr_1fr]">
             <div className="flex flex-col gap-6">
-                <h1 className="font-display text-5xl leading-[1.02] font-extrabold tracking-tight sm:text-7xl xl:text-[5.5rem]">
+                <h1 className="font-display text-5xl leading-[1.02] font-extrabold tracking-tight sm:text-7xl">
                     Mau print? Cari yang buka dekat kampus.
                 </h1>
                 <p className="max-w-md text-lg text-muted-foreground">
@@ -77,7 +68,7 @@ export function HomeHero({
                 <form
                     onSubmit={search}
                     role="search"
-                    className="flex gap-2 rounded-full sticker bg-card p-1.5"
+                    className="flex gap-2 rounded-full border-2 border-foreground bg-card p-1.5 shadow-[4px_4px_0_var(--foreground)]"
                 >
                     <label htmlFor="cari-tempat" className="sr-only">
                         Cari nama tempat
@@ -98,11 +89,12 @@ export function HomeHero({
                 <ul className="flex flex-wrap items-center gap-2">
                     {chips.map((chip) => (
                         <li key={chip.label}>
-                            <FilterChip
+                            <Link
                                 href={directoryIndex({ query: chip.query }).url}
+                                className="inline-flex rounded-full border-2 border-foreground/15 bg-card px-4 py-1.5 text-sm font-semibold hover:border-primary hover:text-primary"
                             >
                                 {chip.label}
-                            </FilterChip>
+                            </Link>
                         </li>
                     ))}
                 </ul>

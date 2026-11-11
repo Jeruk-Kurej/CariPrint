@@ -17,16 +17,30 @@ const sortLabels: Record<ShopSort, string> = {
     name: 'Nama',
 };
 
+/** Pencarian, urutan, dan filter bisa dibawa lewat alamat, misalnya dari beranda. */
+function initialParams(): URLSearchParams {
+    return new URLSearchParams(window.location.search);
+}
+
+function parseSort(value: string | null): ShopSort | null {
+    return value !== null && value in sortLabels ? (value as ShopSort) : null;
+}
+
 export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
     const location = useGeolocation();
     const { selectedId, select } = useSelectedShop();
     const [sorting, setSorting] = useState(false);
-    const [openOnly, setOpenOnly] = useState(false);
-    const [query, setQuery] = useState('');
-    const [chosenSort, setChosenSort] = useState<ShopSort | null>(null);
+    const [openOnly, setOpenOnly] = useState(
+        () => initialParams().get('buka') === '1',
+    );
+    const [query, setQuery] = useState(() => initialParams().get('q') ?? '');
+    const [chosenSort, setChosenSort] = useState<ShopSort | null>(() =>
+        parseSort(initialParams().get('urut')),
+    );
 
     const hasDistance = location.status === 'granted';
-    const sort = chosenSort ?? (hasDistance ? 'distance' : 'name');
+    const wanted = chosenSort ?? 'distance';
+    const sort = wanted === 'distance' && !hasDistance ? 'name' : wanted;
 
     useEffect(() => {
         if (!hasDistance) {
@@ -139,7 +153,7 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                             )}
                         </section>
 
-                        <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                        <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
                             {visibleShops.length === 0 ? (
                                 <EmptyState
                                     title="Tidak ada yang cocok"

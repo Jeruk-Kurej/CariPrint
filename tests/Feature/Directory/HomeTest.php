@@ -35,6 +35,11 @@ test('each shop card includes its coordinates for the map', function () {
             ->where('shops.0.longitude', 112.6700));
 });
 
+test('each shop card lists its services', function () {
+    $this->get('/tempat')
+        ->assertInertia(fn (Assert $page) => $page->has('shops.0.services'));
+});
+
 test('nearby rejects invalid coordinates', function () {
     $this->postJson('/shops/nearby', ['latitude' => 200, 'longitude' => 112.6])
         ->assertUnprocessable()

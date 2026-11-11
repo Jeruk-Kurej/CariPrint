@@ -1,6 +1,5 @@
 import { Link } from '@inertiajs/react';
 import { FlyerCard } from '@/components/directory/flyer-card';
-import { SectionHeading } from '@/components/page-header';
 import { index as directoryIndex } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
 
@@ -22,9 +21,12 @@ export function FlyerBoard({ featured, shops }: Props) {
             className="flex flex-col gap-6 px-4 py-6"
         >
             <div className="flex flex-wrap items-end justify-between gap-3">
-                <SectionHeading id="papan">
+                <h2
+                    id="papan"
+                    className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl"
+                >
                     Yang masih buka sekarang
-                </SectionHeading>
+                </h2>
                 <Link
                     href={directoryIndex().url}
                     className="text-sm font-semibold text-primary underline underline-offset-4"
@@ -32,7 +34,7 @@ export function FlyerBoard({ featured, shops }: Props) {
                     Lihat semua tempat
                 </Link>
             </div>
-            <div className="grid gap-7 pt-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-7 pt-3 sm:grid-cols-2 lg:grid-cols-3">
                 {featured.map((shop) => (
                     <div key={shop.id} className="lg:hidden">
                         <FlyerCard shop={shop} />
