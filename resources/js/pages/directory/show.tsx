@@ -1,90 +1,99 @@
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
-import { OpenStatusBadge } from '@/components/directory/open-status-badge';
+import { Fastener, paperFor } from '@/components/directory/flyer-parts';
+import { OpenStatusLine } from '@/components/directory/open-status-line';
 import { OpeningHoursList } from '@/components/directory/opening-hours-list';
 import { PriceTable } from '@/components/directory/price-table';
+import { ShopMap } from '@/components/directory/shop-map';
 import { WhatsAppButton } from '@/components/directory/whatsapp-button';
+import { PageTitle, SectionHeading } from '@/components/page-header';
+import { serviceLabel } from '@/lib/labels';
+import { todayKey } from '@/lib/weekday';
 import { home } from '@/routes';
-import type { OpenState } from '@/types';
+import type { ShopDetail } from '@/types';
 
-type Shop = {
-    name: string;
-    address: string;
-    whatsapp: string | null;
-    openState: OpenState;
-    closesAt: string | null;
-    opensAt: string | null;
-    openingHours: Record<string, { open: string; close: string }[]>;
-    services: string[];
-    prices: {
-        service: string;
-        paperSize: string | null;
-        colorMode: string | null;
-        price: number;
-        unit: string;
-        source: 'verified' | 'estimated';
-    }[];
-    updatedAt: string | null;
-};
-
-const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-
-export default function ShopShow({ shop }: { shop: Shop }) {
-    const today = dayKeys[new Date().getDay()];
+export default function ShopShow({ shop }: { shop: ShopDetail }) {
+    const marker = { ...shop, distanceKm: null, startingPrice: null };
 
     return (
         <>
             <Head title={shop.name} />
-            <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 p-4">
+            <main className="flex flex-col gap-8 px-4 py-6 sm:py-10">
                 <Link
                     href={home()}
-                    className="inline-flex items-center gap-1 text-sm text-muted-foreground"
+                    className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
                 >
-                    <ArrowLeft className="size-4" /> Semua tempat
+                    <ArrowLeft className="size-4" aria-hidden /> Semua tempat
                 </Link>
 
-                <header className="flex flex-col gap-2">
-                    <div className="flex items-start justify-between gap-3">
-                        <h1 className="text-2xl font-bold">{shop.name}</h1>
-                        <OpenStatusBadge state={shop.openState} />
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                        {shop.address}
-                    </p>
-                    {shop.openState === 'closed' && shop.opensAt && (
-                        <p className="text-sm">Buka lagi: {shop.opensAt}</p>
-                    )}
-                    {shop.openState !== 'closed' && shop.closesAt && (
-                        <p className="text-sm">Tutup pukul {shop.closesAt}</p>
+                <header
+                    className={`relative mt-2 flex flex-col gap-3 rounded-sm p-6 paper-shadow sm:p-8 ${paperFor(shop.id)}`}
+                >
+                    <Fastener id={shop.id} />
+                    <OpenStatusLine shop={shop} />
+                    <PageTitle>{shop.name}</PageTitle>
+                    <p className="text-muted-foreground">{shop.address}</p>
+                    {shop.whatsapp && (
+                        <div>
+                            <WhatsAppButton
+                                phone={shop.whatsapp}
+                                message={`Halo ${shop.name}, saya mau tanya harga printing.`}
+                            />
+                        </div>
                     )}
                 </header>
 
-                {shop.whatsapp && (
-                    <WhatsAppButton
-                        phone={shop.whatsapp}
-                        message={`Halo ${shop.name}, saya mau tanya harga printing.`}
-                    />
-                )}
-
-                <section className="flex flex-col gap-2">
-                    <h2 className="font-semibold">Harga</h2>
-                    <PriceTable prices={shop.prices} />
-                    {shop.updatedAt && (
-                        <p className="text-xs text-muted-foreground">
-                            Data terakhir diperbarui: {shop.updatedAt}
+                <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+                    <section className="flex flex-col gap-3">
+                        <SectionHeading>Daftar harga</SectionHeading>
+                        <PriceTable prices={shop.prices} />
+                        <p className="text-sm text-muted-foreground">
+                            <span className="font-medium text-foreground">
+                                Terverifikasi
+                            </span>{' '}
+                            berarti dari survei tim CariPrint.{' '}
+                            <span className="font-medium text-foreground">
+                                Perkiraan
+                            </span>{' '}
+                            berarti belum disurvei dan bisa berbeda di lapangan.
+                            {shop.updatedAt &&
+                                ` Data terakhir diperbarui ${shop.updatedAt}.`}
                         </p>
-                    )}
-                </section>
+                    </section>
 
-                <section className="flex flex-col gap-2">
-                    <h2 className="font-semibold">Layanan</h2>
-                    <p className="text-sm">{shop.services.join(' · ')}</p>
-                </section>
+                    <aside className="flex flex-col gap-8">
+                        <section className="flex flex-col gap-3">
+                            <SectionHeading>Jam buka</SectionHeading>
+                            <OpeningHoursList
+                                hours={shop.openingHours}
+                                today={todayKey()}
+                            />
+                        </section>
 
-                <section className="flex flex-col gap-2">
-                    <h2 className="font-semibold">Jam buka</h2>
-                    <OpeningHoursList hours={shop.openingHours} today={today} />
-                </section>
+                        <section className="flex flex-col gap-3">
+                            <SectionHeading>Layanan</SectionHeading>
+                            <ul className="flex flex-wrap gap-2">
+                                {shop.services.map((service) => (
+                                    <li
+                                        key={service}
+                                        className="rounded-md bg-secondary px-2.5 py-1 text-sm font-medium"
+                                    >
+                                        {serviceLabel(service)}
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+
+                        <section className="flex flex-col gap-3">
+                            <SectionHeading>Lokasi</SectionHeading>
+                            <ShopMap
+                                shops={[marker]}
+                                selectedId={shop.id}
+                                heightClass="h-64"
+                            />
+                        </section>
+                    </aside>
+                </div>
             </main>
         </>
     );

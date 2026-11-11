@@ -1,26 +1,17 @@
-export function PageHeader({ title, intro }: { title: string; intro: string }) {
-    return (
-        <header className="flex flex-col gap-3 border-b pb-8">
-            <h1 className="font-display text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl">
-                {title}
-            </h1>
-            <p className="max-w-2xl text-lg text-muted-foreground">{intro}</p>
-        </header>
-    );
-}
+import type { ReactNode } from 'react';
+import { SectionHeading } from '@/components/page-header';
 
+/** Satu bagian halaman informasi: judul dan paragraf dengan lebar baris yang nyaman dibaca. */
 export function Section({
     title,
     children,
 }: {
     title: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }) {
     return (
         <section className="flex flex-col gap-3">
-            <h2 className="font-display text-2xl font-bold tracking-tight">
-                {title}
-            </h2>
+            <SectionHeading>{title}</SectionHeading>
             <div className="flex max-w-2xl flex-col gap-3 text-muted-foreground">
                 {children}
             </div>
