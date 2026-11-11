@@ -1,20 +1,29 @@
 import { Head } from '@inertiajs/react';
-import { FlyerBoard } from '@/components/home/flyer-board';
-import { HomeHero } from '@/components/home/home-hero';
-import { MapAndNotes } from '@/components/home/map-and-notes';
-import { splitOpenShops } from '@/lib/featured-shops';
+import { AssistantBanner } from '@/components/directory/assistant-banner';
+import { ClosingCta } from '@/components/directory/closing-cta';
+import { FeatureCards } from '@/components/directory/feature-cards';
+import { HomeHero } from '@/components/directory/home-hero';
+import { HowItWorks } from '@/components/directory/how-it-works';
+import { TrustStrip } from '@/components/directory/trust-strip';
 import type { ShopSummary } from '@/types';
 
 export default function Home({ shops }: { shops: ShopSummary[] }) {
-    const { featured, rest } = splitOpenShops(shops);
+    const openCount = shops.filter(
+        (shop) => shop.openState !== 'closed',
+    ).length;
 
     return (
         <>
             <Head title="Cari tempat printing di CitraLand" />
-            <main className="flex flex-col pb-4">
-                <HomeHero shops={shops} featured={featured} />
-                <FlyerBoard featured={featured} shops={rest} />
-                <MapAndNotes shops={shops} />
+            <main className="flex flex-col gap-14 pb-4">
+                <HomeHero shops={shops} openCount={openCount} />
+                <div className="flex flex-col gap-14 px-4">
+                    <FeatureCards />
+                    <HowItWorks />
+                    <TrustStrip />
+                    <AssistantBanner />
+                    <ClosingCta />
+                </div>
             </main>
         </>
     );

@@ -1,4 +1,6 @@
+import { Link } from '@inertiajs/react';
 import { ListChecks, MapPin, MessageCircle } from 'lucide-react';
+import { howItWorks } from '@/routes/info';
 
 const steps = [
     {
@@ -52,6 +54,12 @@ export function HowItWorks() {
                     </li>
                 ))}
             </ol>
+            <Link
+                href={howItWorks().url}
+                className="w-fit text-sm font-medium underline underline-offset-4"
+            >
+                Baca cara kerjanya selengkapnya
+            </Link>
         </section>
     );
 }

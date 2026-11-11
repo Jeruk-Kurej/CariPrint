@@ -3,6 +3,7 @@ import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { Button } from '@/components/ui/button';
 import { formatRupiah } from '@/lib/format';
 import { index as agentIndex } from '@/routes/agent';
+import { index as directoryIndex } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
 
 type Props = {
@@ -100,7 +101,9 @@ export function HomeHero({ shops, openCount }: Props) {
                             size="lg"
                             className="bg-highlight text-highlight-foreground hover:bg-highlight/90"
                         >
-                            <a href="#daftar">Cari tempat terdekat</a>
+                            <Link href={directoryIndex().url}>
+                                Cari tempat terdekat
+                            </Link>
                         </Button>
                         <Button
                             asChild

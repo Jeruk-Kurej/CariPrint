@@ -8,8 +8,8 @@ beforeEach(function () {
     Shop::factory()->create(['name' => 'Alfa Print', 'latitude' => -7.3100, 'longitude' => 112.6700]);
 });
 
-test('home lists shops by name when no location is given', function () {
-    $this->get('/')
+test('directory lists shops by name when no location is given', function () {
+    $this->get('/tempat')
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('directory/index')
@@ -29,7 +29,7 @@ test('nearby sorts shops from the closest to the farthest', function () {
 });
 
 test('each shop card includes its coordinates for the map', function () {
-    $this->get('/')
+    $this->get('/tempat')
         ->assertInertia(fn (Assert $page) => $page
             ->where('shops.0.latitude', -7.3100)
             ->where('shops.0.longitude', 112.6700));
@@ -45,4 +45,12 @@ test('coordinates are never in the URL', function () {
     $this->post('/shops/nearby', ['latitude' => -7.2870, 'longitude' => 112.6375]);
 
     expect(request()->fullUrl())->not->toContain('latitude');
+});
+
+test('home page gets the shops for the hero and the price board', function () {
+    $this->get('/')
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('home')
+            ->has('shops', 2));
 });
