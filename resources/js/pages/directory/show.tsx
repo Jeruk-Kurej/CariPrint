@@ -45,7 +45,9 @@ export default function ShopShow({ shop }: { shop: Shop }) {
 
                 <header className="flex flex-col gap-2">
                     <div className="flex items-start justify-between gap-3">
-                        <h1 className="text-2xl font-bold">{shop.name}</h1>
+                        <h1 className="font-display text-3xl leading-tight font-bold tracking-tight">
+                            {shop.name}
+                        </h1>
                         <OpenStatusBadge state={shop.openState} />
                     </div>
                     <p className="text-sm text-muted-foreground">
@@ -67,7 +69,9 @@ export default function ShopShow({ shop }: { shop: Shop }) {
                 )}
 
                 <section className="flex flex-col gap-2">
-                    <h2 className="font-semibold">Daftar harga</h2>
+                    <h2 className="font-display text-lg font-semibold">
+                        Daftar harga
+                    </h2>
                     <p className="text-xs text-muted-foreground">
                         <span className="font-medium text-foreground">
                             Terverifikasi
@@ -87,12 +91,16 @@ export default function ShopShow({ shop }: { shop: Shop }) {
                 </section>
 
                 <section className="flex flex-col gap-2">
-                    <h2 className="font-semibold">Layanan</h2>
+                    <h2 className="font-display text-lg font-semibold">
+                        Layanan
+                    </h2>
                     <p className="text-sm">{shop.services.join(' · ')}</p>
                 </section>
 
                 <section className="flex flex-col gap-2">
-                    <h2 className="font-semibold">Jam buka</h2>
+                    <h2 className="font-display text-lg font-semibold">
+                        Jam buka
+                    </h2>
                     <OpeningHoursList hours={shop.openingHours} today={today} />
                 </section>
             </main>
