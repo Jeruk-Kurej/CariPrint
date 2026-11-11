@@ -16,7 +16,7 @@ use Illuminate\Support\Collection;
 class PriceComparison
 {
     /**
-     * @return array{shops: list<array{id: int, name: string, slug: string}>, rows: list<array<string, mixed>>}
+     * @return array{shops: array<int, array{id: int, name: string, slug: string}>, rows: list<array<string, mixed>>}
      */
     public function forAllShops(): array
     {
@@ -25,7 +25,7 @@ class PriceComparison
 
     /**
      * @param  Collection<int, Shop>  $shops
-     * @return array{shops: list<array{id: int, name: string, slug: string}>, rows: list<array<string, mixed>>}
+     * @return array{shops: array<int, array{id: int, name: string, slug: string}>, rows: list<array<string, mixed>>}
      */
     public function build(Collection $shops): array
     {
@@ -62,7 +62,7 @@ class PriceComparison
     }
 
     /**
-     * @param  list<int|null>  $prices
+     * @param  array<int, int|null>  $prices
      * @return list<int>
      */
     private function cheapestColumns(array $prices): array

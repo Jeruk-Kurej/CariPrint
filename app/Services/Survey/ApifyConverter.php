@@ -31,7 +31,7 @@ class ApifyConverter
         $skipped = [];
         $slugs = [];
 
-        foreach ($this->rows($csvPath) as $row) {
+        foreach (CsvFile::read($csvPath) as $row) {
             $title = trim($row['title'] ?? '');
 
             if (($reason = $this->skipReason($row, $area)) !== null) {
@@ -200,30 +200,5 @@ class ApifyConverter
         $slugs[$slug] = true;
 
         return $slug;
-    }
-
-    /**
-     * @return list<array<string, string>>
-     */
-    private function rows(string $path): array
-    {
-        if (! is_file($path)) {
-            throw new InvalidArgumentException("File Apify tidak ditemukan: $path");
-        }
-
-        $handle = fopen($path, 'r');
-        $header = fgetcsv($handle);
-        $rows = [];
-
-        while (($line = fgetcsv($handle)) !== false) {
-            if ($line === [null] || $line === []) {
-                continue;
-            }
-            $rows[] = array_combine($header, array_pad($line, count($header), ''));
-        }
-
-        fclose($handle);
-
-        return $rows;
     }
 }

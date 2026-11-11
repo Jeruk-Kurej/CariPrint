@@ -21,8 +21,8 @@ class SurveyImporter
 
     public function import(string $shopsCsv, string $pricesCsv): int
     {
-        $shops = $this->rows($shopsCsv);
-        $prices = $this->rows($pricesCsv);
+        $shops = CsvFile::read($shopsCsv);
+        $prices = CsvFile::read($pricesCsv);
 
         foreach ($shops as $row) {
             $shop = Shop::updateOrCreate(['slug' => $row['slug']], [
@@ -48,31 +48,7 @@ class SurveyImporter
     }
 
     /**
-     * @return list<array<string, string>>
-     */
-    private function rows(string $path): array
-    {
-        if (! is_file($path)) {
-            throw new InvalidArgumentException("File survei tidak ditemukan: $path");
-        }
-
-        $handle = fopen($path, 'r');
-        $header = fgetcsv($handle);
-        $rows = [];
-
-        while (($line = fgetcsv($handle)) !== false) {
-            if ($line === [null] || $line === []) {
-                continue;
-            }
-            $rows[] = array_combine($header, array_pad($line, count($header), ''));
-        }
-
-        fclose($handle);
-
-        return $rows;
-    }
-
-    /**
+     * @param  array<string, string>  $row
      * @return array<string, list<array{open: string, close: string}>>
      */
     private function openingHours(array $row): array
@@ -99,7 +75,7 @@ class SurveyImporter
         return array_map(function (string $code) {
             return ShopService::tryFrom(trim($code))
                 ?? throw new InvalidArgumentException("Kode layanan tidak dikenal: $code");
-        }, array_filter(explode('|', $codes)));
+        }, array_values(array_filter(explode('|', $codes))));
     }
 
     /**

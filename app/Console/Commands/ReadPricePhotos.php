@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Shop;
+use App\Services\Survey\CsvFile;
 use App\Services\Survey\PriceListReader;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
@@ -27,7 +28,7 @@ class ReadPricePhotos extends Command
 
         $drafts = [];
 
-        foreach (glob("$folder/*", GLOB_ONLYDIR) as $shopFolder) {
+        foreach (glob("$folder/*", GLOB_ONLYDIR) ?: [] as $shopFolder) {
             $slug = basename($shopFolder);
 
             if (! Shop::where('slug', $slug)->exists()) {
@@ -71,14 +72,7 @@ class ReadPricePhotos extends Command
             mkdir($out, 0755, true);
         }
 
-        $handle = fopen("$out/survey-prices-draft.csv", 'w');
-        fputcsv($handle, self::COLUMNS);
-
-        foreach ($drafts as $row) {
-            fputcsv($handle, array_map(fn (string $column) => $row[$column], self::COLUMNS));
-        }
-
-        fclose($handle);
+        CsvFile::write("$out/survey-prices-draft.csv", self::COLUMNS, $drafts);
 
         $this->info("Draf ada di: $out/survey-prices-draft.csv. Periksa baris bertanda 'ya', hapus yang salah, lalu salin ke database/data/survey-prices.csv.");
 
