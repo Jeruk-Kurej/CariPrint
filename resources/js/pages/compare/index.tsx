@@ -5,7 +5,6 @@ import type {
     CompareShop,
 } from '@/components/compare/compare-table';
 import { EmptyState } from '@/components/directory/empty-state';
-import { PageHeader } from '@/components/page-header';
 
 type Props = { shops: CompareShop[]; rows: CompareRow[] };
 
@@ -14,10 +13,16 @@ export default function CompareIndex({ shops, rows }: Props) {
         <>
             <Head title="Bandingkan harga" />
             <main className="flex flex-col gap-6 px-4 py-8 sm:py-12">
-                <PageHeader
-                    title="Bandingkan harga"
-                    intro="Harga layanan yang sama dari semua tempat, berdampingan. Yang paling murah di tiap baris diberi warna kuning. Tanda – berarti tempat itu belum punya harganya."
-                />
+                <header className="flex flex-col gap-2">
+                    <h1 className="font-display text-3xl leading-tight font-extrabold tracking-tight sm:text-5xl">
+                        Bandingkan harga
+                    </h1>
+                    <p className="max-w-2xl text-muted-foreground">
+                        Harga layanan yang sama dari semua tempat, berdampingan.
+                        Yang paling murah di tiap baris diberi warna kuning.
+                        Tanda – berarti tempat itu belum punya harganya.
+                    </p>
+                </header>
 
                 {rows.length === 0 ? (
                     <EmptyState
