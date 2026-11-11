@@ -1,6 +1,9 @@
 import { Head, router } from '@inertiajs/react';
 import { useEffect, useMemo, useState } from 'react';
+import { AssistantBanner } from '@/components/directory/assistant-banner';
 import { EmptyState } from '@/components/directory/empty-state';
+import { HomeHero } from '@/components/directory/home-hero';
+import { HowItWorks } from '@/components/directory/how-it-works';
 import { ShopList } from '@/components/directory/shop-list';
 import { ShopMap } from '@/components/directory/shop-map';
 import { Button } from '@/components/ui/button';
@@ -56,44 +59,44 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
     return (
         <>
             <Head title="Cari tempat printing" />
-            <main className="flex flex-col gap-6 px-4 py-6 sm:py-10">
-                <section className="flex flex-col gap-3">
-                    <h1 className="font-display text-3xl leading-tight font-bold tracking-tight sm:text-4xl">
-                        Cetak di CitraLand tanpa keliling
-                    </h1>
-                    <p className="max-w-2xl text-muted-foreground">
-                        Lihat tempat mana yang masih buka, harga mulai dari, dan
-                        jaraknya dari kamu.
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                        <span className="font-display text-base font-bold text-foreground tabular-nums">
-                            {openCount}
-                        </span>{' '}
-                        dari {shops.length} tempat masih buka sekarang.
-                    </p>
-                </section>
+            <main className="flex flex-col gap-14 pb-4">
+                <HomeHero shops={shops} openCount={openCount} />
 
-                <p className="rounded-lg border border-dashed px-4 py-3 text-sm text-muted-foreground">
-                    Data tempat di halaman ini masih contoh untuk pengembangan.
-                    Nama, harga, dan jam buka akan diganti dengan hasil survei
-                    tim.
-                </p>
+                <section
+                    id="daftar"
+                    aria-labelledby="daftar-judul"
+                    className="flex scroll-mt-20 flex-col gap-4 px-4"
+                >
+                    <div className="flex flex-col gap-1">
+                        <h2
+                            id="daftar-judul"
+                            className="font-display text-2xl font-bold tracking-tight sm:text-3xl"
+                        >
+                            Semua tempat printing
+                        </h2>
+                        <p className="text-sm text-muted-foreground">
+                            Data tempat masih contoh untuk pengembangan. Nama,
+                            harga, dan jam buka akan diganti dengan hasil survei
+                            tim.
+                        </p>
+                    </div>
 
-                {shops.length === 0 ? (
-                    <EmptyState
-                        title="Belum ada tempat printing"
-                        hint="Data sedang disiapkan oleh tim survei."
-                    />
-                ) : (
-                    <>
-                        <section className="flex flex-col gap-2">
-                            <div
-                                role="group"
-                                aria-label="Urutkan dan filter"
-                                className="flex flex-wrap gap-2"
-                            >
-                                {(Object.keys(sortLabels) as ShopSort[]).map(
-                                    (option) => (
+                    {shops.length === 0 ? (
+                        <EmptyState
+                            title="Belum ada tempat printing"
+                            hint="Data sedang disiapkan oleh tim survei."
+                        />
+                    ) : (
+                        <>
+                            <section className="flex flex-col gap-2">
+                                <div
+                                    role="group"
+                                    aria-label="Urutkan dan filter"
+                                    className="flex flex-wrap gap-2"
+                                >
+                                    {(
+                                        Object.keys(sortLabels) as ShopSort[]
+                                    ).map((option) => (
                                         <Button
                                             key={option}
                                             size="sm"
@@ -113,49 +116,56 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                                         >
                                             {sortLabels[option]}
                                         </Button>
-                                    ),
+                                    ))}
+                                    <Button
+                                        size="sm"
+                                        variant={
+                                            openOnly ? 'default' : 'outline'
+                                        }
+                                        aria-pressed={openOnly}
+                                        onClick={() => setOpenOnly((on) => !on)}
+                                    >
+                                        Masih buka
+                                    </Button>
+                                </div>
+                                {!hasDistance && (
+                                    <p className="text-xs text-muted-foreground">
+                                        Izinkan lokasi untuk mengurutkan dari
+                                        yang terdekat.
+                                    </p>
                                 )}
-                                <Button
-                                    size="sm"
-                                    variant={openOnly ? 'default' : 'outline'}
-                                    aria-pressed={openOnly}
-                                    onClick={() => setOpenOnly((on) => !on)}
-                                >
-                                    Masih buka
-                                </Button>
-                            </div>
-                            {!hasDistance && (
-                                <p className="text-xs text-muted-foreground">
-                                    Izinkan lokasi untuk mengurutkan dari yang
-                                    terdekat.
-                                </p>
-                            )}
-                        </section>
+                            </section>
 
-                        <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-                            {visibleShops.length === 0 ? (
-                                <EmptyState
-                                    title="Tidak ada yang cocok"
-                                    hint="Coba matikan filter Masih buka."
-                                />
-                            ) : (
-                                <ShopList
-                                    shops={visibleShops}
-                                    selectedId={selectedId}
-                                    onSelect={select}
-                                    sorting={sorting}
-                                />
-                            )}
-                            <div className="lg:sticky lg:top-20">
-                                <ShopMap
-                                    shops={shops}
-                                    selectedId={selectedId}
-                                    onSelect={select}
-                                />
+                            <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                                {visibleShops.length === 0 ? (
+                                    <EmptyState
+                                        title="Tidak ada yang cocok"
+                                        hint="Coba matikan filter Masih buka."
+                                    />
+                                ) : (
+                                    <ShopList
+                                        shops={visibleShops}
+                                        selectedId={selectedId}
+                                        onSelect={select}
+                                        sorting={sorting}
+                                    />
+                                )}
+                                <div className="lg:sticky lg:top-20">
+                                    <ShopMap
+                                        shops={shops}
+                                        selectedId={selectedId}
+                                        onSelect={select}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </>
-                )}
+                        </>
+                    )}
+                </section>
+
+                <div className="flex flex-col gap-14 px-4">
+                    <HowItWorks />
+                    <AssistantBanner />
+                </div>
             </main>
         </>
     );
