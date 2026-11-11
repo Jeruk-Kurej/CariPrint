@@ -13,8 +13,7 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
     --font-display:
-        'Bricolage Grotesque', 'Instrument Sans', ui-sans-serif, system-ui,
-        sans-serif;
+        'Gabarito', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -65,6 +64,13 @@
 
     --color-brand: var(--brand);
     --color-brand-foreground: var(--brand-foreground);
+    --color-note-yellow: var(--note-yellow);
+    --color-note-pink: var(--note-pink);
+    --color-note-mint: var(--note-mint);
+    --color-note-sky: var(--note-sky);
+    --color-pink: var(--pink);
+    --color-highlight: var(--highlight);
+    --color-highlight-foreground: var(--highlight-foreground);
     --color-status-open: var(--status-open);
     --color-status-closing: var(--status-closing);
     --color-status-closed: var(--status-closed);
@@ -73,46 +79,53 @@
 }
 
 :root {
-    --background: #f6f4ef;
-    --foreground: #1a1c26;
+    --background: #fcfdff;
+    --foreground: #1d2147;
     --card: #ffffff;
-    --card-foreground: #1a1c26;
+    --card-foreground: #1d2147;
     --popover: #ffffff;
-    --popover-foreground: #1a1c26;
-    --primary: #1a1c26;
-    --primary-foreground: #f6f4ef;
-    --secondary: #ebe8e0;
-    --secondary-foreground: #1a1c26;
-    --muted: #ebe8e0;
-    --muted-foreground: #5e6170;
-    --accent: #e4e0d6;
-    --accent-foreground: #1a1c26;
+    --popover-foreground: #1d2147;
+    --primary: #3558f0;
+    --primary-foreground: #ffffff;
+    --secondary: #eef1fb;
+    --secondary-foreground: #1d2147;
+    --muted: #eef1fb;
+    --muted-foreground: #55597e;
+    --accent: #e4eaff;
+    --accent-foreground: #1d2147;
     --destructive: #b42318;
     --destructive-foreground: #ffffff;
-    --border: #d9d4c8;
-    --input: #d9d4c8;
-    --ring: #b8125c;
-    --chart-1: #b8125c;
-    --chart-2: #1f7a4d;
-    --chart-3: #a15c07;
-    --chart-4: #6b6f7d;
-    --chart-5: #1a1c26;
+    --border: #dfe3f5;
+    --input: #dfe3f5;
+    --ring: #3558f0;
+    --chart-1: #3558f0;
+    --chart-2: #137a4a;
+    --chart-3: #ffd84d;
+    --chart-4: #55597e;
+    --chart-5: #1d2147;
     --sidebar: #ffffff;
-    --sidebar-foreground: #1a1c26;
-    --sidebar-primary: #1a1c26;
-    --sidebar-primary-foreground: #f6f4ef;
-    --sidebar-accent: #ebe8e0;
-    --sidebar-accent-foreground: #1a1c26;
-    --sidebar-border: #d9d4c8;
-    --sidebar-ring: #b8125c;
-    --brand: #b8125c;
+    --sidebar-foreground: #1d2147;
+    --sidebar-primary: #3558f0;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #eef1fb;
+    --sidebar-accent-foreground: #1d2147;
+    --sidebar-border: #dfe3f5;
+    --sidebar-ring: #3558f0;
+    --brand: #3558f0;
     --brand-foreground: #ffffff;
-    --status-open: #1f7a4d;
-    --status-closing: #a15c07;
-    --status-closed: #5e6170;
-    --price-verified: #1a1c26;
-    --price-estimated: #6b6f7d;
-    --radius: 0.5rem;
+    --highlight: #ffd84d;
+    --highlight-foreground: #1d2147;
+    --note-yellow: #fff1a6;
+    --note-pink: #ffd5e3;
+    --note-mint: #c8f1dc;
+    --note-sky: #d3e4ff;
+    --pink: #ff78a0;
+    --status-open: #137a4a;
+    --status-closing: #9a5b00;
+    --status-closed: #55597e;
+    --price-verified: #1d2147;
+    --price-estimated: #55597e;
+    --radius: 0.75rem;
 }
 
 @layer base {
@@ -122,5 +135,97 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+/* Latar kertas buku bergaris kotak, tipis supaya isi halaman tetap terbaca. */
+@utility bg-notebook {
+    background-color: var(--background);
+    background-image:
+        linear-gradient(
+            color-mix(in srgb, var(--primary) 7%, transparent) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--primary) 7%, transparent) 1px,
+            transparent 1px
+        );
+    background-size: 28px 28px;
+}
+
+/* Bayangan kertas yang menempel di papan: tipis di tepi, lembut di bawah. */
+@utility paper-shadow {
+    box-shadow:
+        0 1px 0 color-mix(in srgb, var(--foreground) 15%, transparent),
+        0 10px 20px -10px color-mix(in srgb, var(--foreground) 35%, transparent);
+}
+
+/* Pojok kertas yang terlipat. Elemennya harus relative. */
+@utility dog-ear {
+    &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 1.75rem;
+        height: 1.75rem;
+        background: linear-gradient(
+            135deg,
+            transparent 50%,
+            color-mix(in srgb, var(--foreground) 14%, transparent) 50%
+        );
+    }
+}
+
+/* Paku payung. */
+@utility pin {
+    border-radius: 9999px;
+    background-color: var(--primary);
+    box-shadow:
+        0 2px 0 color-mix(in srgb, var(--foreground) 35%, transparent),
+        0 0 0 2px var(--card);
+}
+
+/* Selotip kertas bergaris dalam tiga warna. */
+@utility tape-blue {
+    background-image: repeating-linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--primary) 30%, transparent) 0 6px,
+        color-mix(in srgb, var(--primary) 16%, transparent) 6px 12px
+    );
+}
+
+@utility tape-yellow {
+    background-image: repeating-linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--highlight) 75%, transparent) 0 6px,
+        color-mix(in srgb, var(--highlight) 45%, transparent) 6px 12px
+    );
+}
+
+@utility tape-pink {
+    background-image: repeating-linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--pink) 40%, transparent) 0 6px,
+        color-mix(in srgb, var(--pink) 22%, transparent) 6px 12px
+    );
+}
+
+/* Gaya "stiker": garis tebal dan bayangan keras. sticker-press menambah efek tertekan saat diklik. */
+@utility sticker {
+    border-width: 2px;
+    border-color: var(--foreground);
+    box-shadow: 4px 4px 0 var(--foreground);
+}
+
+@utility sticker-press {
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s;
+
+    &:active {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 var(--foreground);
     }
 }
