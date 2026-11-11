@@ -34,7 +34,7 @@ export function useDirectoryFilters(
 
     return {
         openOnly,
-        toggleOpenOnly: () => setOpenOnly((on) => !on),
+        setOpenOnly,
         query,
         setQuery,
         sort,

@@ -1,10 +1,11 @@
-import { FilterChip } from '@/components/filter-chip';
+import { SegmentedControl } from '@/components/segmented-control';
+import { SwitchField } from '@/components/switch-field';
 import { Input } from '@/components/ui/input';
 import type { DirectoryFilters } from '@/hooks/use-directory-filters';
 import { sortLabels } from '@/lib/shop-filter';
 import type { ShopSort } from '@/lib/shop-filter';
 
-/** Kotak cari nama, pilihan urutan, dan filter "Masih buka". */
+/** Kotak cari nama, pilihan urutan (pilih satu), dan sakelar "hanya yang masih buka" (ya atau tidak). */
 export function FilterBar({
     filters,
     hasDistance,
@@ -12,8 +13,16 @@ export function FilterBar({
     filters: DirectoryFilters;
     hasDistance: boolean;
 }) {
+    const sortOptions = (Object.keys(sortLabels) as ShopSort[]).map(
+        (value) => ({
+            value,
+            label: sortLabels[value],
+            disabled: value === 'distance' && !hasDistance,
+        }),
+    );
+
     return (
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-4">
             <Input
                 type="search"
                 value={filters.query}
@@ -22,27 +31,18 @@ export function FilterBar({
                 aria-label="Cari nama tempat"
                 className="max-w-sm bg-card"
             />
-            <div
-                role="group"
-                aria-label="Urutkan dan filter"
-                className="flex flex-wrap gap-2"
-            >
-                {(Object.keys(sortLabels) as ShopSort[]).map((option) => (
-                    <FilterChip
-                        key={option}
-                        active={filters.sort === option}
-                        disabled={option === 'distance' && !hasDistance}
-                        onClick={() => filters.setSort(option)}
-                    >
-                        {sortLabels[option]}
-                    </FilterChip>
-                ))}
-                <FilterChip
-                    active={filters.openOnly}
-                    onClick={filters.toggleOpenOnly}
-                >
-                    Masih buka
-                </FilterChip>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                <SegmentedControl
+                    label="Urutkan"
+                    value={filters.sort}
+                    options={sortOptions}
+                    onChange={filters.setSort}
+                />
+                <SwitchField
+                    label="Hanya yang masih buka"
+                    checked={filters.openOnly}
+                    onChange={filters.setOpenOnly}
+                />
             </div>
             {!hasDistance && (
                 <p className="text-xs text-muted-foreground">
