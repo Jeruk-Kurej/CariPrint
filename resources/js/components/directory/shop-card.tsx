@@ -48,7 +48,7 @@ export function ShopCard({ shop, selected = false, onSelect }: Props) {
                 )}
             </dl>
 
-            <footer className="flex justify-end gap-2">
+            <footer className="flex flex-wrap justify-end gap-2">
                 {onSelect && (
                     <Button size="sm" variant="ghost" onClick={onSelect}>
                         Lihat di peta

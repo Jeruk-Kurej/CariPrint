@@ -1,5 +1,5 @@
 import { Head, router } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ShopList } from '@/components/directory/shop-list';
 import { ShopMap } from '@/components/directory/shop-map';
 import { useSelectedShop } from '@/hooks/use-selected-shop';
@@ -11,15 +11,23 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
     const location = useGeolocation();
     const { selectedId, select } = useSelectedShop();
 
+    const [sorting, setSorting] = useState(false);
+
     useEffect(() => {
         if (location.status !== 'granted') {
             return;
         }
 
+        setSorting(true);
         router.post(
             nearby().url,
             { latitude: location.latitude, longitude: location.longitude },
-            { preserveState: true, preserveScroll: true, only: ['shops'] },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['shops'],
+                onFinish: () => setSorting(false),
+            },
         );
     }, [location]);
 
@@ -39,11 +47,12 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                             : 'Urut nama. Izinkan lokasi untuk urut jarak.'}
                     </p>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid min-w-0 gap-4 sm:grid-cols-2">
                     <ShopList
                         shops={shops}
                         selectedId={selectedId}
                         onSelect={select}
+                        sorting={sorting}
                     />
                     <ShopMap
                         shops={shops}
