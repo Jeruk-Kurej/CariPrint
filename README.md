@@ -16,17 +16,17 @@ Website pencarian tempat printing di area CitraLand Surabaya. Mahasiswa bisa mem
 
 Status: ✅ selesai · 🚧 dikerjakan · ⏳ belum dimulai
 
-| Fitur                                    | Status | Keterangan                                       |
-| ---------------------------------------- | ------ | ------------------------------------------------ |
-| Fondasi project (schema, layout, deploy) | 🚧     | Aturan project dan schema database selesai       |
-| Printing Shop Directory                  | ⏳     | List, peta, detail shop, status buka, urut jarak |
-| Admin Panel                              | ⏳     | Kelola data tempat printing dan harga            |
-| Data survei tempat printing              | ⏳     | 0 tempat tersurvei                               |
-| AI Print Agent                           | ⏳     |                                                  |
-| Smart File Check & Color Optimization    | ⏳     |                                                  |
-| Login Google dan batas penggunaan AI     | ⏳     |                                                  |
-| Laporan dari user                        | ⏳     |                                                  |
-| Migrasi database ke Supabase             | ⏳     | Menunggu materi Supabase                         |
+| Fitur                                    | Status | Keterangan                                                                |
+| ---------------------------------------- | ------ | ------------------------------------------------------------------------- |
+| Fondasi project (schema, layout, deploy) | 🚧     | Schema, aturan project, seeder admin, layout publik selesai. Deploy belum |
+| Printing Shop Directory                  | 🚧     | Home urut jarak, peta, dan detail shop selesai. Belum live                |
+| Admin Panel                              | 🚧     | Login admin, CRUD tempat dan harga selesai. Laporan belum                 |
+| Data survei tempat printing              | ⏳     | Importer siap, data survei belum dimasukkan (0 tempat)                    |
+| AI Print Agent                           | 🚧     | Prototype: kalimat → spesifikasi cetak → estimasi. Perlu API key Gemini   |
+| Smart File Check & Color Optimization    | ⏳     |                                                                           |
+| Login Google dan batas penggunaan AI     | ⏳     |                                                                           |
+| Laporan dari user                        | ⏳     |                                                                           |
+| Migrasi database ke Supabase             | ⏳     | Menunggu materi Supabase                                                  |
 
 Rincian task ada di [docs/ROADMAP.md](docs/ROADMAP.md).
 
