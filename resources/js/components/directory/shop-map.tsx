@@ -1,4 +1,5 @@
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { MapPlaceholder } from '@/components/directory/map-placeholder';
 import { CITRALAND_CENTER } from '@/lib/map';
 import type { OpenState, ShopSummary } from '@/types';
 
@@ -15,6 +16,10 @@ type Props = {
 };
 
 export function ShopMap({ shops, selectedId, onSelect }: Props) {
+    if (!import.meta.env.VITE_GOOGLE_MAPS_API_KEY) {
+        return <MapPlaceholder />;
+    }
+
     const selected = shops.find((shop) => shop.id === selectedId);
     const center = selected
         ? { lat: selected.latitude, lng: selected.longitude }

@@ -67,7 +67,17 @@ export default function ShopShow({ shop }: { shop: Shop }) {
                 )}
 
                 <section className="flex flex-col gap-2">
-                    <h2 className="font-semibold">Harga</h2>
+                    <h2 className="font-semibold">Daftar harga</h2>
+                    <p className="text-xs text-muted-foreground">
+                        <span className="font-medium text-foreground">
+                            Terverifikasi
+                        </span>{' '}
+                        = dari survei tim CariPrint.{' '}
+                        <span className="font-medium text-foreground">
+                            Perkiraan
+                        </span>{' '}
+                        = belum disurvei, bisa berbeda di lapangan.
+                    </p>
                     <PriceTable prices={shop.prices} />
                     {shop.updatedAt && (
                         <p className="text-xs text-muted-foreground">
