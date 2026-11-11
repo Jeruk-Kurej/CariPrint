@@ -1,0 +1,140 @@
+name: deploy
+
+# Jalan otomatis setelah workflow "tests" sukses di branch main.
+# Bisa juga dijalankan manual dari tab Actions (Run workflow).
+#
+# Secrets (kredensial)     : SSH_HOST, SSH_USERNAME, lalu SSH_PRIVATE_KEY (disarankan) atau SSH_PASSWORD
+# Variables (bukan rahasia): APP_PATH (wajib), SSH_PORT (opsional, default 22)
+on:
+  workflow_run:
+    workflows: [tests]
+    types: [completed]
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  APP_PATH: ${{ vars.APP_PATH }}
+
+jobs:
+  deploy:
+    name: Build & deploy to live hosting
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      # Gagal cepat kalau konfigurasi belum lengkap, sebelum membuang waktu untuk build.
+      - name: Check deploy configuration
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          missing=0
+          for name in SSH_HOST SSH_USERNAME APP_PATH; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name belum diisi (Settings > Secrets and variables > Actions)"
+              missing=1
+            fi
+          done
+          if [ -z "$SSH_PASSWORD" ] && [ -z "$SSH_PRIVATE_KEY" ]; then
+            echo "::error::Isi salah satu: secret SSH_PRIVATE_KEY (disarankan) atau SSH_PASSWORD"
+            missing=1
+          fi
+          exit "$missing"
+
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
+
+      # Versi PHP disamakan dengan server (8.4) supaya build gagal di sini, bukan di produksi.
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+          cache: npm
+
+      # vendor/ dan public/build tidak masuk git dan server tidak perlu Composer/Node,
+      # jadi keduanya dibangun di sini. Wayfinder butuh aplikasi bisa boot saat build,
+      # makanya .env sementara dibuat (hanya ada di runner ini, tidak dikirim ke server).
+      - name: Build application
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          cp .env.example .env
+          php artisan key:generate --no-interaction
+          npm ci
+          npm run build
+
+      - name: Install production dependencies only
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
+
+      - name: Package vendor and built assets
+        run: tar -czf release.tar.gz vendor public/build
+
+      - name: Upload package to server
+        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SSH_PORT || 22 }}
+          source: release.tar.gz
+          target: ${{ env.APP_PATH }}
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SSH_PORT || 22 }}
+          envs: APP_PATH
+          script: |
+            set -e
+            cd "$APP_PATH"
+
+            # Server hanya menyimpan kode dari main. .env tidak ikut git, jadi aman.
+            # Reset ini juga membuang perubahan lokal di server (mis. package-lock.json dari npm i).
+            git fetch origin main
+            git reset --hard origin/main
+
+            # Ekstrak ke folder sementara lalu tukar, supaya vendor/ tidak kosong lama-lama.
+            rm -rf .release && mkdir .release
+            tar -xzf release.tar.gz -C .release
+            rm -f release.tar.gz
+
+            rm -rf vendor.old
+            if [ -d vendor ]; then mv vendor vendor.old; fi
+            mv .release/vendor vendor
+            rm -rf public/build
+            mv .release/public/build public/build
+            rm -rf .release vendor.old
+
+            # Cache lama bisa menyebut paket dev yang tidak ada di vendor produksi.
+            rm -f bootstrap/cache/packages.php bootstrap/cache/services.php bootstrap/cache/config.php
+
+            php artisan package:discover --ansi
+            php artisan migrate --force --no-interaction
+            php artisan optimize:clear
+            php artisan optimize
+            echo "Deploy selesai."
