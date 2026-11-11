@@ -1,77 +1,68 @@
 # CariPrint
 
-Website pencarian tempat printing di area CitraLand Surabaya. Mahasiswa bisa membandingkan lokasi, jam buka, layanan, dan harga tanpa menghubungi tempat printing satu per satu. CariPrint hanya menjadi penghubung: tidak ada pemesanan maupun pembayaran di website.
+Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat printing: melihat mana yang sedang buka, membandingkan harga, dan mengetahui jaraknya dari lokasi kamu. Website ini hanya menghubungkan mahasiswa dengan tempat printing. Tidak ada pemesanan dan pembayaran di dalamnya.
 
-**Live:** https://cariprint.lius.my.id _(segera, setelah deploy Milestone 1)_
+**Website:** https://cariprint.lius.my.id
 
-## Tim
+## Tim dan pembagian kerja
 
-| Nama                         | NIM           | Area                                              |
-| ---------------------------- | ------------- | ------------------------------------------------- |
-| Bryan Carlie Lukito Setiawan | 0706012410025 | Fondasi, deploy, AI Print Agent, Smart File Check |
-| Hanzelius                    | 0706012410008 | Printing Shop Directory                           |
-| Mario Ruby Ariesusandi       | 0706012410028 | Admin Panel, laporan, data survei                 |
+Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 November 2026.
 
-## Yang sudah jalan (Milestone 1)
+| Anggota | Area utama | Commit |
+|---|---|---|
+| Bryan Carlie Lukito Setiawan | Fondasi project, desain, asisten AI, impor data survei, deploy | 38 |
+| Hanzelius (`Infinite-cpu-ai`) | Direktori tempat (daftar, peta, detail, halaman perbandingan) | 36 |
+| Mario Ruby Ariesusandi | Panel admin, validasi data, pembaca foto harga, perapian kode | 31 |
 
-- **Daftar tempat printing** urut jarak dari lokasi kamu, dengan status buka (Buka / Segera tutup / Tutup).
-- **Peta** yang tersinkron dengan daftar.
-- **Halaman detail** berisi jam buka, layanan, dan harga. Harga diberi label _Terverifikasi_ (survei tim) atau _Perkiraan_.
-- **Admin** (`/admin`): kelola data tempat dan harga. Perubahan langsung terlihat di halaman publik.
-- **Asisten cetak** (prototipe): kalimat kebutuhan cetak diubah jadi spesifikasi, lalu dihitung estimasi per tempat.
+## Status fitur
 
-Rincian task ada di [docs/ROADMAP.md](docs/ROADMAP.md). Naskah demo ada di [docs/DEMO.md](docs/DEMO.md).
+Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 
-## Progres
+| Fitur | Status | Keterangan |
+|---|---|---|
+| Daftar tempat printing dengan status buka (Buka, Segera tutup, Tutup) | ✅ | Bisa diurutkan dari yang terdekat atau termurah, dan difilter yang masih buka |
+| Peta yang tersinkron dengan daftar | ✅ | Klik titik untuk membuka halaman tempatnya |
+| Halaman detail tempat | ✅ | Jam buka, layanan, daftar harga, tombol WhatsApp |
+| Halaman perbandingan harga | ✅ | Harga layanan yang sama dari semua tempat, dengan yang termurah ditandai |
+| Panel admin (`/admin`) | ✅ | Kelola data tempat dan harga, hanya untuk admin |
+| Impor data survei | 🚧 | Impor sudah jalan. Data tempat dari Google Maps sudah masuk (9 tempat), harga belum |
+| Asisten cetak (AI) | 🚧 | Kalimat kebutuhan cetak diubah jadi spesifikasi, lalu dihitung estimasi per tempat. Estimasi di server menunggu kunci Gemini |
+| Jarak dan waktu tempuh lewat Routes API | ⏳ | Saat ini jarak garis lurus |
+| Rekomendasi dan template pesan WhatsApp dari asisten | ⏳ | |
+| Login Google dan batas pemakaian AI | ⏳ | |
+| Laporan data salah dari pengguna | ⏳ | |
+| Unggah dan cek file PDF (halaman berwarna) | ⏳ | |
+| Pindah database ke Supabase | ⏳ | Saat ini masih SQLite |
 
-Status: ✅ selesai · 🚧 dikerjakan · ⏳ belum dimulai
+## Data
 
-| Fitur                                    | Status | Keterangan                                                                |
-| ---------------------------------------- | ------ | ------------------------------------------------------------------------- |
-| Fondasi project (schema, layout, deploy) | 🚧     | Schema, aturan project, seeder admin, layout publik selesai. Deploy belum |
-| Printing Shop Directory                  | 🚧     | Home urut jarak, peta, dan detail shop selesai. Belum live                |
-| Admin Panel                              | 🚧     | Login admin, CRUD tempat dan harga selesai. Laporan belum                 |
-| Data survei tempat printing              | ⏳     | Importer siap, data survei belum dimasukkan                               |
-| AI Print Agent                           | 🚧     | Prototipe. Perlu API key Gemini                                           |
-| Smart File Check & Color Optimization    | ⏳     |                                                                           |
-| Login Google dan batas penggunaan AI     | ⏳     |                                                                           |
-| Laporan dari user                        | ⏳     |                                                                           |
-| Migrasi database ke Supabase             | ⏳     | Menunggu materi Supabase                                                  |
+- **Lokasi, alamat, nomor telepon, dan jam buka** diambil dari Google Maps dengan alat Apify.
+- **Harga belum tersedia** dari sumber mana pun. Harga akan ditanyakan langsung ke pemilik tempat dan hanya ditampilkan setelah dikonfirmasi. Harga yang sudah dikonfirmasi diberi tanda *Terverifikasi*, sedangkan harga yang belum disurvei diberi tanda *Perkiraan*.
+- Lokasi pengguna hanya dipakai untuk menghitung jarak dan tidak disimpan.
 
-## Tech stack
+## Teknologi
 
-- **Backend:** Laravel 13, Pest, Filament (admin)
-- **Frontend:** Inertia, React, TypeScript, Tailwind CSS, shadcn/ui
-- **Database:** SQLite (sementara), lalu Supabase (PostgreSQL, Storage)
-- **AI:** Gemini Flash melalui Laravel AI SDK
-- **Maps:** Google Maps JavaScript API
-- **Deployment:** server UC dengan CloudPanel, domain DomaiNesia, GitHub
+Laravel, Inertia, React, Tailwind CSS, Filament (panel admin), Gemini (asisten AI), Leaflet dengan OpenStreetMap (peta), SQLite. Tes otomatis dan pengecekan kode berjalan di GitHub Actions setiap ada perubahan di `main`. Setelah tes lulus, perubahan dikirim otomatis ke server.
 
-## Menjalankan di komputer kamu
+## Menjalankan di komputer lokal
 
 ```bash
 composer install
 npm install
 cp .env.example .env
 php artisan key:generate
-php artisan migrate:fresh --seed
-composer run dev
+touch database/database.sqlite
+php artisan migrate
+php artisan db:seed
+npm run build
+php artisan serve
 ```
 
-Buka http://localhost:8000. Untuk admin, isi `ADMIN_EMAIL` dan `ADMIN_PASSWORD` di `.env` sebelum seeding, atau jalankan `php artisan cariprint:create-admin email@kamu.com`.
+Lalu buka http://127.0.0.1:8000. Untuk asisten AI, isi `GEMINI_API_KEY` di `.env`.
 
-Kunci opsional di `.env`:
+## Dokumen
 
-- Peta memakai OpenStreetMap dan tidak butuh API key.
-- `GEMINI_API_KEY`: aktifkan asisten cetak.
-
-Panduan lengkap ada di [docs/SETUP.md](docs/SETUP.md).
-
-## Dokumentasi
-
-- [Setup lokal](docs/SETUP.md)
-- [Deploy](docs/DEPLOY.md)
-- [Panduan admin](docs/ADMIN.md)
-- [Format survei](docs/SURVEY.md)
-- [Arah visual](docs/DESIGN.md)
-- [Proposal](docs/proposal.pdf)
+- [docs/ROADMAP.md](docs/ROADMAP.md): daftar task lengkap dan pembagiannya.
+- [docs/SURVEY.md](docs/SURVEY.md): format data survei.
+- [docs/DEPLOY.md](docs/DEPLOY.md): cara deploy ke server.
+- [docs/DEMO.md](docs/DEMO.md): naskah demo.
