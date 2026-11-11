@@ -1,47 +1,18 @@
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
-import { OpenStatusBadge } from '@/components/directory/open-status-badge';
+import { Fastener, paperFor } from '@/components/directory/flyer-parts';
+import { OpenStatusLine } from '@/components/directory/open-status-line';
 import { OpeningHoursList } from '@/components/directory/opening-hours-list';
 import { PriceTable } from '@/components/directory/price-table';
 import { ShopMap } from '@/components/directory/shop-map';
 import { WhatsAppButton } from '@/components/directory/whatsapp-button';
+import { PageTitle, SectionHeading } from '@/components/page-header';
 import { serviceLabel } from '@/lib/labels';
+import { todayKey } from '@/lib/weekday';
 import { home } from '@/routes';
-import type { OpenState } from '@/types';
+import type { ShopDetail } from '@/types';
 
-type Shop = {
-    id: number;
-    slug: string;
-    name: string;
-    address: string;
-    latitude: number;
-    longitude: number;
-    whatsapp: string | null;
-    openState: OpenState;
-    closesAt: string | null;
-    opensAt: string | null;
-    openingHours: Record<string, { open: string; close: string }[]>;
-    services: string[];
-    prices: {
-        service: string;
-        paperSize: string | null;
-        colorMode: string | null;
-        price: number;
-        unit: string;
-        source: 'verified' | 'estimated';
-    }[];
-    updatedAt: string | null;
-};
-
-const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-const keepSelection = () => {};
-
-function SectionTitle({ children }: { children: string }) {
-    return <h2 className="font-display text-xl font-bold">{children}</h2>;
-}
-
-export default function ShopShow({ shop }: { shop: Shop }) {
-    const today = dayKeys[new Date().getDay()];
+export default function ShopShow({ shop }: { shop: ShopDetail }) {
     const marker = { ...shop, distanceKm: null, startingPrice: null };
 
     return (
@@ -55,11 +26,12 @@ export default function ShopShow({ shop }: { shop: Shop }) {
                     <ArrowLeft className="size-4" aria-hidden /> Semua tempat
                 </Link>
 
-                <header className="flex flex-col gap-3 border-b pb-6">
-                    <OpenStatusBadgeRow shop={shop} />
-                    <h1 className="font-display text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl">
-                        {shop.name}
-                    </h1>
+                <header
+                    className={`relative mt-2 flex flex-col gap-3 rounded-sm p-6 paper-shadow sm:p-8 ${paperFor(shop.id)}`}
+                >
+                    <Fastener id={shop.id} />
+                    <OpenStatusLine shop={shop} />
+                    <PageTitle>{shop.name}</PageTitle>
                     <p className="text-muted-foreground">{shop.address}</p>
                     {shop.whatsapp && (
                         <div>
@@ -73,7 +45,7 @@ export default function ShopShow({ shop }: { shop: Shop }) {
 
                 <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
                     <section className="flex flex-col gap-3">
-                        <SectionTitle>Daftar harga</SectionTitle>
+                        <SectionHeading>Daftar harga</SectionHeading>
                         <PriceTable prices={shop.prices} />
                         <p className="text-sm text-muted-foreground">
                             <span className="font-medium text-foreground">
@@ -91,15 +63,15 @@ export default function ShopShow({ shop }: { shop: Shop }) {
 
                     <aside className="flex flex-col gap-8">
                         <section className="flex flex-col gap-3">
-                            <SectionTitle>Jam buka</SectionTitle>
+                            <SectionHeading>Jam buka</SectionHeading>
                             <OpeningHoursList
                                 hours={shop.openingHours}
-                                today={today}
+                                today={todayKey()}
                             />
                         </section>
 
                         <section className="flex flex-col gap-3">
-                            <SectionTitle>Layanan</SectionTitle>
+                            <SectionHeading>Layanan</SectionHeading>
                             <ul className="flex flex-wrap gap-2">
                                 {shop.services.map((service) => (
                                     <li
@@ -113,11 +85,10 @@ export default function ShopShow({ shop }: { shop: Shop }) {
                         </section>
 
                         <section className="flex flex-col gap-3">
-                            <SectionTitle>Lokasi</SectionTitle>
+                            <SectionHeading>Lokasi</SectionHeading>
                             <ShopMap
                                 shops={[marker]}
                                 selectedId={shop.id}
-                                onSelect={keepSelection}
                                 heightClass="h-64"
                             />
                         </section>
@@ -125,20 +96,5 @@ export default function ShopShow({ shop }: { shop: Shop }) {
                 </div>
             </main>
         </>
-    );
-}
-
-/** Status buka dan kapan berubah, ditaruh paling atas karena itu yang dicari lebih dulu. */
-function OpenStatusBadgeRow({ shop }: { shop: Shop }) {
-    return (
-        <div className="flex flex-wrap items-center gap-2 text-sm">
-            <OpenStatusBadge state={shop.openState} />
-            {shop.openState === 'closed' && shop.opensAt && (
-                <span>Buka lagi {shop.opensAt}</span>
-            )}
-            {shop.openState !== 'closed' && shop.closesAt && (
-                <span>Tutup pukul {shop.closesAt}</span>
-            )}
-        </div>
     );
 }

@@ -2,7 +2,7 @@ import type { ShopSummary } from '@/types';
 
 export type ShopSort = 'distance' | 'price' | 'name';
 
-type Options = { openOnly: boolean; sort: ShopSort };
+type Options = { openOnly: boolean; sort: ShopSort; query?: string };
 
 /** Tempat tanpa data jarak atau harga selalu ditaruh di bawah. */
 function ascendingWithMissingLast(
@@ -32,11 +32,24 @@ const comparators: Record<
 /** "Masih buka" membuang tempat yang sedang tutup, tapi tetap menampilkan yang segera tutup. */
 export function filterAndSortShops(
     shops: ShopSummary[],
-    { openOnly, sort }: Options,
+    { openOnly, sort, query = '' }: Options,
 ): ShopSummary[] {
-    const visible = openOnly
-        ? shops.filter((shop) => shop.openState !== 'closed')
-        : shops;
+    const needle = query.trim().toLowerCase();
+    const visible = shops.filter(
+        (shop) =>
+            (!openOnly || shop.openState !== 'closed') &&
+            (needle === '' || shop.name.toLowerCase().includes(needle)),
+    );
 
     return [...visible].sort(comparators[sort]);
+}
+
+export const sortLabels: Record<ShopSort, string> = {
+    distance: 'Terdekat',
+    price: 'Termurah',
+    name: 'Nama',
+};
+
+export function parseSort(value: string | null): ShopSort | null {
+    return value !== null && value in sortLabels ? (value as ShopSort) : null;
 }

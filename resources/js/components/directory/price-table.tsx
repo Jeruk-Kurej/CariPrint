@@ -1,6 +1,6 @@
 import { PriceSourceBadge } from '@/components/directory/price-source-badge';
 import { formatRupiah } from '@/lib/format';
-import { serviceLabel } from '@/lib/labels';
+import { colorLabel, serviceLabel, unitLabel } from '@/lib/labels';
 
 type Price = {
     service: string;
@@ -9,15 +9,6 @@ type Price = {
     price: number;
     unit: string;
     source: 'verified' | 'estimated';
-};
-
-const colorLabel: Record<string, string> = {
-    bw: 'Hitam-putih',
-    color: 'Warna',
-};
-const unitLabel: Record<string, string> = {
-    page: 'per halaman',
-    item: 'per buku/lembar',
 };
 
 export function PriceTable({ prices }: { prices: Price[] }) {
@@ -52,8 +43,8 @@ export function PriceTable({ prices }: { prices: Price[] }) {
                                     {[
                                         item.paperSize?.toUpperCase(),
                                         item.colorMode &&
-                                            colorLabel[item.colorMode],
-                                        unitLabel[item.unit],
+                                            colorLabel(item.colorMode),
+                                        unitLabel(item.unit),
                                     ]
                                         .filter(Boolean)
                                         .join(' · ')}

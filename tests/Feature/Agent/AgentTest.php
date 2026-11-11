@@ -53,3 +53,12 @@ test('empty request is rejected before calling the AI', function () {
 
     PrintRequestAgent::assertNeverPrompted();
 });
+
+test('a failing AI call shows a friendly error instead of crashing', function () {
+    PrintRequestAgent::fake(fn () => throw new RuntimeException('provider down'));
+
+    $this->from('/agent')
+        ->post('/agent', ['request' => 'print 5 halaman'])
+        ->assertRedirect('/agent')
+        ->assertSessionHasErrors('request');
+});

@@ -19,3 +19,21 @@ const serviceLabels: Record<string, string> = {
 export function serviceLabel(service: string): string {
     return serviceLabels[service] ?? service;
 }
+
+const colorLabels: Record<string, string> = {
+    bw: 'Hitam-putih',
+    color: 'Warna',
+};
+
+const unitLabels: Record<string, string> = {
+    page: 'per halaman',
+    item: 'per buku/lembar',
+};
+
+export function colorLabel(mode: string): string {
+    return colorLabels[mode] ?? mode;
+}
+
+export function unitLabel(unit: string): string {
+    return unitLabels[unit] ?? unit;
+}

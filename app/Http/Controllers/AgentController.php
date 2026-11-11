@@ -9,8 +9,10 @@ use App\Http\Requests\AgentRequest;
 use App\Models\Shop;
 use App\Services\Pricing\PriceCalculator;
 use App\Services\Pricing\PrintSpec;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class AgentController extends Controller
 {
@@ -21,7 +23,15 @@ class AgentController extends Controller
 
     public function parse(AgentRequest $request, PriceCalculator $calculator): Response
     {
-        $parsed = (new PrintRequestAgent)->prompt($request->string('request')->toString());
+        try {
+            $parsed = (new PrintRequestAgent)->prompt($request->string('request')->toString());
+        } catch (Throwable $exception) {
+            report($exception);
+
+            throw ValidationException::withMessages([
+                'request' => 'Asisten belum bisa dipakai saat ini. Coba lagi sebentar lagi.',
+            ]);
+        }
 
         $spec = new PrintSpec(
             paperSize: PaperSize::from($parsed['paper_size']),

@@ -1,5 +1,5 @@
+import { FlyerCard } from '@/components/directory/flyer-card';
 import { ShopListSkeleton } from '@/components/directory/shop-list-skeleton';
-import { ShopRow } from '@/components/directory/shop-row';
 import type { ShopSummary } from '@/types';
 
 type Props = {
@@ -16,17 +16,17 @@ export function ShopList({
     sorting = false,
 }: Props) {
     if (sorting) {
-        return <ShopListSkeleton count={Math.min(shops.length || 3, 4)} />;
+        return <ShopListSkeleton count={Math.min(shops.length || 4, 4)} />;
     }
 
     return (
-        <div className="divide-y overflow-hidden rounded-lg border bg-card">
+        <div className="grid gap-6 pt-3 sm:grid-cols-2">
             {shops.map((shop) => (
-                <ShopRow
+                <FlyerCard
                     key={shop.id}
                     shop={shop}
                     selected={shop.id === selectedId}
-                    onSelect={() => onSelect(shop.id)}
+                    onSelect={onSelect}
                 />
             ))}
         </div>
