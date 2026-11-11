@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -31,11 +31,13 @@ function RegistrationMark() {
 
 export function PublicHeader() {
     const [open, setOpen] = useState(false);
+    const { url } = usePage();
+    const path = url.split('?')[0];
     const mobileLinks = [...mainNav, ...aboutNav.slice(1)];
 
     return (
         <header className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur">
-            <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+            <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-4 px-4 py-3 lg:px-10">
                 <Link href={homeUrl} className="flex items-center gap-2">
                     <RegistrationMark />
                     <span className="font-display text-lg font-bold tracking-tight">
@@ -45,13 +47,16 @@ export function PublicHeader() {
 
                 <nav
                     aria-label="Menu utama"
-                    className="hidden items-center gap-6 text-sm font-medium md:flex"
+                    className="hidden items-center gap-1 text-sm font-semibold md:flex"
                 >
                     {mainNav.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
-                            className="text-muted-foreground hover:text-foreground"
+                            aria-current={
+                                path === link.href ? 'page' : undefined
+                            }
+                            className={`rounded-full px-3.5 py-1.5 ${path === link.href ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-accent hover:text-foreground'}`}
                         >
                             {link.label}
                         </Link>

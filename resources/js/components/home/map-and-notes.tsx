@@ -1,4 +1,5 @@
 import { Link, router } from '@inertiajs/react';
+import { paperShadow } from '@/components/directory/flyer-parts';
 import { ShopMap } from '@/components/directory/shop-map';
 import { index as agentIndex } from '@/routes/agent';
 import { index as compareIndex } from '@/routes/compare';
@@ -61,7 +62,7 @@ export function MapAndNotes({ shops }: { shops: ShopSummary[] }) {
                     <li key={note.title}>
                         <Link
                             href={note.href}
-                            className={`block rounded-sm p-5 shadow-[0_1px_0_rgba(29,33,71,0.15),0_10px_20px_-10px_rgba(29,33,71,0.35)] hover:-translate-y-1 hover:rotate-0 motion-safe:transition-transform ${note.paper}`}
+                            className={`relative block rounded-sm p-5 ${paperShadow} after:absolute after:right-0 after:bottom-0 after:size-7 after:bg-[linear-gradient(135deg,transparent_50%,rgba(29,33,71,0.14)_50%)] hover:-translate-y-1 hover:rotate-0 motion-safe:transition-transform ${note.paper}`}
                         >
                             <h3 className="font-display text-2xl font-extrabold">
                                 {note.title}

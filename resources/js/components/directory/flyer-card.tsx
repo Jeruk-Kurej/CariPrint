@@ -1,17 +1,16 @@
 import { Link } from '@inertiajs/react';
-import { MapPin, MessageCircle } from 'lucide-react';
+import { MapPin, MessageCircle, Scissors } from 'lucide-react';
+import {
+    Fastener,
+    paperFor,
+    paperShadow,
+} from '@/components/directory/flyer-parts';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { formatDistance, formatRupiah } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
 import { show } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
 
-const papers = [
-    'bg-note-yellow',
-    'bg-note-pink',
-    'bg-note-mint',
-    'bg-note-sky',
-];
 const tilts = [
     '-rotate-[1.2deg]',
     'rotate-[0.9deg]',
@@ -40,17 +39,14 @@ export function FlyerCard({
     onSelect,
     tilted = true,
 }: Props) {
-    const paper = papers[shop.id % papers.length];
+    const paper = paperFor(shop.id);
     const tilt = tilted ? tilts[(shop.id * 3) % tilts.length] : '';
 
     return (
         <article
-            className={`group relative flex flex-col rounded-sm text-foreground shadow-[0_1px_0_rgba(29,33,71,0.15),0_10px_20px_-10px_rgba(29,33,71,0.35)] hover:z-10 hover:-translate-y-1 hover:rotate-0 motion-safe:transition-transform motion-safe:duration-200 ${paper} ${tilt} ${selected ? 'ring-2 ring-primary' : ''}`}
+            className={`group relative flex flex-col rounded-sm text-foreground ${paperShadow} hover:z-10 hover:-translate-y-1 hover:rotate-0 motion-safe:transition-transform motion-safe:duration-200 ${paper} ${tilt} ${selected ? 'ring-2 ring-primary' : ''}`}
         >
-            <span
-                aria-hidden
-                className="absolute -top-2 left-1/2 size-4 -translate-x-1/2 rounded-full bg-primary shadow-[0_2px_0_rgba(0,0,0,0.25)] ring-2 ring-white"
-            />
+            <Fastener id={shop.id} />
             <div className="flex flex-1 flex-col gap-2 p-4 pt-5">
                 <h3 className="font-display text-2xl leading-tight font-extrabold">
                     <Link
@@ -81,7 +77,11 @@ export function FlyerCard({
                     ))}
                 </ul>
             </div>
-            <div className="relative z-10 flex divide-x-2 divide-dashed divide-foreground/25 border-t-2 border-dashed border-foreground/25">
+            <div className="relative z-10 flex divide-x-2 divide-dashed divide-foreground/25 border-t-2 border-dashed border-foreground/25 bg-inherit">
+                <Scissors
+                    aria-hidden
+                    className="absolute -top-[11px] left-3 size-5 rotate-0 bg-inherit px-0.5 text-foreground/55"
+                />
                 <div className={`${tab} flex-1`}>
                     <span className="text-xs font-medium text-foreground/70">
                         Mulai dari

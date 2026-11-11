@@ -26,8 +26,8 @@ function FooterColumn({
 
 export function PublicFooter() {
     return (
-        <footer className="mt-16 border-t bg-card">
-            <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 text-sm sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
+        <footer className="mt-16 border-t-2 border-dashed bg-card">
+            <div className="mx-auto grid max-w-[90rem] gap-8 px-4 py-10 text-sm sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr] lg:px-10">
                 <div className="flex flex-col gap-2">
                     <Link
                         href={homeUrl}

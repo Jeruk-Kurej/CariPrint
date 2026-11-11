@@ -5,6 +5,7 @@ import { EstimateList } from '@/components/agent/estimate-list';
 import type { Estimate } from '@/components/agent/estimate-list';
 import { SpecSummary } from '@/components/agent/spec-summary';
 import type { PrintSpec } from '@/components/agent/spec-summary';
+import { Fastener, paperShadow } from '@/components/directory/flyer-parts';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { parse } from '@/routes/agent';
@@ -44,7 +45,7 @@ export default function AgentIndex({ spec, estimates }: Props) {
     return (
         <>
             <Head title="Asisten cetak" />
-            <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8 sm:py-12">
+            <main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-8 sm:py-12">
                 <header className="flex flex-col gap-3">
                     <h1 className="font-display text-3xl leading-tight font-extrabold tracking-tight sm:text-5xl">
                         Tulis kebutuhan cetakmu
@@ -58,15 +59,16 @@ export default function AgentIndex({ spec, estimates }: Props) {
 
                 <form
                     onSubmit={submit}
-                    className="flex flex-col gap-3 rounded-lg border bg-card p-4 shadow-sm sm:p-5"
+                    className={`relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 sm:p-6 ${paperShadow}`}
                 >
+                    <Fastener id={2} />
                     <textarea
                         value={request}
                         onChange={(event) => setRequest(event.target.value)}
                         maxLength={500}
                         rows={3}
                         placeholder="Misalnya: print 20 halaman hitam putih A4, jilid spiral"
-                        className="rounded-md border bg-background p-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="rounded-md border bg-card p-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         aria-label="Kebutuhan cetak"
                         aria-invalid={error !== null}
                     />
@@ -76,7 +78,7 @@ export default function AgentIndex({ spec, estimates }: Props) {
                                 key={example}
                                 type="button"
                                 onClick={() => setRequest(example)}
-                                className="rounded-md bg-secondary px-2.5 py-1 text-left text-sm hover:bg-accent"
+                                className="rounded-md bg-white/70 px-2.5 py-1 text-left text-sm hover:bg-white"
                             >
                                 {example}
                             </button>

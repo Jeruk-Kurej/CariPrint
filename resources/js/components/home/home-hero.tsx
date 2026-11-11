@@ -1,5 +1,5 @@
 import { Link, router } from '@inertiajs/react';
-import { Search } from 'lucide-react';
+import { Paperclip, Search } from 'lucide-react';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { FlyerCard } from '@/components/directory/flyer-card';
@@ -23,14 +23,17 @@ const stackPlaces = [
 function PinnedStack({ shops }: { shops: ShopSummary[] }) {
     return (
         <div className="relative hidden h-[34rem] lg:block" aria-hidden>
+            <div className="absolute inset-x-2 top-16 bottom-10 -rotate-3 rounded-[2.5rem] bg-highlight/70" />
             {shops.map((shop, index) => (
                 <div
                     key={shop.id}
-                    className={`absolute w-72 ${stackPlaces[index]}`}
+                    style={{ animationDelay: `${300 + index * 180}ms` }}
+                    className={`absolute w-72 motion-safe:animate-in motion-safe:duration-700 motion-safe:fill-mode-backwards motion-safe:fade-in motion-safe:slide-in-from-top-8 ${stackPlaces[index]}`}
                 >
                     <FlyerCard shop={shop} tilted={false} />
                 </div>
             ))}
+            <Paperclip className="absolute top-[5.1rem] right-10 z-10 size-12 rotate-[20deg] text-foreground/70" />
         </div>
     );
 }
@@ -58,7 +61,7 @@ export function HomeHero({
     return (
         <section className="grid items-center gap-10 px-4 py-10 sm:py-16 lg:grid-cols-[1.1fr_1fr]">
             <div className="flex flex-col gap-6">
-                <h1 className="font-display text-5xl leading-[1.02] font-extrabold tracking-tight sm:text-7xl">
+                <h1 className="font-display text-5xl leading-[1.02] font-extrabold tracking-tight sm:text-7xl xl:text-[5.5rem]">
                     Mau print? Cari yang buka dekat kampus.
                 </h1>
                 <p className="max-w-md text-lg text-muted-foreground">

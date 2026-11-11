@@ -34,7 +34,7 @@ export function FlyerBoard({ featured, shops }: Props) {
                     Lihat semua tempat
                 </Link>
             </div>
-            <div className="grid gap-7 pt-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-7 pt-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {featured.map((shop) => (
                     <div key={shop.id} className="lg:hidden">
                         <FlyerCard shop={shop} />

@@ -1,5 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
+import {
+    Fastener,
+    paperFor,
+    paperShadow,
+} from '@/components/directory/flyer-parts';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { OpeningHoursList } from '@/components/directory/opening-hours-list';
 import { PriceTable } from '@/components/directory/price-table';
@@ -55,7 +60,10 @@ export default function ShopShow({ shop }: { shop: Shop }) {
                     <ArrowLeft className="size-4" aria-hidden /> Semua tempat
                 </Link>
 
-                <header className="flex flex-col gap-3 border-b pb-6">
+                <header
+                    className={`relative mt-2 flex flex-col gap-3 rounded-sm p-6 sm:p-8 ${paperFor(shop.id)} ${paperShadow}`}
+                >
+                    <Fastener id={shop.id} />
                     <OpenStatusBadgeRow shop={shop} />
                     <h1 className="font-display text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl">
                         {shop.name}
