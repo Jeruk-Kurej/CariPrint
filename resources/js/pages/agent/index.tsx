@@ -37,7 +37,7 @@ export default function AgentIndex({
         <>
             <Head title="Asisten cetak" />
             <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 p-4">
-                <h1 className="font-display text-3xl leading-tight font-bold tracking-tight">
+                <h1 className="text-xl font-semibold">
                     Tulis kebutuhan cetakmu
                 </h1>
                 <p className="text-sm text-muted-foreground">
@@ -51,7 +51,7 @@ export default function AgentIndex({
                         onChange={(e) => setRequest(e.target.value)}
                         maxLength={500}
                         rows={3}
-                        className="rounded-lg border bg-card p-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="rounded-xl border bg-background p-3 text-sm"
                         aria-label="Kebutuhan cetak"
                     />
                     <Button type="submit" disabled={request.trim() === ''}>
@@ -61,9 +61,7 @@ export default function AgentIndex({
 
                 {spec && (
                     <section className="flex flex-col gap-2 text-sm">
-                        <h2 className="font-display text-lg font-semibold">
-                            Yang kami pahami
-                        </h2>
+                        <h2 className="font-semibold">Yang kami pahami</h2>
                         <p>
                             Kertas {spec.paperSize.toUpperCase()} ·{' '}
                             {spec.bwPages} hal. hitam putih · {spec.colorPages}{' '}
@@ -75,9 +73,7 @@ export default function AgentIndex({
 
                 {estimates && (
                     <section className="flex flex-col gap-2">
-                        <h2 className="font-display text-lg font-semibold">
-                            Estimasi per tempat
-                        </h2>
+                        <h2 className="font-semibold">Estimasi per tempat</h2>
                         <EstimateList estimates={estimates} />
                         <p className="text-xs text-muted-foreground">
                             Estimasi dari daftar harga yang tersimpan. Harga

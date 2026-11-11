@@ -6,7 +6,7 @@
 
         <style>
             html {
-                background-color: #f3f6fd;
+                background-color: #f6f4ef;
             }
         </style>
 

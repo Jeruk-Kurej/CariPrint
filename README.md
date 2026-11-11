@@ -62,7 +62,7 @@ Buka http://localhost:8000. Untuk admin, isi `ADMIN_EMAIL` dan `ADMIN_PASSWORD` 
 
 Kunci opsional di `.env`:
 
-- Peta memakai OpenStreetMap dan tidak butuh API key.
+- `VITE_GOOGLE_MAPS_API_KEY`: aktifkan peta.
 - `GEMINI_API_KEY`: aktifkan asisten cetak.
 
 Panduan lengkap ada di [docs/SETUP.md](docs/SETUP.md).
