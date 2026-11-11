@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge';
 import type { OpenState } from '@/types';
 
 const labels: Record<OpenState, string> = {
@@ -7,19 +8,16 @@ const labels: Record<OpenState, string> = {
 };
 
 const styles: Record<OpenState, string> = {
-    open: 'bg-status-open/12 text-status-open',
-    closing_soon: 'bg-status-closing/15 text-status-closing',
-    closed: 'bg-muted text-muted-foreground',
+    open: 'border-transparent bg-status-open text-white',
+    closing_soon: 'border-transparent bg-status-closing text-foreground',
+    closed: 'border-transparent bg-status-closed text-white',
 };
 
-/** Status buka berbentuk label lembut, warnanya dari token di app.css. */
+/** Status buka: warna dari token di app.css, supaya selalu sama di semua halaman. */
 export function OpenStatusBadge({ state }: { state: OpenState }) {
     return (
-        <span
-            className={`inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-semibold ${styles[state]}`}
-        >
-            <span className="size-1.5 rounded-full bg-current" aria-hidden />
+        <Badge className={`px-2.5 py-1 text-xs font-semibold ${styles[state]}`}>
             {labels[state]}
-        </span>
+        </Badge>
     );
 }
