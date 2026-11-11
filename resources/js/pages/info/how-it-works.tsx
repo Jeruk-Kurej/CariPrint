@@ -1,6 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Section } from '@/components/info/section';
-import { PageHeader } from '@/components/page-header';
+import { PageHeader, Section } from '@/components/info/page-header';
 import { Button } from '@/components/ui/button';
 import { index as directoryIndex } from '@/routes/directory';
 
