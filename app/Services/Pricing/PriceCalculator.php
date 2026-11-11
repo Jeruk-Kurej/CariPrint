@@ -3,6 +3,7 @@
 namespace App\Services\Pricing;
 
 use App\Enums\ColorMode;
+use App\Enums\PaperSize;
 use App\Enums\PriceUnit;
 use App\Enums\ShopService;
 use App\Models\PriceList;
@@ -54,7 +55,7 @@ class PriceCalculator
         $lines[] = new PriceLine("$label ({$spec->paperSize->value})", $price->price, $pages * $spec->copies);
     }
 
-    private function find(Shop $shop, ShopService $service, PriceUnit $unit, $paper, ?ColorMode $mode): ?PriceList
+    private function find(Shop $shop, ShopService $service, PriceUnit $unit, ?PaperSize $paper, ?ColorMode $mode): ?PriceList
     {
         return $shop->priceLists
             ->first(fn (PriceList $p) => $p->service === $service

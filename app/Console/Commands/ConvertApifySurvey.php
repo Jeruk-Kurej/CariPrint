@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\Survey\ApifyConverter;
+use App\Services\Survey\CsvFile;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -91,13 +92,6 @@ class ConvertApifySurvey extends Command
      */
     private function writeCsv(string $path, array $columns, array $rows): void
     {
-        $handle = fopen($path, 'w');
-        fputcsv($handle, $columns);
-
-        foreach ($rows as $row) {
-            fputcsv($handle, array_map(fn (string $column) => $row[$column] ?? '', $columns));
-        }
-
-        fclose($handle);
+        CsvFile::write($path, $columns, $rows);
     }
 }

@@ -26,6 +26,7 @@ class ShopDirectory
     {
         $now = CarbonImmutable::now('Asia/Jakarta');
 
+        /** @var Collection<int, array<string, mixed>> $cards */
         $cards = Shop::query()->with('priceLists')->orderBy('name')->get()->map(function (Shop $shop) use ($now, $latitude, $longitude) {
             return [
                 'id' => $shop->id,
@@ -49,6 +50,13 @@ class ShopDirectory
             : $cards->sortBy('distanceKm')->values();
     }
 
+    private function localTime(?CarbonImmutable $time): ?string
+    {
+        $localized = $time?->locale('id');
+
+        return $localized instanceof CarbonImmutable ? $localized->translatedFormat('l H:i') : null;
+    }
+
     /**
      * Full detail for the shop page: hours, services, prices with their source, and when the data was last updated.
      *
@@ -69,7 +77,7 @@ class ShopDirectory
             'whatsapp' => $shop->whatsapp,
             'openState' => $status->state->value,
             'closesAt' => $status->closesAt?->format('H:i'),
-            'opensAt' => $status->opensAt?->locale('id')->translatedFormat('l H:i'),
+            'opensAt' => $this->localTime($status->opensAt),
             'openingHours' => $shop->opening_hours,
             'services' => $shop->services->map(fn ($service) => $service->name)->values(),
             'prices' => $shop->priceLists->map(fn (PriceList $p) => [
