@@ -14,6 +14,7 @@ void createInertiaApp({
     layout: (name) => {
         switch (true) {
             case name.startsWith('directory/'):
+            case name.startsWith('agent/'):
                 return PublicLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;
