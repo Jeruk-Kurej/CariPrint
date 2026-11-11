@@ -27,15 +27,20 @@ class ShopForm
                     ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug((string) $state))),
                 TextInput::make('slug')->required()->unique(ignoreRecord: true),
                 TextInput::make('address')->label('Alamat')->required(),
-                TextInput::make('whatsapp')->label('WhatsApp (format 62...)')->tel(),
+                TextInput::make('whatsapp')->label('WhatsApp (format 62...)')->tel()
+                    ->regex('/^62\d{8,13}$/')
+                    ->helperText('Format internasional tanpa + atau spasi, contoh 6281234567890.'),
                 TextInput::make('place_id')->label('Google place_id')
                     ->helperText('Hanya place_id yang boleh dari Google. Koordinat diisi dari survei.'),
                 DateTimePicker::make('last_surveyed_at')->label('Terakhir disurvei'),
             ])->columns(2),
 
             Section::make('Lokasi')->schema([
-                TextInput::make('latitude')->required()->numeric()->minValue(-90)->maxValue(90),
-                TextInput::make('longitude')->required()->numeric()->minValue(-180)->maxValue(180),
+                TextInput::make('latitude')->required()->numeric()
+                    ->minValue(config('cariprint.area.min_latitude'))->maxValue(config('cariprint.area.max_latitude'))
+                    ->helperText('Harus di dalam area CitraLand (lihat config/cariprint.php).'),
+                TextInput::make('longitude')->required()->numeric()
+                    ->minValue(config('cariprint.area.min_longitude'))->maxValue(config('cariprint.area.max_longitude')),
             ])->columns(2),
 
             Section::make('Jam buka')->schema(
