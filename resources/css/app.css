@@ -12,6 +12,9 @@
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+    --font-display:
+        'Bricolage Grotesque', 'Instrument Sans', ui-sans-serif, system-ui,
+        sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -70,88 +73,46 @@
 }
 
 :root {
-    --background: #f4f8fa;
-    --foreground: #0e1f2b;
+    --background: #f6f4ef;
+    --foreground: #1a1c26;
     --card: #ffffff;
-    --card-foreground: #0e1f2b;
+    --card-foreground: #1a1c26;
     --popover: #ffffff;
-    --popover-foreground: #0e1f2b;
-    --primary: #0e1f2b;
-    --primary-foreground: #f4f8fa;
-    --secondary: #e3edf2;
-    --secondary-foreground: #0e1f2b;
-    --muted: #e3edf2;
-    --muted-foreground: #56697a;
-    --accent: #dcebf1;
-    --accent-foreground: #0e1f2b;
+    --popover-foreground: #1a1c26;
+    --primary: #1a1c26;
+    --primary-foreground: #f6f4ef;
+    --secondary: #ebe8e0;
+    --secondary-foreground: #1a1c26;
+    --muted: #ebe8e0;
+    --muted-foreground: #5e6170;
+    --accent: #e4e0d6;
+    --accent-foreground: #1a1c26;
     --destructive: #b42318;
     --destructive-foreground: #ffffff;
-    --border: #d5e0e7;
-    --input: #d5e0e7;
-    --ring: #00738f;
-    --chart1: #00738f;
-    --chart2: #15803d;
-    --chart3: #b45309;
-    --chart4: #6b7a89;
-    --chart5: #0e1f2b;
+    --border: #d9d4c8;
+    --input: #d9d4c8;
+    --ring: #b8125c;
+    --chart-1: #b8125c;
+    --chart-2: #1f7a4d;
+    --chart-3: #a15c07;
+    --chart-4: #6b6f7d;
+    --chart-5: #1a1c26;
     --sidebar: #ffffff;
-    --sidebar-foreground: #0e1f2b;
-    --sidebar-primary: #0e1f2b;
-    --sidebar-primary-foreground: #f4f8fa;
-    --sidebar-accent: #e3edf2;
-    --sidebar-accent-foreground: #0e1f2b;
-    --sidebar-border: #d5e0e7;
-    --sidebar-ring: #00738f;
-    --brand: #00738f;
+    --sidebar-foreground: #1a1c26;
+    --sidebar-primary: #1a1c26;
+    --sidebar-primary-foreground: #f6f4ef;
+    --sidebar-accent: #ebe8e0;
+    --sidebar-accent-foreground: #1a1c26;
+    --sidebar-border: #d9d4c8;
+    --sidebar-ring: #b8125c;
+    --brand: #b8125c;
     --brand-foreground: #ffffff;
-    --status-open: #15803d;
-    --status-closing: #b45309;
-    --status-closed: #b42318;
-    --price-verified: #00738f;
-    --price-estimated: #6b7a89;
-    --radius: 0.75rem;
-}
-
-.dark {
-    --background: #0b1a24;
-    --foreground: #e6f0f5;
-    --card: #122532;
-    --card-foreground: #e6f0f5;
-    --popover: #122532;
-    --popover-foreground: #e6f0f5;
-    --primary: #e6f0f5;
-    --primary-foreground: #0b1a24;
-    --secondary: #1a3140;
-    --secondary-foreground: #e6f0f5;
-    --muted: #1a3140;
-    --muted-foreground: #94a8b5;
-    --accent: #1f3b4c;
-    --accent-foreground: #e6f0f5;
-    --destructive: #f87171;
-    --destructive-foreground: #0b1a24;
-    --border: #213a4a;
-    --input: #213a4a;
-    --ring: #5bc8e0;
-    --chart1: #5bc8e0;
-    --chart2: #4ade80;
-    --chart3: #fbbf24;
-    --chart4: #94a8b5;
-    --chart5: #e6f0f5;
-    --sidebar: #122532;
-    --sidebar-foreground: #e6f0f5;
-    --sidebar-primary: #e6f0f5;
-    --sidebar-primary-foreground: #0b1a24;
-    --sidebar-accent: #1a3140;
-    --sidebar-accent-foreground: #e6f0f5;
-    --sidebar-border: #213a4a;
-    --sidebar-ring: #5bc8e0;
-    --brand: #5bc8e0;
-    --brand-foreground: #0b1a24;
-    --status-open: #4ade80;
-    --status-closing: #fbbf24;
-    --status-closed: #f87171;
-    --price-verified: #5bc8e0;
-    --price-estimated: #94a8b5;
+    --status-open: #1f7a4d;
+    --status-closing: #a15c07;
+    --status-closed: #5e6170;
+    --price-verified: #1a1c26;
+    --price-estimated: #6b6f7d;
+    --radius: 0.5rem;
 }
 
 @layer base {
