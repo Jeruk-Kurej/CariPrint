@@ -11,10 +11,13 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $this->call([
-            AdminSeeder::class,
-            ShopSeeder::class,
-            SurveyShopSeeder::class,
-        ]);
+        $this->call(AdminSeeder::class);
+
+        // Contoh toko hanya dipakai selama data survei belum ada, supaya tidak tercampur dengan data nyata.
+        if (! is_file(config('cariprint.survey.directory').'/survey-shops.csv')) {
+            $this->call(ShopSeeder::class);
+        }
+
+        $this->call(SurveyShopSeeder::class);
     }
 }

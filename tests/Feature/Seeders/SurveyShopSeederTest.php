@@ -4,6 +4,7 @@ use App\Enums\PriceSource;
 use App\Models\PriceList;
 use App\Models\Shop;
 use App\Services\Survey\SurveyImporter;
+use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\SurveyShopSeeder;
 
 beforeEach(fn () => $this->fixtures = base_path('tests/Fixtures/survey'));
@@ -42,7 +43,22 @@ test('unknown service code stops the import with a clear message', function () {
 });
 
 test('seeder skips quietly when the survey files are not there yet', function () {
+    config(['cariprint.survey.directory' => sys_get_temp_dir().'/no-survey-'.uniqid()]);
+
     $this->seed(SurveyShopSeeder::class);
 
     expect(Shop::count())->toBe(0);
+});
+
+test('sample shops are not seeded once real survey data exists', function () {
+    $directory = sys_get_temp_dir().'/survey-'.uniqid();
+    mkdir($directory);
+    copy(base_path('tests/Fixtures/survey/shops.csv'), "$directory/survey-shops.csv");
+    copy(base_path('tests/Fixtures/survey/prices.csv'), "$directory/survey-prices.csv");
+    config(['cariprint.survey.directory' => $directory]);
+
+    $this->seed(DatabaseSeeder::class);
+
+    expect(Shop::where('slug', 'like', 'contoh-%')->exists())->toBeFalse()
+        ->and(Shop::where('slug', 'print-sejahtera')->exists())->toBeTrue();
 });

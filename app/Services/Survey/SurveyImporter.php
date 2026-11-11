@@ -31,6 +31,7 @@ class SurveyImporter
                 'latitude' => (float) $row['latitude'],
                 'longitude' => (float) $row['longitude'],
                 'whatsapp' => $row['whatsapp'] ?: null,
+                'place_id' => ($row['place_id'] ?? '') ?: null,
                 'opening_hours' => $this->openingHours($row),
                 'services' => $this->services($row['services']),
                 'color_page_rule' => $row['color_page_rule'] ?: null,
