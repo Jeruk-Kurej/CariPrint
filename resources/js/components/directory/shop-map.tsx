@@ -2,18 +2,13 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import { CITRALAND_CENTER } from '@/lib/map';
-import type { OpenState, ShopSummary } from '@/types';
-
-const markerColor: Record<OpenState, string> = {
-    open: '#137a4a',
-    closing_soon: '#9a5b00',
-    closed: '#55597e',
-};
+import { markerColor, markerRingColor } from '@/lib/map-colors';
+import type { ShopSummary } from '@/types';
 
 type Props = {
     shops: ShopSummary[];
     selectedId: number | null;
-    onSelect: (id: number) => void;
+    onSelect?: (id: number) => void;
     heightClass?: string;
 };
 
@@ -75,13 +70,13 @@ export function ShopMap({
 
             L.circleMarker([shop.latitude, shop.longitude], {
                 radius: isSelected ? 9 : 7,
-                color: '#ffffff',
+                color: markerRingColor(),
                 weight: isSelected ? 3 : 2,
-                fillColor: markerColor[shop.openState],
+                fillColor: markerColor(shop.openState),
                 fillOpacity: 1,
             })
                 .bindTooltip(shop.name)
-                .on('click', () => onSelect(shop.id))
+                .on('click', () => onSelect?.(shop.id))
                 .addTo(markers);
         });
 

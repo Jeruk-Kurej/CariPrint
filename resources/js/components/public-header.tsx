@@ -1,6 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { BrandMark } from '@/components/brand-mark';
 import { Button } from '@/components/ui/button';
 import {
     Sheet,
@@ -10,24 +11,6 @@ import {
     SheetTrigger,
 } from '@/components/ui/sheet';
 import { aboutNav, homeUrl, mainNav } from '@/lib/navigation';
-
-/** Tanda registrasi cetak: lingkaran dengan garis silang, dipakai sebagai logo. */
-function RegistrationMark() {
-    return (
-        <svg
-            viewBox="0 0 24 24"
-            className="size-6 text-brand"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            aria-hidden
-        >
-            <circle cx="12" cy="12" r="7.5" />
-            <path d="M12 1.5v5M12 17.5v5M1.5 12h5M17.5 12h5" />
-            <circle cx="12" cy="12" r="2.25" fill="currentColor" />
-        </svg>
-    );
-}
 
 export function PublicHeader() {
     const [open, setOpen] = useState(false);
@@ -39,7 +22,7 @@ export function PublicHeader() {
         <header className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur">
             <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-4 px-4 py-3 lg:px-10">
                 <Link href={homeUrl} className="flex items-center gap-2">
-                    <RegistrationMark />
+                    <BrandMark />
                     <span className="font-display text-lg font-bold tracking-tight">
                         CariPrint
                     </span>
