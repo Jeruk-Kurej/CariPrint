@@ -21,6 +21,10 @@ class ShopResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $navigationLabel = 'Tempat printing';
+
+    protected static ?string $modelLabel = 'tempat printing';
+
     public static function form(Schema $schema): Schema
     {
         return ShopForm::configure($schema);

@@ -43,3 +43,21 @@ test('regular users cannot open the shop form', function () {
         ->get('/admin/shops/create')
         ->assertForbidden();
 });
+
+test('whatsapp number must be in international format', function () {
+    $this->actingAs(User::factory()->admin()->create());
+
+    Livewire::test(CreateShop::class)
+        ->fillForm(['name' => 'Print X', 'address' => 'x', 'latitude' => -7.29, 'longitude' => 112.64, 'whatsapp' => '0812-3456', 'services' => []])
+        ->call('create')
+        ->assertHasFormErrors(['whatsapp']);
+});
+
+test('shop coordinates must be inside the CitraLand area', function () {
+    $this->actingAs(User::factory()->admin()->create());
+
+    Livewire::test(CreateShop::class)
+        ->fillForm(['name' => 'Print Jauh', 'address' => 'x', 'latitude' => -6.2, 'longitude' => 106.8, 'services' => []])
+        ->call('create')
+        ->assertHasFormErrors(['latitude', 'longitude']);
+});

@@ -12,8 +12,11 @@ void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
+            case name === 'home':
             case name.startsWith('directory/'):
+            case name.startsWith('compare/'):
             case name.startsWith('agent/'):
+            case name.startsWith('info/'):
                 return PublicLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;
@@ -33,6 +36,6 @@ void createInertiaApp({
         );
     },
     progress: {
-        color: '#4B5563',
+        color: 'var(--primary)',
     },
 });
