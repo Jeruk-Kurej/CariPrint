@@ -1,5 +1,6 @@
 import { PriceSourceBadge } from '@/components/directory/price-source-badge';
 import { formatRupiah } from '@/lib/format';
+import { serviceLabel } from '@/lib/labels';
 
 type Price = {
     service: string;
@@ -29,7 +30,7 @@ export function PriceTable({ prices }: { prices: Price[] }) {
     }
 
     return (
-        <div className="overflow-x-auto rounded-xl border">
+        <div className="overflow-x-auto rounded-lg border bg-card">
             <table className="w-full text-sm">
                 <thead className="bg-muted text-left text-xs text-muted-foreground">
                     <tr>
@@ -45,7 +46,7 @@ export function PriceTable({ prices }: { prices: Price[] }) {
                         <tr key={index} className="border-t">
                             <td className="px-3 py-2">
                                 <div className="font-medium">
-                                    {item.service}
+                                    {serviceLabel(item.service)}
                                 </div>
                                 <div className="text-xs text-muted-foreground">
                                     {[
@@ -58,7 +59,7 @@ export function PriceTable({ prices }: { prices: Price[] }) {
                                         .join(' · ')}
                                 </div>
                             </td>
-                            <td className="px-3 py-2 text-right text-base font-semibold">
+                            <td className="px-3 py-2 text-right font-display text-base font-bold tabular-nums">
                                 {formatRupiah(item.price)}
                             </td>
                             <td className="px-3 py-2">

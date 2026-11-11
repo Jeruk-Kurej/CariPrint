@@ -19,17 +19,17 @@ export function OpeningHoursList({
     today: string;
 }) {
     return (
-        <ul className="divide-y rounded-xl border text-sm">
+        <ul className="divide-y overflow-hidden rounded-lg border bg-card text-sm">
             {Object.entries(dayLabels).map(([key, label]) => {
                 const slots = hours[key] ?? [];
 
                 return (
                     <li
                         key={key}
-                        className={`flex justify-between px-3 py-2 ${key === today ? 'font-semibold text-brand' : ''}`}
+                        className={`flex justify-between px-3 py-2 ${key === today ? 'bg-accent font-semibold' : ''}`}
                     >
                         <span>{label}</span>
-                        <span>
+                        <span className="tabular-nums">
                             {slots.length === 0
                                 ? 'Tutup'
                                 : slots

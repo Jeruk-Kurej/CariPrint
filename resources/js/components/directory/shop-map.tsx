@@ -5,19 +5,25 @@ import { CITRALAND_CENTER } from '@/lib/map';
 import type { OpenState, ShopSummary } from '@/types';
 
 const markerColor: Record<OpenState, string> = {
-    open: '#1f7a4d',
-    closing_soon: '#a15c07',
-    closed: '#5e6170',
+    open: '#137a4a',
+    closing_soon: '#9a5b00',
+    closed: '#5b6488',
 };
 
 type Props = {
     shops: ShopSummary[];
     selectedId: number | null;
     onSelect: (id: number) => void;
+    heightClass?: string;
 };
 
 /** Peta OpenStreetMap (Leaflet): gratis dan tanpa API key. */
-export function ShopMap({ shops, selectedId, onSelect }: Props) {
+export function ShopMap({
+    shops,
+    selectedId,
+    onSelect,
+    heightClass = 'h-72 lg:h-[30rem]',
+}: Props) {
     const containerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<L.Map | null>(null);
 
@@ -85,7 +91,9 @@ export function ShopMap({ shops, selectedId, onSelect }: Props) {
     }, [shops, selectedId, onSelect]);
 
     return (
-        <div className="relative isolate h-72 w-full overflow-hidden rounded-lg border lg:h-[30rem]">
+        <div
+            className={`relative isolate w-full overflow-hidden rounded-lg border ${heightClass}`}
+        >
             <div ref={containerRef} className="absolute inset-0" />
         </div>
     );

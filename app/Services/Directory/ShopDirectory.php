@@ -59,13 +59,16 @@ class ShopDirectory
         $status = $this->openingStatus->evaluate($shop->opening_hours, $now);
 
         return [
+            'id' => $shop->id,
             'name' => $shop->name,
             'slug' => $shop->slug,
             'address' => $shop->address,
+            'latitude' => $shop->latitude,
+            'longitude' => $shop->longitude,
             'whatsapp' => $shop->whatsapp,
             'openState' => $status->state->value,
             'closesAt' => $status->closesAt?->format('H:i'),
-            'opensAt' => $status->opensAt?->format('D H:i'),
+            'opensAt' => $status->opensAt?->locale('id')->translatedFormat('l H:i'),
             'openingHours' => $shop->opening_hours,
             'services' => $shop->services->map(fn ($service) => $service->name)->values(),
             'prices' => $shop->priceLists->map(fn (PriceList $p) => [
