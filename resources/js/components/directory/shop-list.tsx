@@ -1,6 +1,5 @@
-import { EmptyState } from '@/components/directory/empty-state';
-import { ShopCard } from '@/components/directory/shop-card';
 import { ShopListSkeleton } from '@/components/directory/shop-list-skeleton';
+import { ShopRow } from '@/components/directory/shop-row';
 import type { ShopSummary } from '@/types';
 
 type Props = {
@@ -20,19 +19,10 @@ export function ShopList({
         return <ShopListSkeleton count={Math.min(shops.length || 3, 4)} />;
     }
 
-    if (shops.length === 0) {
-        return (
-            <EmptyState
-                title="Belum ada tempat printing"
-                hint="Data tempat printing sedang disiapkan."
-            />
-        );
-    }
-
     return (
-        <div className="grid gap-3">
+        <div className="divide-y overflow-hidden rounded-lg border bg-card">
             {shops.map((shop) => (
-                <ShopCard
+                <ShopRow
                     key={shop.id}
                     shop={shop}
                     selected={shop.id === selectedId}

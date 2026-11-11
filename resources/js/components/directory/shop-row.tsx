@@ -33,7 +33,7 @@ export function ShopRow({ shop, selected, onSelect }: Props) {
                 </button>
                 <div className="shrink-0 text-right">
                     <p className="text-xs text-muted-foreground">mulai dari</p>
-                    <p className="mt-0.5 inline-block rounded-sm bg-highlight px-1.5 font-display text-xl font-bold text-highlight-foreground tabular-nums">
+                    <p className="font-display text-xl font-bold tabular-nums">
                         {shop.startingPrice === null
                             ? '–'
                             : formatRupiah(shop.startingPrice)}
