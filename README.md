@@ -233,7 +233,6 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 - [docs/ROADMAP.md](docs/ROADMAP.md) — daftar task lengkap dan pembagiannya.
 - [docs/SURVEY.md](docs/SURVEY.md) — format data survei.
 - [docs/DEPLOY.md](docs/DEPLOY.md) — cara deploy ke server.
-- [docs/DEMO.md](docs/DEMO.md) — naskah demo.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
