@@ -176,7 +176,6 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
       <br />
       <sub>Fondasi project, desain, asisten AI, deploy</sub>
       <br />
-      <sub>⭐ 38 commits</sub>
     </td>
     <td align="center" valign="top" width="34%">
       <a href="https://github.com/Infinite-cpu-ai">
@@ -187,7 +186,6 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
       <br />
       <sub>Direktori tempat — daftar, peta, detail, perbandingan</sub>
       <br />
-      <sub>⭐ 36 commits</sub>
     </td>
     <td align="center" valign="top" width="33%">
       <a href="https://github.com/mario-r-a">
@@ -198,7 +196,6 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
       <br />
       <sub>Panel admin, validasi data, pembaca foto harga</sub>
       <br />
-      <sub>⭐ 31 commits</sub>
     </td>
   </tr>
 </table>
