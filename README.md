@@ -81,6 +81,8 @@ Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat 
 [![TypeScript][TypeScript-badge]][TypeScript-url]
 [![TailwindCSS][Tailwind-badge]][Tailwind-url]
 [![Inertia][Inertia-badge]][Inertia-url]
+[![Filament][Filament-badge]][Filament-url]
+[![Gemini][Gemini-badge]][Gemini-url]
 [![Leaflet][Leaflet-badge]][Leaflet-url]
 [![SQLite][SQLite-badge]][SQLite-url]
 
@@ -96,7 +98,7 @@ Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat 
 
 Pastikan sudah terinstal:
 
-- PHP >= 8.2
+- PHP >= 8.3
 - Composer
 - Node.js & npm
 
@@ -137,7 +139,7 @@ Pastikan sudah terinstal:
     php artisan serve
     ```
 
-Lalu buka http://127.0.0.1:8000.
+Lalu buka http://127.0.0.1:8000. Halaman detail dan perbandingan harga akan kosong sampai harga dikonfirmasi, dan itu wajar.
 
 > **Untuk asisten AI:** isi `GEMINI_API_KEY` di `.env` dengan API key dari [Google AI Studio](https://aistudio.google.com).
 
@@ -155,8 +157,10 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 | --------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | Daftar tempat printing dengan status buka (Buka, Segera tutup, Tutup) | ✅     | Bisa diurutkan dari yang terdekat atau termurah, dan difilter yang masih buka                                                |
 | Peta yang tersinkron dengan daftar                                    | ✅     | Klik titik untuk membuka halaman tempatnya                                                                                   |
-| Halaman detail tempat                                                 | ✅     | Jam buka, layanan, daftar harga, tombol WhatsApp                                                                             |
-| Halaman perbandingan harga                                            | ✅     | Harga layanan yang sama dari semua tempat, dengan yang termurah ditandai                                                     |
+| Halaman detail tempat | ✅ | Jam buka, layanan, tombol WhatsApp. Daftar harga muncul setelah dikonfirmasi pemilik tempat |
+| Halaman perbandingan harga | 🚧 | Halaman sudah jadi, tapi belum berisi harga karena harga belum dikonfirmasi pemilik tempat |
+| Halaman informasi (cara kerja, tentang, pertanyaan umum) | ✅ | Menjelaskan cara kerja dan sumber data |
+| Deploy otomatis (CI/CD) | ✅ | Tes berjalan di setiap perubahan `main`. Setelah lulus, situs diperbarui otomatis |
 | Panel admin (`/admin`)                                                | ✅     | Kelola data tempat dan harga, hanya untuk admin                                                                              |
 | Impor data survei                                                     | 🚧     | Impor sudah jalan. Data tempat dari Google Maps sudah masuk (9 tempat), harga belum                                          |
 | Asisten cetak (AI)                                                    | 🚧     | Kalimat kebutuhan cetak diubah jadi spesifikasi, lalu dihitung estimasi per tempat. Estimasi di server menunggu kunci Gemini |
@@ -261,5 +265,9 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 [Inertia-url]: https://inertiajs.com
 [Leaflet-badge]: https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=leaflet&logoColor=white
 [Leaflet-url]: https://leafletjs.com
+[Filament-badge]: https://img.shields.io/badge/Filament-FDAE4B?style=for-the-badge&logoColor=white
+[Filament-url]: https://filamentphp.com
+[Gemini-badge]: https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white
+[Gemini-url]: https://ai.google.dev
 [SQLite-badge]: https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white
 [SQLite-url]: https://sqlite.org
