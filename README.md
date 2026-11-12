@@ -175,8 +175,6 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 
 ## Tim
 
-Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 November 2026.
-
 <table width="100%">
   <tr>
     <td align="center" valign="top" width="33%">
