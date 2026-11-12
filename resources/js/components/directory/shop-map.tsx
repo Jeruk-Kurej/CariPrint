@@ -12,7 +12,7 @@ type Props = {
     heightClass?: string;
 };
 
-/** Peta OpenStreetMap (Leaflet): gratis dan tanpa API key. */
+/** Peta (Leaflet) dengan data OpenStreetMap, ditampilkan lewat CARTO: gratis dan tanpa API key. */
 export function ShopMap({
     shops,
     selectedId,
@@ -33,11 +33,16 @@ export function ShopMap({
             scrollWheelZoom: false,
         });
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution:
-                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        }).addTo(map);
+        L.tileLayer(
+            'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+            {
+                subdomains: 'abcd',
+                detectRetina: true,
+                maxZoom: 19,
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            },
+        ).addTo(map);
 
         mapRef.current = map;
 
