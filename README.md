@@ -1,7 +1,9 @@
 <!-- Back to top anchor -->
+
 <a id="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stars][stars-shield]][stars-url]
@@ -57,6 +59,7 @@
 ---
 
 <!-- ABOUT THE PROJECT -->
+
 ## Tentang Project
 
 [![Screenshot CariPrint][product-screenshot]](https://cariprint.lius.my.id)
@@ -70,6 +73,7 @@ Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat 
 ---
 
 <!-- TECH STACK -->
+
 ### Teknologi
 
 [![Laravel][Laravel-badge]][Laravel-url]
@@ -85,11 +89,13 @@ Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat 
 ---
 
 <!-- GETTING STARTED -->
+
 ## Memulai
 
 ### Prasyarat
 
 Pastikan sudah terinstal:
+
 - PHP >= 8.2
 - Composer
 - Node.js & npm
@@ -97,35 +103,39 @@ Pastikan sudah terinstal:
 ### Instalasi
 
 1. Clone repo
-   ```bash
-   git clone https://github.com/Jeruk-Kurej/CariPrint.git
-   cd CariPrint
-   ```
+
+    ```bash
+    git clone https://github.com/Jeruk-Kurej/CariPrint.git
+    cd CariPrint
+    ```
 
 2. Install dependencies PHP dan Node
-   ```bash
-   composer install
-   npm install
-   ```
+
+    ```bash
+    composer install
+    npm install
+    ```
 
 3. Salin file environment dan generate app key
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
 4. Siapkan database dan jalankan seeder
-   ```bash
-   touch database/database.sqlite
-   php artisan migrate
-   php artisan db:seed
-   ```
+
+    ```bash
+    touch database/database.sqlite
+    php artisan migrate
+    php artisan db:seed
+    ```
 
 5. Build aset frontend dan jalankan server
-   ```bash
-   npm run build
-   php artisan serve
-   ```
+    ```bash
+    npm run build
+    php artisan serve
+    ```
 
 Lalu buka http://127.0.0.1:8000.
 
@@ -136,31 +146,33 @@ Lalu buka http://127.0.0.1:8000.
 ---
 
 <!-- FEATURES -->
+
 ## Status Fitur
 
 Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 
-| Fitur | Status | Keterangan |
-|---|---|---|
-| Daftar tempat printing dengan status buka (Buka, Segera tutup, Tutup) | ✅ | Bisa diurutkan dari yang terdekat atau termurah, dan difilter yang masih buka |
-| Peta yang tersinkron dengan daftar | ✅ | Klik titik untuk membuka halaman tempatnya |
-| Halaman detail tempat | ✅ | Jam buka, layanan, daftar harga, tombol WhatsApp |
-| Halaman perbandingan harga | ✅ | Harga layanan yang sama dari semua tempat, dengan yang termurah ditandai |
-| Panel admin (`/admin`) | ✅ | Kelola data tempat dan harga, hanya untuk admin |
-| Impor data survei | 🚧 | Impor sudah jalan. Data tempat dari Google Maps sudah masuk (9 tempat), harga belum |
-| Asisten cetak (AI) | 🚧 | Kalimat kebutuhan cetak diubah jadi spesifikasi, lalu dihitung estimasi per tempat. Estimasi di server menunggu kunci Gemini |
-| Jarak dan waktu tempuh lewat Routes API | ⏳ | Saat ini jarak garis lurus |
-| Rekomendasi dan template pesan WhatsApp dari asisten | ⏳ | |
-| Login Google dan batas pemakaian AI | ⏳ | |
-| Laporan data salah dari pengguna | ⏳ | |
-| Unggah dan cek file PDF (halaman berwarna) | ⏳ | |
-| Pindah database ke Supabase | ⏳ | Saat ini masih SQLite |
+| Fitur                                                                 | Status | Keterangan                                                                                                                   |
+| --------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| Daftar tempat printing dengan status buka (Buka, Segera tutup, Tutup) | ✅     | Bisa diurutkan dari yang terdekat atau termurah, dan difilter yang masih buka                                                |
+| Peta yang tersinkron dengan daftar                                    | ✅     | Klik titik untuk membuka halaman tempatnya                                                                                   |
+| Halaman detail tempat                                                 | ✅     | Jam buka, layanan, daftar harga, tombol WhatsApp                                                                             |
+| Halaman perbandingan harga                                            | ✅     | Harga layanan yang sama dari semua tempat, dengan yang termurah ditandai                                                     |
+| Panel admin (`/admin`)                                                | ✅     | Kelola data tempat dan harga, hanya untuk admin                                                                              |
+| Impor data survei                                                     | 🚧     | Impor sudah jalan. Data tempat dari Google Maps sudah masuk (9 tempat), harga belum                                          |
+| Asisten cetak (AI)                                                    | 🚧     | Kalimat kebutuhan cetak diubah jadi spesifikasi, lalu dihitung estimasi per tempat. Estimasi di server menunggu kunci Gemini |
+| Jarak dan waktu tempuh lewat Routes API                               | ⏳     | Saat ini jarak garis lurus                                                                                                   |
+| Rekomendasi dan template pesan WhatsApp dari asisten                  | ⏳     |                                                                                                                              |
+| Login Google dan batas pemakaian AI                                   | ⏳     |                                                                                                                              |
+| Laporan data salah dari pengguna                                      | ⏳     |                                                                                                                              |
+| Unggah dan cek file PDF (halaman berwarna)                            | ⏳     |                                                                                                                              |
+| Pindah database ke Supabase                                           | ⏳     | Saat ini masih SQLite                                                                                                        |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
 <!-- TEAM -->
+
 ## Tim
 
 Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 November 2026.
@@ -205,10 +217,11 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
 ---
 
 <!-- DATA -->
+
 ## Data
 
 - **Lokasi, alamat, nomor telepon, dan jam buka** diambil dari Google Maps dengan alat Apify.
-- **Harga belum tersedia** dari sumber mana pun. Harga akan ditanyakan langsung ke pemilik tempat dan hanya ditampilkan setelah dikonfirmasi. Harga yang sudah dikonfirmasi diberi tanda *Terverifikasi*, sedangkan harga yang belum disurvei diberi tanda *Perkiraan*.
+- **Harga belum tersedia** dari sumber mana pun. Harga akan ditanyakan langsung ke pemilik tempat dan hanya ditampilkan setelah dikonfirmasi. Harga yang sudah dikonfirmasi diberi tanda _Terverifikasi_, sedangkan harga yang belum disurvei diberi tanda _Perkiraan_.
 - Lokasi pengguna hanya dipakai untuk menghitung jarak dan tidak disimpan.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -216,6 +229,7 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
 ---
 
 <!-- DOCS -->
+
 ## Dokumen
 
 - [docs/ROADMAP.md](docs/ROADMAP.md) — daftar task lengkap dan pembagiannya.
@@ -228,6 +242,7 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
 ---
 
 <!-- MARKDOWN LINKS & IMAGES -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
 [contributors-url]: https://github.com/Jeruk-Kurej/CariPrint/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
@@ -237,7 +252,6 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
 [issues-shield]: https://img.shields.io/github/issues/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
 [issues-url]: https://github.com/Jeruk-Kurej/CariPrint/issues
 [product-screenshot]: docs/landing_page.png
-
 [Laravel-badge]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
 [Laravel-url]: https://laravel.com
 [React-badge]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
