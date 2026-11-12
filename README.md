@@ -24,7 +24,7 @@
     <br />
     <a href="https://cariprint.lius.my.id">🌐 Lihat Website</a>
     ·
-    <a href="https://github.com/Jeruk-Kurej/CariPrint/issues/new?labels=bug">🐛 Laporkan Bug</a>
+    <a href="https://github.com/Jeruk-Kurev/CariPrint/issues/new?labels=bug">🐛 Laporkan Bug</a>
     ·
     <a href="https://github.com/Jeruk-Kurev/CariPrint/issues/new?labels=enhancement">✨ Request Fitur</a>
   </p>
@@ -169,26 +169,35 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
   <tr>
     <td align="center" width="33%">
       <a href="https://github.com/Jeruk-Kurej">
-        <img src="https://github.com/Jeruk-Kurej.png?size=100" width="80px;" style="border-radius:50%;" alt="Bryan"/><br />
-        <sub><b>Bryan Carlie Lukito Setiawan</b></sub>
-      </a><br />
-      <sub>Fondasi project, desain, asisten AI, deploy</sub><br />
+        <img src="https://avatars.githubusercontent.com/Jeruk-Kurej?size=100" width="80px;" style="border-radius:50%;" alt="Bryan"/>
+      </a>
+      <br />
+      <a href="https://github.com/Jeruk-Kurej"><sub><b>Bryan Carlie Lukito Setiawan</b></sub></a>
+      <br />
+      <sub>Fondasi project, desain, asisten AI, deploy</sub>
+      <br />
       <sub>38 commits</sub>
     </td>
     <td align="center" width="34%">
       <a href="https://github.com/Infinite-cpu-ai">
-        <img src="https://github.com/Infinite-cpu-ai.png?size=100" width="80px;" style="border-radius:50%;" alt="Hanzelius"/><br />
-        <sub><b>Hanzelius</b></sub>
-      </a><br />
-      <sub>Direktori tempat (daftar, peta, detail, perbandingan)</sub><br />
+        <img src="https://avatars.githubusercontent.com/Infinite-cpu-ai?size=100" width="80px;" style="border-radius:50%;" alt="Hanzelius"/>
+      </a>
+      <br />
+      <a href="https://github.com/Infinite-cpu-ai"><sub><b>Hanzelius</b></sub></a>
+      <br />
+      <sub>Direktori tempat (daftar, peta, detail, perbandingan)</sub>
+      <br />
       <sub>36 commits</sub>
     </td>
     <td align="center" width="33%">
       <a href="https://github.com/mario-r-a">
-        <img src="https://github.com/mario-r-a.png?size=100" width="80px;" style="border-radius:50%;" alt="Mario"/><br />
-        <sub><b>Mario Ruby Ariesusandi</b></sub>
-      </a><br />
-      <sub>Panel admin, validasi data, pembaca foto harga</sub><br />
+        <img src="https://avatars.githubusercontent.com/mario-r-a?size=100" width="80px;" style="border-radius:50%;" alt="Mario"/>
+      </a>
+      <br />
+      <a href="https://github.com/mario-r-a"><sub><b>Mario Ruby Ariesusandi</b></sub></a>
+      <br />
+      <sub>Panel admin, validasi data, pembaca foto harga</sub>
+      <br />
       <sub>31 commits</sub>
     </td>
   </tr>
