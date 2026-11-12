@@ -21,9 +21,6 @@
   <p align="center">
     Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat printing.
     <br />
-    <a href="docs/ROADMAP.md"><strong>Lihat Roadmap »</strong></a>
-    <br />
-    <br />
     <a href="https://cariprint.lius.my.id">🌐 Lihat Website</a>
     ·
     <a href="https://github.com/Jeruk-Kurej/CariPrint/issues/new?labels=bug">🐛 Laporkan Bug</a>
@@ -157,10 +154,10 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 | --------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | Daftar tempat printing dengan status buka (Buka, Segera tutup, Tutup) | ✅     | Bisa diurutkan dari yang terdekat atau termurah, dan difilter yang masih buka                                                |
 | Peta yang tersinkron dengan daftar                                    | ✅     | Klik titik untuk membuka halaman tempatnya                                                                                   |
-| Halaman detail tempat | ✅ | Jam buka, layanan, tombol WhatsApp. Daftar harga muncul setelah dikonfirmasi pemilik tempat |
-| Halaman perbandingan harga | 🚧 | Halaman sudah jadi, tapi belum berisi harga karena harga belum dikonfirmasi pemilik tempat |
-| Halaman informasi (cara kerja, tentang, pertanyaan umum) | ✅ | Menjelaskan cara kerja dan sumber data |
-| Deploy otomatis (CI/CD) | ✅ | Tes berjalan di setiap perubahan `main`. Setelah lulus, situs diperbarui otomatis |
+| Halaman detail tempat                                                 | ✅     | Jam buka, layanan, tombol WhatsApp. Daftar harga muncul setelah dikonfirmasi pemilik tempat                                  |
+| Halaman perbandingan harga                                            | 🚧     | Halaman sudah jadi, tapi belum berisi harga karena harga belum dikonfirmasi pemilik tempat                                   |
+| Halaman informasi (cara kerja, tentang, pertanyaan umum)              | ✅     | Menjelaskan cara kerja dan sumber data                                                                                       |
+| Deploy otomatis (CI/CD)                                               | ✅     | Tes berjalan di setiap perubahan `main`. Setelah lulus, situs diperbarui otomatis                                            |
 | Panel admin (`/admin`)                                                | ✅     | Kelola data tempat dan harga, hanya untuk admin                                                                              |
 | Impor data survei                                                     | 🚧     | Impor sudah jalan. Data tempat dari Google Maps sudah masuk (9 tempat), harga belum                                          |
 | Asisten cetak (AI)                                                    | 🚧     | Kalimat kebutuhan cetak diubah jadi spesifikasi, lalu dihitung estimasi per tempat. Estimasi di server menunggu kunci Gemini |
@@ -234,7 +231,6 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 
 ## Dokumen
 
-- [docs/ROADMAP.md](docs/ROADMAP.md) — daftar task lengkap dan pembagiannya.
 - [docs/SURVEY.md](docs/SURVEY.md) — format data survei.
 - [docs/DEPLOY.md](docs/DEPLOY.md) — cara deploy ke server.
 

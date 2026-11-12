@@ -28,6 +28,7 @@ bash scripts/deploy.sh
 ### 2. Akses SSH ke server
 
 Site User di CloudPanel (`lius-cariprint`) dipakai untuk login SSH. Ada dua cara:
+
 - **Kata sandi**: kata sandi Site User. Cukup untuk tugas ini, tapi kurang aman.
 - **Kunci SSH** (lebih disarankan): buat kunci di komputer, tempel kunci publiknya ke CloudPanel (Site User Settings → SSH Keys), dan simpan kunci privatnya sebagai secret di GitHub.
 
@@ -37,14 +38,14 @@ Jangan pernah menulis kata sandi atau kunci privat di repo atau di chat.
 
 Settings → Secrets and variables → Actions:
 
-| Jenis | Nama | Isi |
-|---|---|---|
-| Secret | `SSH_HOST` | `cariprint.lius.my.id` |
-| Secret | `SSH_USERNAME` | `lius-cariprint` |
-| Secret | `SSH_PASSWORD` | kata sandi Site User (salah satu dari `SSH_PASSWORD` atau `SSH_PRIVATE_KEY` wajib ada) |
-| Secret | `SSH_PRIVATE_KEY` | isi kunci privat SSH (alternatif `SSH_PASSWORD`) |
-| Variable | `APP_PATH` | `/home/lius-cariprint/htdocs/cariprint.lius.my.id` |
-| Variable | `SSH_PORT` | opsional, default `22` |
+| Jenis    | Nama              | Isi                                                                                    |
+| -------- | ----------------- | -------------------------------------------------------------------------------------- |
+| Secret   | `SSH_HOST`        | `cariprint.lius.my.id`                                                                 |
+| Secret   | `SSH_USERNAME`    | `lius-cariprint`                                                                       |
+| Secret   | `SSH_PASSWORD`    | kata sandi Site User (salah satu dari `SSH_PASSWORD` atau `SSH_PRIVATE_KEY` wajib ada) |
+| Secret   | `SSH_PRIVATE_KEY` | isi kunci privat SSH (alternatif `SSH_PASSWORD`)                                       |
+| Variable | `APP_PATH`        | `/home/lius-cariprint/htdocs/cariprint.lius.my.id`                                     |
+| Variable | `SSH_PORT`        | opsional, default `22`                                                                 |
 
 Kalau secret belum lengkap, workflow deploy berhenti di langkah "Check deploy configuration" dengan pesan yang menyebut secret mana yang kurang. Itu tidak mengubah server.
 
@@ -108,8 +109,8 @@ Belum diperlukan. Scheduler (`schedule:run`) baru dibutuhkan saat ada tugas terj
 ## Kalau ada masalah
 
 - **Deploy merah di tab Actions**: buka log langkah yang gagal.
-  - "belum diisi": secret atau variable di GitHub belum lengkap.
-  - "npm ci" gagal: `package-lock.json` tidak sinkron dengan `package.json`. Jalankan `npm install --package-lock-only` di komputer, lalu commit.
-  - Gagal di migrate: cek `storage/logs/laravel.log` di server.
+    - "belum diisi": secret atau variable di GitHub belum lengkap.
+    - "npm ci" gagal: `package-lock.json` tidak sinkron dengan `package.json`. Jalankan `npm install --package-lock-only` di komputer, lalu commit.
+    - Gagal di migrate: cek `storage/logs/laravel.log` di server.
 - **Situs error setelah deploy**: di server, `tail -50 storage/logs/laravel.log`. Jangan pernah mengaktifkan `APP_DEBUG=true` di production.
 - **Mengubah `.env`**: jalankan `php artisan optimize:clear && php artisan optimize`.

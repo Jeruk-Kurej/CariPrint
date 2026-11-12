@@ -20,19 +20,20 @@ Alamat, layanan, jam lengkap, dan tombol WhatsApp mendukung tiga hal di atas dan
 
 Semua warna didefinisikan sebagai token di `resources/css/app.css`. Komponen tidak boleh menulis kode warna langsung.
 
-| Token | Nilai | Dipakai untuk |
-|---|---|---|
-| `--primary` / `--brand` | `#3558f0` (biru tinta bolpoin) | tombol utama, logo, menu aktif, fokus |
-| `--highlight` | `#ffd84d` (kuning stabilo) | harga. Hanya untuk harga |
-| `--foreground` | `#1d2147` | teks utama |
-| `--muted-foreground` | `#55597e` | teks pendukung |
-| `--background` | `#fcfdff` | latar, dengan garis kotak tipis seperti kertas buku |
-| `--note-yellow` / `--note-pink` / `--note-mint` / `--note-sky` | pastel | warna kertas pamflet dan sticky note |
-| `--status-open` | `#137a4a` (hijau) | status Buka |
-| `--status-closing` | `#9a5b00` (cokelat-amber) | status Segera tutup |
-| `--status-closed` | `#55597e` (abu kebiruan) | status Tutup |
+| Token                                                          | Nilai                          | Dipakai untuk                                       |
+| -------------------------------------------------------------- | ------------------------------ | --------------------------------------------------- |
+| `--primary` / `--brand`                                        | `#3558f0` (biru tinta bolpoin) | tombol utama, logo, menu aktif, fokus               |
+| `--highlight`                                                  | `#ffd84d` (kuning stabilo)     | harga. Hanya untuk harga                            |
+| `--foreground`                                                 | `#1d2147`                      | teks utama                                          |
+| `--muted-foreground`                                           | `#55597e`                      | teks pendukung                                      |
+| `--background`                                                 | `#fcfdff`                      | latar, dengan garis kotak tipis seperti kertas buku |
+| `--note-yellow` / `--note-pink` / `--note-mint` / `--note-sky` | pastel                         | warna kertas pamflet dan sticky note                |
+| `--status-open`                                                | `#137a4a` (hijau)              | status Buka                                         |
+| `--status-closing`                                             | `#9a5b00` (cokelat-amber)      | status Segera tutup                                 |
+| `--status-closed`                                              | `#55597e` (abu kebiruan)       | status Tutup                                        |
 
 Aturan:
+
 - Warna status hanya untuk status buka. Kuning stabilo hanya untuk harga.
 - Warna pastel hanya untuk kertas, bukan untuk teks atau tombol.
 
