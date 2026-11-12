@@ -24,9 +24,9 @@
     <br />
     <a href="https://cariprint.lius.my.id">🌐 Lihat Website</a>
     ·
-    <a href="https://github.com/Jeruk-Kurev/CariPrint/issues/new?labels=bug">🐛 Laporkan Bug</a>
+    <a href="https://github.com/Jeruk-Kurej/CariPrint/issues/new?labels=bug">🐛 Laporkan Bug</a>
     ·
-    <a href="https://github.com/Jeruk-Kurev/CariPrint/issues/new?labels=enhancement">✨ Request Fitur</a>
+    <a href="https://github.com/Jeruk-Kurej/CariPrint/issues/new?labels=enhancement">✨ Request Fitur</a>
   </p>
 </div>
 
@@ -98,7 +98,7 @@ Pastikan sudah terinstal:
 
 1. Clone repo
    ```bash
-   git clone https://github.com/Jeruk-Kurev/CariPrint.git
+   git clone https://github.com/Jeruk-Kurej/CariPrint.git
    cd CariPrint
    ```
 
@@ -187,7 +187,7 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
       <br />
       <sub>Direktori tempat — daftar, peta, detail, perbandingan</sub>
       <br />
-      <sub>⭐ 51 commits</sub>
+      <sub>⭐ 36 commits</sub>
     </td>
     <td align="center" valign="top" width="33%">
       <a href="https://github.com/mario-r-a">
@@ -231,14 +231,14 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
 ---
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/Jeruk-Kurev/CariPrint.svg?style=for-the-badge
-[contributors-url]: https://github.com/Jeruk-Kurev/CariPrint/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Jeruk-Kurev/CariPrint.svg?style=for-the-badge
-[forks-url]: https://github.com/Jeruk-Kurev/CariPrint/network/members
-[stars-shield]: https://img.shields.io/github/stars/Jeruk-Kurev/CariPrint.svg?style=for-the-badge
-[stars-url]: https://github.com/Jeruk-Kurev/CariPrint/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Jeruk-Kurev/CariPrint.svg?style=for-the-badge
-[issues-url]: https://github.com/Jeruk-Kurev/CariPrint/issues
+[contributors-shield]: https://img.shields.io/github/contributors/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
+[contributors-url]: https://github.com/Jeruk-Kurej/CariPrint/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
+[forks-url]: https://github.com/Jeruk-Kurej/CariPrint/network/members
+[stars-shield]: https://img.shields.io/github/stars/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
+[stars-url]: https://github.com/Jeruk-Kurej/CariPrint/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
+[issues-url]: https://github.com/Jeruk-Kurej/CariPrint/issues
 [product-screenshot]: docs/landing_page.png
 
 [Laravel-badge]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
