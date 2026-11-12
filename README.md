@@ -167,38 +167,38 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
 
 <table width="100%">
   <tr>
-    <td align="center" width="33%">
+    <td align="center" valign="top" width="33%">
       <a href="https://github.com/Jeruk-Kurej">
-        <img src="https://avatars.githubusercontent.com/Jeruk-Kurej?size=100" width="80px;" style="border-radius:50%;" alt="Bryan"/>
+        <img src="https://avatars.githubusercontent.com/Jeruk-Kurej?size=100" width="80" height="80" style="border-radius:50%;object-fit:cover;" alt="Bryan"/>
       </a>
-      <br />
-      <a href="https://github.com/Jeruk-Kurej"><sub><b>Bryan Carlie Lukito Setiawan</b></sub></a>
+      <br /><br />
+      <a href="https://github.com/Jeruk-Kurej"><b>Bryan Carlie Lukito Setiawan</b></a>
       <br />
       <sub>Fondasi project, desain, asisten AI, deploy</sub>
       <br />
-      <sub>38 commits</sub>
+      <sub>⭐ 38 commits</sub>
     </td>
-    <td align="center" width="34%">
+    <td align="center" valign="top" width="34%">
       <a href="https://github.com/Infinite-cpu-ai">
-        <img src="https://avatars.githubusercontent.com/Infinite-cpu-ai?size=100" width="80px;" style="border-radius:50%;" alt="Hanzelius"/>
+        <img src="https://avatars.githubusercontent.com/Infinite-cpu-ai?size=100" width="80" height="80" style="border-radius:50%;object-fit:cover;" alt="Hanzelius"/>
       </a>
+      <br /><br />
+      <a href="https://github.com/Infinite-cpu-ai"><b>Hanzelius</b></a>
       <br />
-      <a href="https://github.com/Infinite-cpu-ai"><sub><b>Hanzelius</b></sub></a>
+      <sub>Direktori tempat — daftar, peta, detail, perbandingan</sub>
       <br />
-      <sub>Direktori tempat (daftar, peta, detail, perbandingan)</sub>
-      <br />
-      <sub>36 commits</sub>
+      <sub>⭐ 51 commits</sub>
     </td>
-    <td align="center" width="33%">
+    <td align="center" valign="top" width="33%">
       <a href="https://github.com/mario-r-a">
-        <img src="https://avatars.githubusercontent.com/mario-r-a?size=100" width="80px;" style="border-radius:50%;" alt="Mario"/>
+        <img src="https://avatars.githubusercontent.com/mario-r-a?size=100" width="80" height="80" style="border-radius:50%;object-fit:cover;" alt="Mario"/>
       </a>
-      <br />
-      <a href="https://github.com/mario-r-a"><sub><b>Mario Ruby Ariesusandi</b></sub></a>
+      <br /><br />
+      <a href="https://github.com/mario-r-a"><b>Mario Ruby Ariesusandi</b></a>
       <br />
       <sub>Panel admin, validasi data, pembaca foto harga</sub>
       <br />
-      <sub>31 commits</sub>
+      <sub>⭐ 31 commits</sub>
     </td>
   </tr>
 </table>
