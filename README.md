@@ -165,11 +165,34 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 
 Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 November 2026.
 
-| Anggota | Area utama | Commit |
-|---|---|---|
-| Bryan Carlie Lukito Setiawan | Fondasi project, desain, asisten AI, impor data survei, deploy | 38 |
-| Hanzelius (`Infinite-cpu-ai`) | Direktori tempat (daftar, peta, detail, halaman perbandingan) | 36 |
-| Mario Ruby Ariesusandi | Panel admin, validasi data, pembaca foto harga, perapian kode | 31 |
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Jeruk-Kurej">
+        <img src="https://github.com/Jeruk-Kurev.png?size=100" width="80px;" alt="Bryan"/><br />
+        <sub><b>Bryan Carlie Lukito Setiawan</b></sub>
+      </a><br />
+      <sub>Fondasi project, desain, asisten AI, deploy</sub><br />
+      <sub>38 commits</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Infinite-cpu-ai">
+        <img src="https://github.com/Infinite-cpu-ai.png?size=100" width="80px;" alt="Hanzelius"/><br />
+        <sub><b>Hanzelius</b></sub>
+      </a><br />
+      <sub>Direktori tempat (daftar, peta, detail, perbandingan)</sub><br />
+      <sub>36 commits</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/mario-r-a">
+        <img src="https://github.com/mario-r-a.png?size=100" width="80px;" alt="Mario"/><br />
+        <sub><b>Mario Ruby Ariesusandi</b></sub>
+      </a><br />
+      <sub>Panel admin, validasi data, pembaca foto harga</sub><br />
+      <sub>31 commits</sub>
+    </td>
+  </tr>
+</table>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
