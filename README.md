@@ -1,20 +1,142 @@
-# CariPrint
+<!-- Back to top anchor -->
+<a id="readme-top"></a>
 
-Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat printing: melihat mana yang sedang buka, membandingkan harga, dan mengetahui jaraknya dari lokasi kamu. Website ini hanya menghubungkan mahasiswa dengan tempat printing. Tidak ada pemesanan dan pembayaran di dalamnya.
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stars][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
-**Website:** https://cariprint.lius.my.id
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Jeruk-Kurej/CariPrint">
+    <img src="https://cariprint.lius.my.id/favicon.ico" alt="Logo" width="80" height="80">
+  </a>
 
-## Tim dan pembagian kerja
+  <h3 align="center">CariPrint</h3>
 
-Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 November 2026.
+  <p align="center">
+    Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat printing.
+    <br />
+    <a href="docs/ROADMAP.md"><strong>Lihat Roadmap »</strong></a>
+    <br />
+    <br />
+    <a href="https://cariprint.lius.my.id">🌐 Lihat Website</a>
+    ·
+    <a href="https://github.com/Jeruk-Kurej/CariPrint/issues/new?labels=bug">🐛 Laporkan Bug</a>
+    ·
+    <a href="https://github.com/Jeruk-Kurej/CariPrint/issues/new?labels=enhancement">✨ Request Fitur</a>
+  </p>
+</div>
 
-| Anggota | Area utama | Commit |
-|---|---|---|
-| Bryan Carlie Lukito Setiawan | Fondasi project, desain, asisten AI, impor data survei, deploy | 38 |
-| Hanzelius (`Infinite-cpu-ai`) | Direktori tempat (daftar, peta, detail, halaman perbandingan) | 36 |
-| Mario Ruby Ariesusandi | Panel admin, validasi data, pembaca foto harga, perapian kode | 31 |
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Daftar Isi</summary>
+  <ol>
+    <li>
+      <a href="#tentang-project">Tentang Project</a>
+      <ul>
+        <li><a href="#teknologi">Teknologi</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#memulai">Memulai</a>
+      <ul>
+        <li><a href="#prasyarat">Prasyarat</a></li>
+        <li><a href="#instalasi">Instalasi</a></li>
+      </ul>
+    </li>
+    <li><a href="#status-fitur">Status Fitur</a></li>
+    <li><a href="#tim">Tim</a></li>
+    <li><a href="#data">Data</a></li>
+    <li><a href="#dokumen">Dokumen</a></li>
+  </ol>
+</details>
 
-## Status fitur
+---
+
+<!-- ABOUT THE PROJECT -->
+## Tentang Project
+
+[![Screenshot CariPrint][product-screenshot]](https://cariprint.lius.my.id)
+
+Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin mencari tempat printing: melihat mana yang sedang buka, membandingkan harga, dan mengetahui jaraknya dari lokasi kamu.
+
+> Website ini hanya menghubungkan mahasiswa dengan tempat printing. **Tidak ada pemesanan dan pembayaran** di dalamnya.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+<!-- TECH STACK -->
+### Teknologi
+
+[![Laravel][Laravel-badge]][Laravel-url]
+[![React][React-badge]][React-url]
+[![TypeScript][TypeScript-badge]][TypeScript-url]
+[![TailwindCSS][Tailwind-badge]][Tailwind-url]
+[![Inertia][Inertia-badge]][Inertia-url]
+[![Leaflet][Leaflet-badge]][Leaflet-url]
+[![SQLite][SQLite-badge]][SQLite-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+<!-- GETTING STARTED -->
+## Memulai
+
+### Prasyarat
+
+Pastikan sudah terinstal:
+- PHP >= 8.2
+- Composer
+- Node.js & npm
+
+### Instalasi
+
+1. Clone repo
+   ```bash
+   git clone https://github.com/Jeruk-Kurev/CariPrint.git
+   cd CariPrint
+   ```
+
+2. Install dependencies PHP dan Node
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. Salin file environment dan generate app key
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. Siapkan database dan jalankan seeder
+   ```bash
+   touch database/database.sqlite
+   php artisan migrate
+   php artisan db:seed
+   ```
+
+5. Build aset frontend dan jalankan server
+   ```bash
+   npm run build
+   php artisan serve
+   ```
+
+Lalu buka http://127.0.0.1:8000.
+
+> **Untuk asisten AI:** isi `GEMINI_API_KEY` di `.env` dengan API key dari [Google AI Studio](https://aistudio.google.com).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+<!-- FEATURES -->
+## Status Fitur
 
 Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 
@@ -34,35 +156,70 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 | Unggah dan cek file PDF (halaman berwarna) | ⏳ | |
 | Pindah database ke Supabase | ⏳ | Saat ini masih SQLite |
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+<!-- TEAM -->
+## Tim
+
+Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 November 2026.
+
+| Anggota | Area utama | Commit |
+|---|---|---|
+| Bryan Carlie Lukito Setiawan | Fondasi project, desain, asisten AI, impor data survei, deploy | 38 |
+| Hanzelius (`Infinite-cpu-ai`) | Direktori tempat (daftar, peta, detail, halaman perbandingan) | 36 |
+| Mario Ruby Ariesusandi | Panel admin, validasi data, pembaca foto harga, perapian kode | 31 |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+<!-- DATA -->
 ## Data
 
 - **Lokasi, alamat, nomor telepon, dan jam buka** diambil dari Google Maps dengan alat Apify.
 - **Harga belum tersedia** dari sumber mana pun. Harga akan ditanyakan langsung ke pemilik tempat dan hanya ditampilkan setelah dikonfirmasi. Harga yang sudah dikonfirmasi diberi tanda *Terverifikasi*, sedangkan harga yang belum disurvei diberi tanda *Perkiraan*.
 - Lokasi pengguna hanya dipakai untuk menghitung jarak dan tidak disimpan.
 
-## Teknologi
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Laravel, Inertia, React, Tailwind CSS, Filament (panel admin), Gemini (asisten AI), Leaflet dengan OpenStreetMap (peta), SQLite. Tes otomatis dan pengecekan kode berjalan di GitHub Actions setiap ada perubahan di `main`. Setelah tes lulus, perubahan dikirim otomatis ke server.
+---
 
-## Menjalankan di komputer lokal
-
-```bash
-composer install
-npm install
-cp .env.example .env
-php artisan key:generate
-touch database/database.sqlite
-php artisan migrate
-php artisan db:seed
-npm run build
-php artisan serve
-```
-
-Lalu buka http://127.0.0.1:8000. Untuk asisten AI, isi `GEMINI_API_KEY` di `.env`.
-
+<!-- DOCS -->
 ## Dokumen
 
-- [docs/ROADMAP.md](docs/ROADMAP.md): daftar task lengkap dan pembagiannya.
-- [docs/SURVEY.md](docs/SURVEY.md): format data survei.
-- [docs/DEPLOY.md](docs/DEPLOY.md): cara deploy ke server.
-- [docs/DEMO.md](docs/DEMO.md): naskah demo.
+- [docs/ROADMAP.md](docs/ROADMAP.md) — daftar task lengkap dan pembagiannya.
+- [docs/SURVEY.md](docs/SURVEY.md) — format data survei.
+- [docs/DEPLOY.md](docs/DEPLOY.md) — cara deploy ke server.
+- [docs/DEMO.md](docs/DEMO.md) — naskah demo.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[contributors-shield]: https://img.shields.io/github/contributors/Jeruk-Kurej/CariPrint.svg?style=for-the-badge
+[contributors-url]: https://github.com/Jeruk-Kurev/CariPrint/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Jeruk-Kurev/CariPrint.svg?style=for-the-badge
+[forks-url]: https://github.com/Jeruk-Kurev/CariPrint/network/members
+[stars-shield]: https://img.shields.io/github/stars/Jeruk-Kurev/CariPrint.svg?style=for-the-badge
+[stars-url]: https://github.com/Jeruk-Kurev/CariPrint/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Jeruk-Kurev/CariPrint.svg?style=for-the-badge
+[issues-url]: https://github.com/Jeruk-Kurev/CariPrint/issues
+[product-screenshot]: docs/landing_page.png
+
+[Laravel-badge]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[React-badge]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org
+[TypeScript-badge]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org
+[Tailwind-badge]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind-url]: https://tailwindcss.com
+[Inertia-badge]: https://img.shields.io/badge/Inertia.js-9553E9?style=for-the-badge&logo=inertia&logoColor=white
+[Inertia-url]: https://inertiajs.com
+[Leaflet-badge]: https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=leaflet&logoColor=white
+[Leaflet-url]: https://leafletjs.com
+[SQLite-badge]: https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white
+[SQLite-url]: https://sqlite.org
