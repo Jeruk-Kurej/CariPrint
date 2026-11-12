@@ -168,7 +168,7 @@ Angka di bawah dihitung dari commit asli di branch `main` (tanpa merge), per 11 
 <table width="100%">
   <tr>
     <td align="center" width="33%">
-      <a href="https://github.com/Jeruk-Kurev">
+      <a href="https://github.com/Jeruk-Kurej">
         <img src="https://github.com/Jeruk-Kurev.png?size=100" width="80px;" style="border-radius:50%;" alt="Bryan"/><br />
         <sub><b>Bryan Carlie Lukito Setiawan</b></sub>
       </a><br />
