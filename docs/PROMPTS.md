@@ -5,7 +5,7 @@ Bagian dalam `<...>` diganti sesuai task. Semua prompt dijalankan dari folder pr
 ## 1. Mengerjakan satu task
 
 ```
-Lanjut task <X.Y> di ROADMAP. Buat branch `feat/<area>-<deskripsi>` dari `main` yang terbaru.
+Lanjut task <X.Y> di ROADMAP. Buat branch dari `main` yang terbaru, dengan nama sesuai pemilik task: `bryan`, `hanzelius`, atau `mario`.
 
 1. Plan dulu: file yang akan dibuat atau diubah, keputusan desain beserta alasannya, dan pertanyaan kalau ada yang ambigu. Tunggu approve dariku.
 2. Implement beserta test-nya.
@@ -16,7 +16,12 @@ Lanjut task <X.Y> di ROADMAP. Buat branch `feat/<area>-<deskripsi>` dari `main` 
 ## 2. Merge ke main
 
 ```
-Task di branch ini sudah selesai. Merge ke `main` sesuai Git workflow di guidelines: merge `main` terbaru ke branch ini, jalankan semua check, lalu `merge --no-ff` ke `main`, push, dan hapus branch-nya. Tunjukkan dulu perintah yang akan dijalankan dan tunggu OK.
+Task di branch ini sudah selesai. Sebelum merge, pastikan tim sudah setuju. Lalu:
+1. Merge `main` terbaru ke branch ini, dan jalankan semua check di guidelines sampai lulus.
+2. Buat commit dengan identitas git-ku sendiri (bukan orang lain).
+3. Buka Pull Request ke `main` dan tunggu tes CI hijau.
+4. Setelah disetujui, merge lewat GitHub. Setelah `main` berubah, deploy berjalan otomatis (lihat docs/DEPLOY.md).
+Jangan push langsung ke `main`.
 ```
 
 ## 3. Lanjut di sesi baru
@@ -28,7 +33,7 @@ Lanjut project CariPrint. Baca `docs/ROADMAP.md`, cek `git status` dan branch ak
 ## 4. Review kode teman sebelum merge
 
 ```
-Review perubahan di branch `<nama-branch>` dibanding `main`. Cek kesesuaian dengan `.ai/guidelines/cariprint.md`: arsitektur, duplikasi, kode yang tidak terpakai, test, dan aturan inti (AI tidak menghitung harga, tidak ada data Google selain `place_id`, dll.). Laporkan temuan berdasarkan tingkat keparahan. Jangan ubah apa pun.
+Review perubahan di branch `<nama-branch>` dibanding `main`. Cek juga keterkaitan dengan dokumen di `docs/` (README, ROADMAP, DEPLOY, SURVEY) supaya tetap sesuai. Cek kesesuaian dengan `.ai/guidelines/cariprint.md`: arsitektur, duplikasi, kode yang tidak terpakai, test, dan aturan inti (AI tidak menghitung harga, tidak ada data Google selain `place_id`, dll.). Laporkan temuan berdasarkan tingkat keparahan. Jangan ubah apa pun.
 ```
 
 ## 5. Bingung mau ngapain
