@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
+import { DirectionsButton } from '@/components/directory/directions-button';
 import { Fastener, paperFor } from '@/components/directory/flyer-parts';
 import { OpenStatusLine } from '@/components/directory/open-status-line';
 import { OpeningHoursList } from '@/components/directory/opening-hours-list';
@@ -33,14 +34,18 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                     <OpenStatusLine shop={shop} />
                     <PageTitle>{shop.name}</PageTitle>
                     <p className="text-muted-foreground">{shop.address}</p>
-                    {shop.whatsapp && (
-                        <div>
+                    <div className="flex flex-wrap gap-2">
+                        <DirectionsButton
+                            latitude={shop.latitude}
+                            longitude={shop.longitude}
+                        />
+                        {shop.whatsapp && (
                             <WhatsAppButton
                                 phone={shop.whatsapp}
                                 message={`Halo ${shop.name}, saya mau tanya harga printing.`}
                             />
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </header>
 
                 <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
@@ -83,17 +88,29 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                                 ))}
                             </ul>
                         </section>
-
-                        <section className="flex flex-col gap-3">
-                            <SectionHeading>Lokasi</SectionHeading>
-                            <ShopMap
-                                shops={[marker]}
-                                selectedId={shop.id}
-                                heightClass="h-64"
-                            />
-                        </section>
                     </aside>
                 </div>
+
+                <section className="flex flex-col gap-3">
+                    <SectionHeading>Lokasi</SectionHeading>
+                    <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-8">
+                        <ShopMap
+                            shops={[marker]}
+                            selectedId={shop.id}
+                            heightClass="h-64 lg:h-52"
+                        />
+                        <div className="dog-ear relative flex flex-col items-start gap-3 rounded-sm bg-note-sky p-4 paper-shadow lg:justify-between lg:p-6">
+                            <p className="font-medium lg:text-lg">
+                                {shop.address}
+                            </p>
+                            <DirectionsButton
+                                latitude={shop.latitude}
+                                longitude={shop.longitude}
+                                variant="outline"
+                            />
+                        </div>
+                    </div>
+                </section>
             </main>
         </>
     );

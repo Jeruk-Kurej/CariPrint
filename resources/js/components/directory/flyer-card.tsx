@@ -1,9 +1,10 @@
 import { Link } from '@inertiajs/react';
-import { MapPin, MessageCircle, Scissors } from 'lucide-react';
+import { MapPin, MessageCircle, Navigation, Scissors } from 'lucide-react';
 import { Fastener, paperFor } from '@/components/directory/flyer-parts';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { formatDistance, formatRupiah } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
+import { directionsUrl } from '@/lib/maps';
 import { show } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
 
@@ -27,7 +28,7 @@ const tab =
 
 /**
  * Satu tempat print sebagai pamflet di papan pengumuman kampus. Bagian bawahnya
- * disobek-sobek: harga, WhatsApp, dan penanda peta.
+ * disobek-sobek: harga, WhatsApp, rute, dan penanda peta.
  */
 export function FlyerCard({
     shop,
@@ -99,6 +100,16 @@ export function FlyerCard({
                         WhatsApp
                     </a>
                 )}
+                <a
+                    href={directionsUrl(shop.latitude, shop.longitude)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${tab} items-center hover:bg-white/50`}
+                >
+                    <Navigation className="size-5" aria-hidden />
+                    Rute
+                    <span className="sr-only"> di Google Maps (tab baru)</span>
+                </a>
                 {onSelect && (
                     <button
                         type="button"

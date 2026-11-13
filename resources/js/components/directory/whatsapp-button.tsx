@@ -10,7 +10,7 @@ export function WhatsAppButton({ phone, message }: Props) {
     const query = message ? `?text=${encodeURIComponent(message)}` : '';
 
     return (
-        <Button asChild size="sm" variant="outline">
+        <Button asChild size="sm" variant="outline" className="rounded-full">
             <a
                 href={`https://wa.me/${phone}${query}`}
                 target="_blank"
