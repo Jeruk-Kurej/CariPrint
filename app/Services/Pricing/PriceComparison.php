@@ -7,6 +7,8 @@ use App\Enums\PaperSize;
 use App\Enums\ShopService;
 use App\Models\PriceList;
 use App\Models\Shop;
+use App\Services\Shops\OpeningStatus;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
 /**
@@ -15,8 +17,12 @@ use Illuminate\Support\Collection;
  */
 class PriceComparison
 {
+    public function __construct(
+        private readonly OpeningStatus $openingStatus = new OpeningStatus,
+    ) {}
+
     /**
-     * @return array{shops: array<int, array{id: int, name: string, slug: string}>, rows: list<array<string, mixed>>}
+     * @return array{shops: array<int, array{id: int, name: string, slug: string, openState: string}>, rows: list<array<string, mixed>>}
      */
     public function forAllShops(): array
     {
@@ -25,11 +31,12 @@ class PriceComparison
 
     /**
      * @param  Collection<int, Shop>  $shops
-     * @return array{shops: array<int, array{id: int, name: string, slug: string}>, rows: list<array<string, mixed>>}
+     * @return array{shops: array<int, array{id: int, name: string, slug: string, openState: string}>, rows: list<array<string, mixed>>}
      */
     public function build(Collection $shops): array
     {
         $shops = $shops->values();
+        $now = CarbonImmutable::now('Asia/Jakarta');
         $rows = [];
 
         foreach ($shops as $column => $shop) {
@@ -49,6 +56,7 @@ class PriceComparison
                 'id' => $shop->id,
                 'name' => $shop->name,
                 'slug' => $shop->slug,
+                'openState' => $this->openingStatus->evaluate($shop->opening_hours ?? [], $now)->state->value,
             ])->all(),
             'rows' => array_map(fn (array $row) => [
                 'service' => $row['price']->service->name,

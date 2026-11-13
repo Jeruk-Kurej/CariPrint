@@ -8,7 +8,7 @@ export default function About() {
     return (
         <>
             <Head title="Tentang" />
-            <main className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 py-8 sm:py-12">
+            <main className="flex w-full flex-col gap-10 px-4 py-8 sm:py-12">
                 <PageHeader
                     title="Tentang CariPrint"
                     intro="Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin tahu tempat printing mana yang buka, berapa harganya, dan seberapa jauh."
@@ -55,10 +55,15 @@ export default function About() {
                 </Section>
 
                 <div className="flex flex-wrap gap-3">
-                    <Button asChild size="lg">
+                    <Button asChild size="lg" className="rounded-full">
                         <Link href={directoryIndex().url}>Cari tempat</Link>
                     </Button>
-                    <Button asChild size="lg" variant="outline">
+                    <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="rounded-full"
+                    >
                         <Link href={faq().url}>Pertanyaan umum</Link>
                     </Button>
                 </div>

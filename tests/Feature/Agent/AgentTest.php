@@ -272,3 +272,20 @@ test('a colour list with page numbers that are not whole pages is rejected befor
     'text' => [['merah']],
     'negative' => [[-3]],
 ]);
+
+test('estimate cards include open status, today hours, and distance when coordinates are sent', function () {
+    PrintRequestAgent::fake([[
+        'paper_size' => 'a4', 'page_ranges' => [], 'bw_pages' => 5, 'color_pages' => 0, 'copies' => 1, 'binding' => null,
+    ]]);
+
+    $this->post('/agent', [
+        'request' => 'print 5 halaman',
+        'latitude' => -7.2870,
+        'longitude' => 112.6375,
+    ])
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->whereType('estimates.0.openState', 'string')
+            ->whereType('estimates.0.todayHours', 'string')
+            ->whereType('estimates.0.distanceKm', 'double'));
+});

@@ -11,7 +11,7 @@ export function ClosingCta() {
             <Button
                 asChild
                 size="lg"
-                className="bg-highlight text-highlight-foreground hover:bg-highlight/90"
+                className="rounded-full bg-card text-foreground hover:bg-card/90"
             >
                 <Link href={directoryIndex().url}>Lihat semua tempat</Link>
             </Button>

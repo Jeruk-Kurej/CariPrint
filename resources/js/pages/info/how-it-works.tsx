@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Fastener, paperShadow } from '@/components/directory/flyer-parts';
+import { Fastener } from '@/components/directory/flyer-parts';
 import { PageHeader, Section } from '@/components/info/page-header';
 import { Button } from '@/components/ui/button';
 import { index as agentIndex } from '@/routes/agent';
@@ -16,7 +16,7 @@ export default function HowItWorks() {
     return (
         <>
             <Head title="Cara kerja" />
-            <main className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 py-8 sm:py-12">
+            <main className="flex w-full flex-col gap-10 px-4 py-8 sm:py-12">
                 <PageHeader
                     title="Cara kerja CariPrint"
                     intro="CariPrint membantu kamu memilih tempat printing sebelum berangkat. Berikut apa yang terjadi di balik tiap halaman."
@@ -77,7 +77,7 @@ export default function HowItWorks() {
                     </Section>
 
                     <aside
-                        className={`relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 sm:p-6 ${paperShadow}`}
+                        className={`relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 paper-shadow sm:p-6`}
                     >
                         <Fastener id={1} />
                         <h2 className="font-display text-2xl font-bold tracking-tight">
@@ -97,12 +97,16 @@ export default function HowItWorks() {
                             daftar harga yang tersimpan.
                         </p>
                         <div className="flex flex-wrap gap-2 pt-2">
-                            <Button asChild>
+                            <Button asChild className="rounded-full">
                                 <Link href={directoryIndex().url}>
                                     Mulai cari tempat
                                 </Link>
                             </Button>
-                            <Button asChild variant="outline">
+                            <Button
+                                asChild
+                                variant="outline"
+                                className="rounded-full"
+                            >
                                 <Link href={agentIndex().url}>
                                     Coba asisten cetak
                                 </Link>

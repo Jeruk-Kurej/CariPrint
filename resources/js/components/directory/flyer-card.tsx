@@ -1,10 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { MapPin, MessageCircle, Scissors } from 'lucide-react';
-import {
-    Fastener,
-    paperFor,
-    paperShadow,
-} from '@/components/directory/flyer-parts';
+import { Fastener, paperFor } from '@/components/directory/flyer-parts';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { formatDistance, formatRupiah } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
@@ -44,7 +40,7 @@ export function FlyerCard({
 
     return (
         <article
-            className={`group relative flex flex-col rounded-sm text-foreground ${paperShadow} hover:z-10 hover:-translate-y-1 hover:rotate-0 motion-safe:transition-transform motion-safe:duration-200 ${paper} ${tilt} ${selected ? 'ring-2 ring-primary' : ''}`}
+            className={`group relative flex flex-col rounded-sm text-foreground paper-shadow hover:z-10 hover:-translate-y-1 hover:rotate-0 motion-safe:transition-transform motion-safe:duration-200 ${paper} ${tilt} ${selected ? 'ring-2 ring-primary' : ''}`}
         >
             <Fastener id={shop.id} />
             <div className="flex flex-1 flex-col gap-2 p-4 pt-5">

@@ -41,7 +41,7 @@ export default function Faq() {
     return (
         <>
             <Head title="Pertanyaan umum" />
-            <main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-8 sm:py-12">
+            <main className="flex w-full flex-col gap-8 px-4 py-8 sm:py-12">
                 <PageHeader
                     title="Pertanyaan umum"
                     intro="Jawaban singkat untuk hal yang paling sering ditanyakan tentang CariPrint."

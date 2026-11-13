@@ -6,9 +6,10 @@ import type { Estimate } from '@/components/agent/estimate-list';
 import { PdfAttachment } from '@/components/agent/pdf-attachment';
 import { SpecSummary } from '@/components/agent/spec-summary';
 import type { PrintSpec } from '@/components/agent/spec-summary';
-import { Fastener, paperShadow } from '@/components/directory/flyer-parts';
+import { Fastener } from '@/components/directory/flyer-parts';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { useGeolocation } from '@/hooks/use-geolocation';
 import { usePdfAttachment } from '@/hooks/use-pdf-attachment';
 import type { FileLimits } from '@/hooks/use-pdf-attachment';
 import { parse } from '@/routes/agent';
@@ -24,6 +25,7 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const pdf = usePdfAttachment(fileLimits, () => setError(null));
+    const location = useGeolocation();
 
     function submit(event: FormEvent) {
         event.preventDefault();
@@ -34,6 +36,10 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
                 request,
                 total_pages: pdf.pages,
                 colored_pages: pdf.coloredPages,
+                latitude:
+                    location.status === 'granted' ? location.latitude : null,
+                longitude:
+                    location.status === 'granted' ? location.longitude : null,
             },
             {
                 preserveScroll: true,
@@ -54,7 +60,7 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
     return (
         <>
             <Head title="Asisten cetak" />
-            <main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-8 sm:py-12">
+            <main className="flex w-full flex-col gap-8 px-4 py-8 sm:py-12">
                 <header className="flex flex-col gap-3">
                     <h1 className="font-display text-3xl leading-tight font-extrabold tracking-tight sm:text-5xl">
                         Tulis kebutuhan cetakmu
@@ -68,7 +74,7 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
 
                 <form
                     onSubmit={submit}
-                    className={`relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 sm:p-6 ${paperShadow}`}
+                    className={`relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 paper-shadow sm:p-6`}
                 >
                     <Fastener id={2} />
                     <textarea
@@ -94,6 +100,7 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
                     <Button
                         type="submit"
                         size="lg"
+                        className="rounded-full"
                         disabled={
                             request.trim() === '' || processing || pdf.reading
                         }

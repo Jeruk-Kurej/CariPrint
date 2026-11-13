@@ -1,46 +1,35 @@
 import { Head, router } from '@inertiajs/react';
-import { useEffect, useMemo, useState } from 'react';
+import { Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { EmptyState } from '@/components/directory/empty-state';
 import { ShopList } from '@/components/directory/shop-list';
 import { ShopMap } from '@/components/directory/shop-map';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { SegmentedControl } from '@/components/segmented-control';
+import { SwitchField } from '@/components/switch-field';
+import { useDirectoryFilters } from '@/hooks/use-directory-filters';
 import { useGeolocation } from '@/hooks/use-geolocation';
 import { useSelectedShop } from '@/hooks/use-selected-shop';
-import { filterAndSortShops, type ShopSort } from '@/lib/shop-filter';
+import type { ShopSort } from '@/lib/shop-filter';
 import { nearby } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
-
-const sortLabels: Record<ShopSort, string> = {
-    distance: 'Terdekat',
-    price: 'Termurah',
-    name: 'Nama',
-};
-
-/** Pencarian, urutan, dan filter bisa dibawa lewat alamat, misalnya dari beranda. */
-function initialParams(): URLSearchParams {
-    return new URLSearchParams(window.location.search);
-}
-
-function parseSort(value: string | null): ShopSort | null {
-    return value !== null && value in sortLabels ? (value as ShopSort) : null;
-}
 
 export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
     const location = useGeolocation();
     const { selectedId, select } = useSelectedShop();
     const [sorting, setSorting] = useState(false);
-    const [openOnly, setOpenOnly] = useState(
-        () => initialParams().get('buka') === '1',
-    );
-    const [query, setQuery] = useState(() => initialParams().get('q') ?? '');
-    const [chosenSort, setChosenSort] = useState<ShopSort | null>(() =>
-        parseSort(initialParams().get('urut')),
-    );
 
     const hasDistance = location.status === 'granted';
-    const wanted = chosenSort ?? 'distance';
-    const sort = wanted === 'distance' && !hasDistance ? 'name' : wanted;
+    const filters = useDirectoryFilters(shops, hasDistance);
+
+    const sortOptions: {
+        value: ShopSort;
+        label: string;
+        disabled?: boolean;
+    }[] = [
+        { value: 'distance', label: 'Terdekat', disabled: !hasDistance },
+        { value: 'price', label: 'Termurah' },
+        { value: 'name', label: 'Nama' },
+    ];
 
     useEffect(() => {
         if (!hasDistance) {
@@ -59,15 +48,7 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                 onFinish: () => setSorting(false),
             },
         );
-    }, [location]);
-
-    const visibleShops = useMemo(
-        () => filterAndSortShops(shops, { openOnly, sort, query }),
-        [shops, openOnly, sort, query],
-    );
-    const openCount = shops.filter(
-        (shop) => shop.openState !== 'closed',
-    ).length;
+    }, [location, hasDistance]);
 
     return (
         <>
@@ -79,14 +60,9 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                     </h1>
                     <p className="text-muted-foreground">
                         <span className="font-display font-bold text-foreground tabular-nums">
-                            {openCount}
+                            {filters.openCount}
                         </span>{' '}
                         dari {shops.length} tempat masih buka sekarang.
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                        Data tempat masih contoh untuk pengembangan. Nama,
-                        harga, dan jam buka akan diganti dengan hasil survei
-                        tim.
                     </p>
                 </header>
 
@@ -97,71 +73,58 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                     />
                 ) : (
                     <>
-                        <section className="flex flex-col gap-3">
-                            <Input
-                                type="search"
-                                value={query}
-                                onChange={(event) =>
-                                    setQuery(event.target.value)
-                                }
-                                placeholder="Cari nama tempat"
-                                aria-label="Cari nama tempat"
-                                className="max-w-sm bg-card"
-                            />
-                            <div
-                                role="group"
-                                aria-label="Urutkan dan filter"
-                                className="flex flex-wrap gap-2"
-                            >
-                                {(Object.keys(sortLabels) as ShopSort[]).map(
-                                    (option) => (
-                                        <Button
-                                            key={option}
-                                            size="sm"
-                                            variant={
-                                                sort === option
-                                                    ? 'default'
-                                                    : 'outline'
-                                            }
-                                            aria-pressed={sort === option}
-                                            disabled={
-                                                option === 'distance' &&
-                                                !hasDistance
-                                            }
-                                            onClick={() =>
-                                                setChosenSort(option)
-                                            }
-                                        >
-                                            {sortLabels[option]}
-                                        </Button>
-                                    ),
-                                )}
-                                <Button
-                                    size="sm"
-                                    variant={openOnly ? 'default' : 'outline'}
-                                    aria-pressed={openOnly}
-                                    onClick={() => setOpenOnly((on) => !on)}
-                                >
-                                    Masih buka
-                                </Button>
+                        <section
+                            aria-label="Pencarian dan filter tempat"
+                            className="flex flex-col gap-3 rounded-lg border bg-card p-4"
+                        >
+                            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                                <div className="relative flex-1 sm:max-w-xs">
+                                    <Search
+                                        aria-hidden
+                                        className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+                                    />
+                                    <input
+                                        type="search"
+                                        value={filters.query}
+                                        onChange={(event) =>
+                                            filters.setQuery(event.target.value)
+                                        }
+                                        placeholder="Cari nama tempat..."
+                                        aria-label="Cari nama tempat"
+                                        className="w-full rounded-full border-2 border-foreground/15 bg-background py-1.5 pr-3 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                    />
+                                </div>
+                                <div className="flex flex-wrap items-center gap-4">
+                                    <SwitchField
+                                        label="Masih buka saja"
+                                        checked={filters.openOnly}
+                                        onChange={filters.setOpenOnly}
+                                    />
+                                    <SegmentedControl
+                                        label="Urutkan berdasarkan"
+                                        value={filters.sort}
+                                        options={sortOptions}
+                                        onChange={filters.setSort}
+                                    />
+                                </div>
                             </div>
                             {!hasDistance && (
                                 <p className="text-xs text-muted-foreground">
-                                    Izinkan lokasi untuk mengurutkan dari yang
-                                    terdekat.
+                                    Izinkan lokasi di browser untuk mengurutkan
+                                    dari yang terdekat.
                                 </p>
                             )}
                         </section>
 
                         <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-                            {visibleShops.length === 0 ? (
+                            {filters.visibleShops.length === 0 ? (
                                 <EmptyState
                                     title="Tidak ada yang cocok"
-                                    hint="Ubah kata pencarian atau matikan filter Masih buka."
+                                    hint="Ubah kata pencarian atau matikan sakelar Masih buka saja."
                                 />
                             ) : (
                                 <ShopList
-                                    shops={visibleShops}
+                                    shops={filters.visibleShops}
                                     selectedId={selectedId}
                                     onSelect={select}
                                     sorting={sorting}
