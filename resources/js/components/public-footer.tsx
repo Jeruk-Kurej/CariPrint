@@ -1,38 +1,32 @@
 import { Link } from '@inertiajs/react';
-import { homeUrl, mainNav } from '@/lib/navigation';
+import { BrandMark } from '@/components/brand-mark';
+import { homeUrl } from '@/lib/navigation';
 
 export function PublicFooter() {
     return (
-        <footer className="mt-16 border-t-2 border-dashed bg-card">
-            <div className="mx-auto flex max-w-[90rem] flex-col justify-between gap-8 px-4 py-10 text-sm sm:flex-row sm:items-start lg:px-10">
-                <div className="flex flex-col gap-2">
+        <footer className="mt-16 border-t bg-card">
+            <div className="mx-auto flex max-w-[90rem] flex-col items-start justify-between gap-3 px-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center lg:px-10">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                     <Link
                         href={homeUrl}
-                        className="font-display text-lg font-bold tracking-tight"
+                        className="inline-flex items-center gap-2 font-display text-base font-bold tracking-tight text-foreground"
                     >
+                        <BrandMark />
                         CariPrint
                     </Link>
-                    <p className="max-w-md text-muted-foreground">
-                        Menghubungkan mahasiswa dengan tempat printing di
-                        sekitar CitraLand Surabaya. Tidak ada pemesanan maupun
-                        pembayaran di website ini.
-                    </p>
+                    <span aria-hidden className="hidden sm:inline">
+                        ·
+                    </span>
+                    <span>
+                        Informasi & estimasi biaya tempat printing di sekitar
+                        CitraLand Surabaya.
+                    </span>
                 </div>
 
-                <nav
-                    aria-label="Menu footer"
-                    className="flex flex-wrap gap-x-6 gap-y-2 font-medium"
-                >
-                    {mainNav.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className="text-muted-foreground hover:text-foreground"
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-                </nav>
+                <p className="text-xs sm:text-sm">
+                    © {new Date().getFullYear()} CariPrint · Pemesanan langsung
+                    ke tempat printing.
+                </p>
             </div>
         </footer>
     );

@@ -13,27 +13,46 @@ const chips = [
     { label: 'Terdekat', query: { urut: 'distance' } },
 ];
 
-const stackPlaces = [
-    'left-0 top-0 -rotate-3',
-    'right-0 top-24 rotate-2',
-    'bottom-0 left-12 -rotate-1',
-];
-
-/** Pamflet termurah yang sedang buka, bertumpuk seperti tertempel di papan. */
+/** Pamflet termurah yang sedang buka: 2 di atas dan 1 di tengah bawah supaya seimbang dan tidak menutupi harga. */
 function PinnedStack({ shops }: { shops: ShopSummary[] }) {
+    const [first, second, third] = shops;
+
     return (
-        <div className="relative hidden h-[34rem] lg:block" aria-hidden>
-            <div className="absolute inset-x-2 top-16 bottom-10 -rotate-3 rounded-[2.5rem] bg-highlight/70" />
-            {shops.map((shop, index) => (
-                <div
-                    key={shop.id}
-                    style={{ animationDelay: `${300 + index * 180}ms` }}
-                    className={`absolute w-72 motion-safe:animate-in motion-safe:duration-700 motion-safe:fill-mode-backwards motion-safe:fade-in motion-safe:slide-in-from-top-8 ${stackPlaces[index]}`}
-                >
-                    <FlyerCard shop={shop} tilted={false} />
-                </div>
-            ))}
-            <Paperclip className="absolute top-[5.1rem] right-10 z-10 size-12 rotate-[20deg] text-foreground/70" />
+        <div className="relative hidden lg:block">
+            <div
+                aria-hidden
+                className="absolute inset-x-4 inset-y-6 -rotate-2 rounded-[2.5rem] bg-highlight/70"
+            />
+            <div className="relative grid grid-cols-2 items-start gap-6">
+                {first && (
+                    <div
+                        style={{ animationDelay: '300ms' }}
+                        className="-rotate-2 motion-safe:animate-in motion-safe:duration-700 motion-safe:fill-mode-backwards motion-safe:fade-in motion-safe:slide-in-from-top-8"
+                    >
+                        <FlyerCard shop={first} tilted={false} />
+                    </div>
+                )}
+                {second && (
+                    <div
+                        style={{ animationDelay: '460ms' }}
+                        className="relative mt-6 rotate-2 motion-safe:animate-in motion-safe:duration-700 motion-safe:fill-mode-backwards motion-safe:fade-in motion-safe:slide-in-from-top-8"
+                    >
+                        <Paperclip
+                            aria-hidden
+                            className="absolute -top-4 right-5 z-20 size-11 rotate-[20deg] text-foreground/70"
+                        />
+                        <FlyerCard shop={second} tilted={false} />
+                    </div>
+                )}
+                {third && (
+                    <div
+                        style={{ animationDelay: '620ms' }}
+                        className="col-span-2 mx-auto w-[calc(50%-0.75rem)] -rotate-1 motion-safe:animate-in motion-safe:duration-700 motion-safe:fill-mode-backwards motion-safe:fade-in motion-safe:slide-in-from-top-8"
+                    >
+                        <FlyerCard shop={third} tilted={false} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
@@ -59,7 +78,7 @@ export function HomeHero({
     }
 
     return (
-        <section className="grid items-center gap-10 px-4 py-10 sm:py-16 lg:grid-cols-[1.1fr_1fr]">
+        <section className="grid items-center gap-10 px-4 py-10 sm:py-16 lg:grid-cols-[1.05fr_1.05fr]">
             <div className="flex flex-col gap-6">
                 <h1 className="font-display text-5xl leading-[1.02] font-extrabold tracking-tight sm:text-7xl xl:text-[5.5rem]">
                     Mau print? Cari yang buka dekat kampus.
