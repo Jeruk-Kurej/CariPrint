@@ -8,7 +8,7 @@ export default function About() {
     return (
         <>
             <Head title="Tentang" />
-            <main className="flex flex-col gap-10 px-4 py-8 sm:py-12">
+            <main className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 py-8 sm:py-12">
                 <PageHeader
                     title="Tentang CariPrint"
                     intro="Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin tahu tempat printing mana yang buka, berapa harganya, dan seberapa jauh."

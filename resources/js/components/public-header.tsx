@@ -10,13 +10,12 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet';
-import { aboutNav, homeUrl, mainNav } from '@/lib/navigation';
+import { homeUrl, mainNav } from '@/lib/navigation';
 
 export function PublicHeader() {
     const [open, setOpen] = useState(false);
     const { url } = usePage();
     const path = url.split('?')[0];
-    const mobileLinks = [...mainNav, ...aboutNav.slice(1)];
 
     return (
         <header className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur">
@@ -68,7 +67,7 @@ export function PublicHeader() {
                             aria-label="Menu seluler"
                             className="flex flex-col px-2"
                         >
-                            {mobileLinks.map((link) => (
+                            {mainNav.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
