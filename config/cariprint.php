@@ -38,6 +38,10 @@ return [
     'uploads' => [
         // Uploaded files are deleted automatically after this many hours.
         'ttl_hours' => 24,
+
+        // Largest PDF a user may attach, and the most pages the assistant will count.
+        'max_megabytes' => 25,
+        'max_pages' => 1000,
     ],
 
     'directory' => [

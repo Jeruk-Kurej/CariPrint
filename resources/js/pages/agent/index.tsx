@@ -3,11 +3,14 @@ import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { EstimateList } from '@/components/agent/estimate-list';
 import type { Estimate } from '@/components/agent/estimate-list';
+import { PdfAttachment } from '@/components/agent/pdf-attachment';
 import { SpecSummary } from '@/components/agent/spec-summary';
 import type { PrintSpec } from '@/components/agent/spec-summary';
 import { Fastener, paperShadow } from '@/components/directory/flyer-parts';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { usePdfAttachment } from '@/hooks/use-pdf-attachment';
+import type { FileLimits } from '@/hooks/use-pdf-attachment';
 import { parse } from '@/routes/agent';
 
 const examples = [
@@ -17,27 +20,30 @@ const examples = [
 ];
 
 type Props = {
+    fileLimits: FileLimits;
     spec?: PrintSpec;
     estimates?: Estimate[];
 };
 
-export default function AgentIndex({ spec, estimates }: Props) {
+export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
     const [request, setRequest] = useState('');
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const pdf = usePdfAttachment(fileLimits, () => setError(null));
 
     function submit(event: FormEvent) {
         event.preventDefault();
         setError(null);
         router.post(
             parse().url,
-            { request },
+            { request, total_pages: pdf.pages },
             {
                 preserveScroll: true,
                 preserveState: true,
                 onStart: () => setProcessing(true),
                 onFinish: () => setProcessing(false),
-                onError: (errors) => setError(errors.request ?? null),
+                onError: (errors) =>
+                    setError(errors.request ?? errors.total_pages ?? null),
             },
         );
     }
@@ -72,6 +78,7 @@ export default function AgentIndex({ spec, estimates }: Props) {
                         aria-label="Kebutuhan cetak"
                         aria-invalid={error !== null}
                     />
+                    <PdfAttachment pdf={pdf} />
                     <div className="flex flex-wrap gap-2">
                         {examples.map((example) => (
                             <button
@@ -92,7 +99,9 @@ export default function AgentIndex({ spec, estimates }: Props) {
                     <Button
                         type="submit"
                         size="lg"
-                        disabled={request.trim() === '' || processing}
+                        disabled={
+                            request.trim() === '' || processing || pdf.reading
+                        }
                     >
                         {processing && <Spinner />}
                         {processing ? 'Menghitung estimasi' : 'Cari estimasi'}
