@@ -12,7 +12,7 @@ type Props = {
     heightClass?: string;
 };
 
-/** Peta (Leaflet) dengan data OpenStreetMap, ditampilkan lewat CARTO: gratis dan tanpa API key. */
+/** Peta (Leaflet) dengan tile Esri World Street Map: gratis dan tanpa API key. */
 export function ShopMap({
     shops,
     selectedId,
@@ -34,13 +34,11 @@ export function ShopMap({
         });
 
         L.tileLayer(
-            'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
             {
-                subdomains: 'abcd',
-                detectRetina: true,
                 maxZoom: 19,
                 attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    'Tiles &copy; <a href="https://www.esri.com">Esri</a> &mdash; Esri, DeLorme, NAVTEQ, and the GIS User Community',
             },
         ).addTo(map);
 
