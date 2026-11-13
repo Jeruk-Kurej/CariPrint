@@ -196,3 +196,79 @@ test('the agent page tells the browser the attachment limits', function () {
             ->component('agent/index')
             ->where('fileLimits', ['maxMegabytes' => 10, 'maxPages' => 200]));
 });
+
+test('colour only where needed uses the pages the browser found colour on', function () {
+    $cheap = Shop::where('name', 'Print Murah')->firstOrFail();
+    PriceList::factory()->for($cheap)->create(['service' => ShopService::Print, 'paper_size' => PaperSize::A4, 'color_mode' => ColorMode::Color, 'price' => 1000, 'unit' => PriceUnit::Page]);
+    PrintRequestAgent::fake([[
+        'paper_size' => 'a4',
+        'page_ranges' => [['from' => 1, 'to' => -1, 'mode' => 'auto']],
+        'bw_pages' => 0, 'color_pages' => 0, 'total_pages' => null, 'copies' => 1, 'binding' => null,
+    ]]);
+
+    $this->post('/agent', ['request' => 'Print semua hitam putih, warna hanya yang perlu', 'total_pages' => 10, 'colored_pages' => [2, 3, 9]])
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('spec.bwPages', 7)
+            ->where('spec.colorPages', 3)
+            ->where('spec.colorRuns', [['from' => 2, 'to' => 3], ['from' => 9, 'to' => 9]])
+            ->where('estimates.0.name', 'Print Murah')
+            ->where('estimates.0.total', 5100));
+
+    PrintRequestAgent::assertPrompted(fn ($prompt) => $prompt->contains('The colour of every page has been checked') && ! $prompt->contains('[2, 3, 9]'));
+});
+
+test('a file without any colour is printed entirely in black and white', function () {
+    PrintRequestAgent::fake([[
+        'paper_size' => 'a4',
+        'page_ranges' => [['from' => 1, 'to' => -1, 'mode' => 'auto']],
+        'bw_pages' => 0, 'color_pages' => 0, 'total_pages' => null, 'copies' => 1, 'binding' => null,
+    ]]);
+
+    $this->post('/agent', ['request' => 'Print semua, warna hanya yang perlu', 'total_pages' => 4, 'colored_pages' => []])
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('spec.bwPages', 4)
+            ->where('spec.colorPages', 0));
+});
+
+test('asking for colour only where needed without a checked file asks the user to attach one', function () {
+    PrintRequestAgent::fake([[
+        'paper_size' => 'a4',
+        'page_ranges' => [['from' => 1, 'to' => 10, 'mode' => 'auto']],
+        'bw_pages' => 0, 'color_pages' => 0, 'total_pages' => null, 'copies' => 1, 'binding' => null,
+    ]]);
+
+    $this->from('/agent')
+        ->post('/agent', ['request' => 'Print halaman 1-10, warna hanya yang perlu'])
+        ->assertRedirect('/agent')
+        ->assertSessionHasErrors([
+            'request' => 'Asisten belum memeriksa warna halaman. Lampirkan file PDF-nya dulu, atau tulis halaman mana saja yang berwarna.',
+        ]);
+});
+
+test('a colour list that does not fit the attached file is rejected before calling the AI', function (array $payload) {
+    PrintRequestAgent::fake()->preventStrayPrompts();
+
+    $this->postJson('/agent', ['request' => 'Print file ini', ...$payload])
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['colored_pages']);
+
+    PrintRequestAgent::assertNeverPrompted();
+})->with([
+    'a page past the end of the file' => [['total_pages' => 10, 'colored_pages' => [3, 11]]],
+    'a colour list without a page count' => [['colored_pages' => [1, 2]]],
+]);
+
+test('a colour list with page numbers that are not whole pages is rejected before calling the AI', function (array $pages) {
+    PrintRequestAgent::fake()->preventStrayPrompts();
+
+    $this->postJson('/agent', ['request' => 'Print file ini', 'total_pages' => 10, 'colored_pages' => $pages])
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['colored_pages.0' => 'Daftar halaman berwarna tidak valid. Lampirkan ulang file PDF-nya.']);
+
+    PrintRequestAgent::assertNeverPrompted();
+})->with([
+    'zero' => [[0]],
+    'text' => [['merah']],
+    'negative' => [[-3]],
+]);

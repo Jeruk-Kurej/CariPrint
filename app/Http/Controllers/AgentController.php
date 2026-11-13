@@ -21,7 +21,7 @@ class AgentController extends Controller
     public function parse(AgentRequest $request, PrintRequestReader $reader, PriceCalculator $calculator): Response
     {
         try {
-            $spec = $reader->read($request->string('request')->toString(), $request->documentPages());
+            $spec = $reader->read($request->string('request')->toString(), $request->documentPages(), $request->coloredPages());
         } catch (UnreadablePrintRequest $exception) {
             throw ValidationException::withMessages(['request' => $exception->getMessage()]);
         }

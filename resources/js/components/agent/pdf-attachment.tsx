@@ -2,7 +2,7 @@ import { FileText, Paperclip, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import type { PdfAttachmentState } from '@/hooks/use-pdf-attachment';
-import { formatNumber } from '@/lib/format';
+import { formatNumber, formatPageNumbers } from '@/lib/format';
 
 /** Baris lampiran di form asisten: tombol pilih PDF, lalu nama file dan jumlah halamannya. */
 export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
@@ -32,7 +32,9 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
                     <span className="shrink-0 font-medium tabular-nums">
                         {file.status === 'ready'
                             ? `${formatNumber(file.pages)} halaman`
-                            : 'Membaca file'}
+                            : file.total === null
+                              ? 'Membaca file'
+                              : `Memeriksa warna ${formatNumber(file.done)}/${formatNumber(file.total)}`}
                     </span>
                     <Button
                         type="button"
@@ -57,6 +59,22 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
                 </Button>
             )}
 
+            {file.status === 'ready' && (
+                <p className="text-sm">
+                    {file.coloredPages.length === 0 ? (
+                        'Tidak ada halaman berwarna, semuanya bisa hitam-putih.'
+                    ) : (
+                        <>
+                            <span className="font-medium">
+                                {formatNumber(file.coloredPages.length)} halaman
+                                berwarna:
+                            </span>{' '}
+                            {formatPageNumbers(file.coloredPages)}
+                        </>
+                    )}
+                </p>
+            )}
+
             {file.status === 'rejected' && (
                 <p role="alert" className="text-sm text-destructive">
                     {file.message}
@@ -67,6 +85,10 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
                 Opsional. Dengan PDF terlampir, kamu bisa menulis{' '}
                 <span className="font-medium text-foreground">
                     print semua kecuali halaman terakhir
+                </span>{' '}
+                atau{' '}
+                <span className="font-medium text-foreground">
+                    hitam putih, warna hanya yang perlu
                 </span>
                 . File dibaca di perangkatmu dan tidak diunggah.
             </p>

@@ -36,14 +36,23 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
         setError(null);
         router.post(
             parse().url,
-            { request, total_pages: pdf.pages },
+            {
+                request,
+                total_pages: pdf.pages,
+                colored_pages: pdf.coloredPages,
+            },
             {
                 preserveScroll: true,
                 preserveState: true,
                 onStart: () => setProcessing(true),
                 onFinish: () => setProcessing(false),
                 onError: (errors) =>
-                    setError(errors.request ?? errors.total_pages ?? null),
+                    setError(
+                        errors.request ??
+                            errors.total_pages ??
+                            errors.colored_pages ??
+                            null,
+                    ),
             },
         );
     }

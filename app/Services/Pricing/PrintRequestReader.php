@@ -19,16 +19,17 @@ class PrintRequestReader
 
     /**
      * @param  int|null  $documentPages  Length of the attached PDF as counted in the browser, or null without a file.
+     * @param  list<int>|null  $coloredPages  Pages the browser found colour on, or null when it did not check.
      *
      * @throws UnreadablePrintRequest
      */
-    public function read(string $request, ?int $documentPages): PrintSpec
+    public function read(string $request, ?int $documentPages, ?array $coloredPages = null): PrintSpec
     {
-        $parsed = $this->ask($request, $documentPages !== null);
+        $parsed = $this->ask($request, $documentPages !== null, $coloredPages !== null);
         $ranges = $this->ranges($parsed['page_ranges'] ?? []);
         $pages = $ranges === []
             ? null
-            : $this->selector->select($ranges, $documentPages ?? $this->statedLength($parsed));
+            : $this->selector->select($ranges, $documentPages ?? $this->statedLength($parsed), $coloredPages);
 
         return new PrintSpec(
             paperSize: PaperSize::from($parsed['paper_size']),
@@ -45,11 +46,15 @@ class PrintRequestReader
      *
      * @throws UnreadablePrintRequest
      */
-    private function ask(string $request, bool $hasDocument): StructuredAgentResponse
+    private function ask(string $request, bool $hasDocument, bool $colourChecked): StructuredAgentResponse
     {
         $note = $hasDocument
             ? 'A PDF document is attached. If the user does not say which pages, they want all of it.'
             : 'No document is attached.';
+
+        if ($colourChecked) {
+            $note .= ' The colour of every page has been checked.';
+        }
 
         try {
             return (new PrintRequestAgent)->prompt("{$request}\n\n[{$note}]");
@@ -67,7 +72,12 @@ class PrintRequestReader
     private function ranges(array $ranges): array
     {
         return array_map(
-            fn (array $range) => new PageRange((int) $range['from'], (int) $range['to'], ColorMode::tryFrom($range['mode'])),
+            fn (array $range) => new PageRange(
+                (int) $range['from'],
+                (int) $range['to'],
+                ColorMode::tryFrom($range['mode']),
+                auto: $range['mode'] === 'auto',
+            ),
             $ranges,
         );
     }

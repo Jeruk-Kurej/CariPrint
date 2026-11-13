@@ -26,3 +26,20 @@ export function formatPageRuns(runs: { from: number; to: number }[]): string {
         )
         .join(', ');
 }
+
+/** Menulis nomor halaman yang berurutan sebagai rentang, misalnya [1, 2, 3, 7] menjadi "1–3, 7". */
+export function formatPageNumbers(pages: number[]): string {
+    const runs: { from: number; to: number }[] = [];
+
+    for (const page of [...pages].sort((a, b) => a - b)) {
+        const last = runs[runs.length - 1];
+
+        if (last && last.to === page - 1) {
+            last.to = page;
+        } else {
+            runs.push({ from: page, to: page });
+        }
+    }
+
+    return formatPageRuns(runs);
+}

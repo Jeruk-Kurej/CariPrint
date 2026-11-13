@@ -28,7 +28,10 @@ class PrintRequestAgent implements Agent, HasStructuredOutput
           printed ("file ini", "dokumen ini", "semua"). Leave it empty when the user only gives a number of pages.
           Each item covers the pages from..to, counted from 1. A negative number counts from the end:
           -1 is the last page and -2 is the page before it.
-          mode is bw, color or skip. skip means these pages are not printed. Use bw when the user does not say.
+          mode is bw, color, skip or auto. skip means these pages are not printed. Use bw when the user does not say.
+          auto means "colour only where it is needed": the application prints a page in colour only if it has colour
+          on it and in black and white otherwise. Use auto only when the user asks for that, for example "hitam putih,
+          warna hanya kalau perlu". Never decide yourself which pages have colour.
           A later item replaces an earlier one on the pages they share, so give the general rule first and the
           exceptions after it. Never work out how many pages a range holds and never do page arithmetic.
           The application does that.
@@ -38,6 +41,7 @@ class PrintRequestAgent implements Agent, HasStructuredOutput
           "semua kecuali halaman terakhir" gives [{from: 1, to: -1, mode: bw}, {from: -1, to: -1, mode: skip}]
           "3 halaman terakhir" gives [{from: -3, to: -1, mode: bw}]
           "halaman 1-5 warna, sisanya hitam putih" gives [{from: 1, to: -1, mode: bw}, {from: 1, to: 5, mode: color}]
+          "print semua, warna hanya yang perlu" gives [{from: 1, to: -1, mode: auto}]
         - bw_pages and color_pages: only for a number of pages without positions, such as "20 halaman hitam putih".
           Set both to 0 when page_ranges is not empty.
         - total_pages: the length of the whole document, only if the user states it, such as "dokumen saya 24 halaman".
@@ -58,7 +62,7 @@ class PrintRequestAgent implements Agent, HasStructuredOutput
             'page_ranges' => $schema->array()->items($schema->object([
                 'from' => $schema->integer()->required(),
                 'to' => $schema->integer()->required(),
-                'mode' => $schema->string()->enum(['bw', 'color', 'skip'])->required(),
+                'mode' => $schema->string()->enum(['bw', 'color', 'skip', 'auto'])->required(),
             ]))->required(),
             'bw_pages' => $schema->integer()->min(0)->required(),
             'color_pages' => $schema->integer()->min(0)->required(),

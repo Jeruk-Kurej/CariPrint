@@ -15,10 +15,11 @@ class PageSelector
      *
      * @param  list<PageRange>  $ranges
      * @param  int|null  $totalPages  Length of the document, or null when nobody knows it.
+     * @param  list<int>|null  $coloredPages  Pages the browser found colour on, or null when no file was checked.
      *
      * @throws UnreadablePrintRequest
      */
-    public function select(array $ranges, ?int $totalPages): PageSelection
+    public function select(array $ranges, ?int $totalPages, ?array $coloredPages = null): PageSelection
     {
         $maxPages = config('cariprint.uploads.max_pages');
 
@@ -27,13 +28,20 @@ class PageSelector
         }
 
         $modes = [];
+        $colored = array_flip($coloredPages ?? []);
 
         foreach ($ranges as $range) {
+            if ($range->auto && $coloredPages === null) {
+                throw UnreadablePrintRequest::colourUnknown();
+            }
+
             $from = $this->pageNumber($range->from, $totalPages, $maxPages);
             $to = $this->pageNumber($range->to, $totalPages, $maxPages);
 
             foreach (range(min($from, $to), max($from, $to)) as $page) {
-                $modes[$page] = $range->colorMode;
+                $modes[$page] = $range->auto
+                    ? (isset($colored[$page]) ? ColorMode::Color : ColorMode::BlackWhite)
+                    : $range->colorMode;
             }
         }
 

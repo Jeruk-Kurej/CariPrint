@@ -22,6 +22,14 @@ class UnreadablePrintRequest extends RuntimeException
         return new self('Asisten perlu tahu jumlah halaman dokumenmu. Lampirkan file PDF-nya atau tulis jumlah halamannya.');
     }
 
+    /**
+     * The request asks for colour only where needed, but no file was checked for colour.
+     */
+    public static function colourUnknown(): self
+    {
+        return new self('Asisten belum memeriksa warna halaman. Lampirkan file PDF-nya dulu, atau tulis halaman mana saja yang berwarna.');
+    }
+
     public static function outsideDocument(int $totalPages): self
     {
         $total = number_format($totalPages, 0, ',', '.');

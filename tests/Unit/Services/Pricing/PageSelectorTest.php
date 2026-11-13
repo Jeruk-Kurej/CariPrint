@@ -67,3 +67,40 @@ test('a document longer than the limit is refused', function () {
 
     (new PageSelector)->select([new PageRange(1, 1, ColorMode::BlackWhite)], totalPages: 101);
 })->throws(UnreadablePrintRequest::class, 'halaman 1 sampai 100');
+
+test('colour only where needed prints the coloured pages in colour and the rest in black and white', function () {
+    $selection = (new PageSelector)->select([new PageRange(1, -1, null, auto: true)], totalPages: 8, coloredPages: [3, 7, 8]);
+
+    expect($selection->color)->toBe([3, 7, 8])
+        ->and($selection->blackWhite)->toBe([1, 2, 4, 5, 6]);
+});
+
+test('colour only where needed prints everything in black and white when the file has no colour', function () {
+    $selection = (new PageSelector)->select([new PageRange(1, -1, null, auto: true)], totalPages: 4, coloredPages: []);
+
+    expect($selection->color)->toBe([])
+        ->and($selection->blackWhite)->toBe([1, 2, 3, 4]);
+});
+
+test('colour only where needed applies to the pages the user pointed at and leaves the others out', function () {
+    $selection = (new PageSelector)->select([
+        new PageRange(2, 5, null, auto: true),
+    ], totalPages: 10, coloredPages: [1, 3, 9]);
+
+    expect($selection->color)->toBe([3])
+        ->and($selection->blackWhite)->toBe([2, 4, 5]);
+});
+
+test('an explicit colour choice for some pages beats the colour found on them', function () {
+    $selection = (new PageSelector)->select([
+        new PageRange(1, -1, null, auto: true),
+        new PageRange(3, 3, ColorMode::BlackWhite),
+    ], totalPages: 5, coloredPages: [3, 4]);
+
+    expect($selection->color)->toBe([4])
+        ->and($selection->blackWhite)->toBe([1, 2, 3, 5]);
+});
+
+test('colour only where needed cannot be worked out when no file was checked', function () {
+    (new PageSelector)->select([new PageRange(1, 5, null, auto: true)], totalPages: null, coloredPages: null);
+})->throws(UnreadablePrintRequest::class, 'Asisten belum memeriksa warna halaman');
