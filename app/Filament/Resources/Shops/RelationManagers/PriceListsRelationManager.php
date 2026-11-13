@@ -36,7 +36,11 @@ class PriceListsRelationManager extends RelationManager
             Select::make('unit')->label('Satuan')->required()
                 ->options([PriceUnit::Page->value => 'per halaman', PriceUnit::Item->value => 'per buku/lembar']),
             Select::make('source')->label('Sumber harga')->required()
-                ->options([PriceSource::Verified->value => 'Terverifikasi (survei)', PriceSource::Estimated->value => 'Perkiraan'])
+                ->options([
+                    PriceSource::Verified->value => 'Terverifikasi (survei)',
+                    PriceSource::Estimated->value => 'Perkiraan',
+                    PriceSource::Demo->value => 'Data contoh (demo)',
+                ])
                 ->default(PriceSource::Estimated->value),
         ])->columns(2);
     }

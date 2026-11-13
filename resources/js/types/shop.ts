@@ -20,7 +20,7 @@ export type ShopPrice = {
     colorMode: string | null;
     price: number;
     unit: string;
-    source: 'verified' | 'estimated';
+    source: 'verified' | 'estimated' | 'demo';
 };
 
 export type ShopDetail = {

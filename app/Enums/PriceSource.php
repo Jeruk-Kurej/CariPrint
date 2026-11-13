@@ -6,4 +6,5 @@ enum PriceSource: string
 {
     case Verified = 'verified';
     case Estimated = 'estimated';
+    case Demo = 'demo';
 }

@@ -25,6 +25,20 @@ test('compare page lines up prices and flags the cheapest shop', function () {
             ->where('rows.0.cheapest', [1]));
 });
 
+test('compare page warns when prices are sample data', function () {
+    $shop = Shop::factory()->create();
+    PriceList::factory()->for($shop)->demo()->create();
+
+    $this->get('/bandingkan')->assertInertia(fn (Assert $page) => $page->where('hasDemoPrices', true));
+});
+
+test('compare page does not warn when prices are real', function () {
+    $shop = Shop::factory()->create();
+    PriceList::factory()->for($shop)->verified()->create();
+
+    $this->get('/bandingkan')->assertInertia(fn (Assert $page) => $page->where('hasDemoPrices', false));
+});
+
 test('compare page works with no shops', function () {
     $this->get('/bandingkan')
         ->assertOk()

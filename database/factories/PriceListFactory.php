@@ -44,4 +44,9 @@ class PriceListFactory extends Factory
     {
         return $this->state(fn () => ['source' => PriceSource::Verified]);
     }
+
+    public function demo(): static
+    {
+        return $this->state(fn () => ['source' => PriceSource::Demo]);
+    }
 }

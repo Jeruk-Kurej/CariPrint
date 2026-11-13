@@ -221,6 +221,7 @@ Status: ✅ selesai · 🚧 sebagian · ⏳ belum dikerjakan
 
 - **Lokasi, alamat, nomor telepon, dan jam buka** diambil dari Google Maps dengan alat Apify.
 - **Harga belum tersedia** dari sumber mana pun. Harga akan ditanyakan langsung ke pemilik tempat dan hanya ditampilkan setelah dikonfirmasi. Harga yang sudah dikonfirmasi diberi tanda _Terverifikasi_, sedangkan harga yang belum disurvei diberi tanda _Perkiraan_.
+- **Harga contoh untuk demo:** `DemoPriceSeeder` mengisi harga rekaan agar halaman perbandingan dan asisten bisa didemokan. Harga itu bukan hasil survei, disimpan dengan sumber `demo`, dan selalu ditampilkan dengan label _Data contoh_ serta catatan di halaman. Seeder tidak menyentuh tempat yang sudah punya harga asli.
 - Lokasi pengguna hanya dipakai untuk menghitung jarak dan tidak disimpan.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

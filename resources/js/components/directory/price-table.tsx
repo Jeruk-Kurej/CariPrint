@@ -1,17 +1,9 @@
 import { PriceSourceBadge } from '@/components/directory/price-source-badge';
 import { formatRupiah } from '@/lib/format';
 import { colorLabel, serviceLabel, unitLabel } from '@/lib/labels';
+import type { ShopPrice } from '@/types/shop';
 
-type Price = {
-    service: string;
-    paperSize: string | null;
-    colorMode: string | null;
-    price: number;
-    unit: string;
-    source: 'verified' | 'estimated';
-};
-
-export function PriceTable({ prices }: { prices: Price[] }) {
+export function PriceTable({ prices }: { prices: ShopPrice[] }) {
     if (prices.length === 0) {
         return (
             <p className="text-sm text-muted-foreground">

@@ -41,7 +41,9 @@ class AgentController extends Controller
             binding: $parsed['binding'] ? ShopService::from($parsed['binding']) : null,
         );
 
-        $estimates = Shop::query()->with('priceLists')->orderBy('name')->get()
+        $shops = Shop::query()->with('priceLists')->orderBy('name')->get();
+
+        $estimates = $shops
             ->map(function (Shop $shop) use ($calculator, $spec) {
                 $breakdown = $calculator->forShop($shop, $spec);
 
@@ -64,6 +66,7 @@ class AgentController extends Controller
                 'binding' => $spec->binding?->value,
             ],
             'estimates' => $estimates,
+            'hasDemoPrices' => $shops->contains(fn (Shop $shop) => $shop->hasDemoPrices()),
         ]);
     }
 }
