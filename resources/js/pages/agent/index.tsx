@@ -13,12 +13,6 @@ import { usePdfAttachment } from '@/hooks/use-pdf-attachment';
 import type { FileLimits } from '@/hooks/use-pdf-attachment';
 import { parse } from '@/routes/agent';
 
-const examples = [
-    'Print 20 halaman hitam putih A4, jilid spiral',
-    'Print 5 halaman warna dan 30 halaman hitam putih, 2 rangkap',
-    'Print 12 halaman warna ukuran A3',
-];
-
 type Props = {
     fileLimits: FileLimits;
     spec?: PrintSpec;
@@ -82,24 +76,16 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
                         onChange={(event) => setRequest(event.target.value)}
                         maxLength={500}
                         rows={3}
-                        placeholder="Misalnya: print 20 halaman hitam putih A4, jilid spiral"
+                        placeholder={
+                            pdf.pages !== null
+                                ? 'Misalnya: print semua hitam putih, warna hanya yang perlu, jilid spiral'
+                                : 'Misalnya: print 20 halaman hitam putih A4, 2 rangkap, jilid spiral'
+                        }
                         className="rounded-md border bg-card p-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         aria-label="Kebutuhan cetak"
                         aria-invalid={error !== null}
                     />
                     <PdfAttachment pdf={pdf} />
-                    <div className="flex flex-wrap gap-2">
-                        {examples.map((example) => (
-                            <button
-                                key={example}
-                                type="button"
-                                onClick={() => setRequest(example)}
-                                className="rounded-md bg-white/70 px-2.5 py-1 text-left text-sm hover:bg-white"
-                            >
-                                {example}
-                            </button>
-                        ))}
-                    </div>
                     {error && (
                         <p role="alert" className="text-sm text-destructive">
                             {error}
