@@ -33,4 +33,3 @@ export function coloredShare(rgba: Uint8ClampedArray): number {
 export function needsColor(rgba: Uint8ClampedArray): boolean {
     return coloredShare(rgba) > COLOR_AREA_SHARE;
 }
-
