@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\PriceSource;
 use App\Enums\ShopService;
 use Database\Factories\ShopFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -49,11 +48,6 @@ class Shop extends Model
     /**
      * True when any loaded price is sample data, so pages can tell visitors the numbers are not real.
      */
-    public function hasDemoPrices(): bool
-    {
-        return $this->priceLists->contains(fn (PriceList $price) => $price->source === PriceSource::Demo);
-    }
-
     /**
      * @return HasMany<Report, $this>
      */

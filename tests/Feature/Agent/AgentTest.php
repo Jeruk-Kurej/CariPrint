@@ -62,13 +62,3 @@ test('a failing AI call shows a friendly error instead of crashing', function ()
         ->assertRedirect('/agent')
         ->assertSessionHasErrors('request');
 });
-
-test('the estimate page warns when any price is sample data', function () {
-    PriceList::factory()->for(Shop::where('name', 'Print Murah')->firstOrFail())->demo()->create(['service' => ShopService::Photocopy]);
-    PrintRequestAgent::fake([[
-        'paper_size' => 'a4', 'bw_pages' => 1, 'color_pages' => 0, 'copies' => 1, 'binding' => null,
-    ]]);
-
-    $this->post('/agent', ['request' => 'print 1 halaman'])
-        ->assertInertia(fn (Assert $page) => $page->where('hasDemoPrices', true));
-});

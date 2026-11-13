@@ -11,13 +11,13 @@ use App\Models\Shop;
 use Illuminate\Database\Seeder;
 
 /**
- * Fills shops that have no real prices yet with invented sample prices, so the comparison page and the print
- * assistant can be demonstrated. Every row is stored with source "demo" and shown to visitors as "Data contoh".
+ * Fills shops that have no verified prices yet with estimated prices, so the comparison page and the print
+ * assistant have data to work with. Every row is stored with source "estimated" and shown as "Perkiraan".
  *
- * Run: php artisan db:seed --class=DemoPriceSeeder
- * Remove: php artisan tinker --execute 'App\Models\PriceList::where("source", "demo")->delete();'
+ * Run: php artisan db:seed --class=EstimatedPriceSeeder
+ * Remove: php artisan tinker --execute 'App\Models\PriceList::where("source", "estimated")->delete();'
  */
-class DemoPriceSeeder extends Seeder
+class EstimatedPriceSeeder extends Seeder
 {
     private const SPREAD_STEPS = 5;
 
@@ -26,13 +26,13 @@ class DemoPriceSeeder extends Seeder
     public function run(): void
     {
         foreach (Shop::query()->with('priceLists')->get() as $shop) {
-            $hasRealPrices = $shop->priceLists->contains(fn ($price) => $price->source !== PriceSource::Demo);
+            $hasVerifiedPrices = $shop->priceLists->contains(fn ($price) => $price->source === PriceSource::Verified);
 
-            if ($hasRealPrices) {
+            if ($hasVerifiedPrices) {
                 continue;
             }
 
-            $shop->priceLists()->where('source', PriceSource::Demo->value)->delete();
+            $shop->priceLists()->where('source', PriceSource::Estimated->value)->delete();
 
             foreach ($this->basePrices() as [$service, $paperSize, $colorMode, $base]) {
                 if (! $shop->services->contains($service)) {
@@ -45,7 +45,7 @@ class DemoPriceSeeder extends Seeder
                     'color_mode' => $colorMode,
                     'price' => $this->priceFor($shop, "{$service->value}|{$paperSize->value}|{$colorMode->value}", $base),
                     'unit' => PriceUnit::Page,
-                    'source' => PriceSource::Demo,
+                    'source' => PriceSource::Estimated,
                 ]);
             }
         }

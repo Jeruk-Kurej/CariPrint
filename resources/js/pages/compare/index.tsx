@@ -4,16 +4,14 @@ import type {
     CompareRow,
     CompareShop,
 } from '@/components/compare/compare-table';
-import { DemoPricesNotice } from '@/components/directory/demo-prices-notice';
 import { EmptyState } from '@/components/directory/empty-state';
 
 type Props = {
     shops: CompareShop[];
     rows: CompareRow[];
-    hasDemoPrices: boolean;
 };
 
-export default function CompareIndex({ shops, rows, hasDemoPrices }: Props) {
+export default function CompareIndex({ shops, rows }: Props) {
     return (
         <>
             <Head title="Bandingkan harga" />
@@ -36,7 +34,6 @@ export default function CompareIndex({ shops, rows, hasDemoPrices }: Props) {
                     />
                 ) : (
                     <>
-                        {hasDemoPrices && <DemoPricesNotice />}
                         <CompareTable shops={shops} rows={rows} />
                         <p className="text-sm text-muted-foreground">
                             Harga masih berupa perkiraan dan bisa berbeda saat

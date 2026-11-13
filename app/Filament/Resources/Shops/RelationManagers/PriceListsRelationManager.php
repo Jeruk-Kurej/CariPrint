@@ -39,7 +39,6 @@ class PriceListsRelationManager extends RelationManager
                 ->options([
                     PriceSource::Verified->value => 'Terverifikasi (survei)',
                     PriceSource::Estimated->value => 'Perkiraan',
-                    PriceSource::Demo->value => 'Data contoh (demo)',
                 ])
                 ->default(PriceSource::Estimated->value),
         ])->columns(2);

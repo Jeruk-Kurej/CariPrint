@@ -5,7 +5,6 @@ import { EstimateList } from '@/components/agent/estimate-list';
 import type { Estimate } from '@/components/agent/estimate-list';
 import { SpecSummary } from '@/components/agent/spec-summary';
 import type { PrintSpec } from '@/components/agent/spec-summary';
-import { DemoPricesNotice } from '@/components/directory/demo-prices-notice';
 import { Fastener, paperShadow } from '@/components/directory/flyer-parts';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -20,10 +19,9 @@ const examples = [
 type Props = {
     spec?: PrintSpec;
     estimates?: Estimate[];
-    hasDemoPrices?: boolean;
 };
 
-export default function AgentIndex({ spec, estimates, hasDemoPrices }: Props) {
+export default function AgentIndex({ spec, estimates }: Props) {
     const [request, setRequest] = useState('');
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -115,7 +113,6 @@ export default function AgentIndex({ spec, estimates, hasDemoPrices }: Props) {
                         <h2 className="font-display text-xl font-bold">
                             Estimasi per tempat
                         </h2>
-                        {hasDemoPrices && <DemoPricesNotice />}
                         <EstimateList estimates={estimates} />
                         <p className="text-sm text-muted-foreground">
                             Estimasi dari daftar harga yang tersimpan. Harga

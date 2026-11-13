@@ -66,7 +66,6 @@ class AgentController extends Controller
                 'binding' => $spec->binding?->value,
             ],
             'estimates' => $estimates,
-            'hasDemoPrices' => $shops->contains(fn (Shop $shop) => $shop->hasDemoPrices()),
         ]);
     }
 }
