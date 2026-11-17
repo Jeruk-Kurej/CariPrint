@@ -14,8 +14,10 @@ const fieldClass = 'flex flex-col gap-1.5';
 /** Formulir usul tempat baru. Usulan dikirim ke admin dan baru tampil setelah admin menambahkannya. */
 export default function SuggestionCreate({
     submitted,
+    email,
 }: {
     submitted: boolean;
+    email: string;
 }) {
     return (
         <>
@@ -36,8 +38,10 @@ export default function SuggestionCreate({
                             Terima kasih, usulanmu sudah kami terima
                         </h2>
                         <p>
-                            Admin akan mengecek datanya dulu. Tempat itu muncul
-                            di daftar setelah ditambahkan.
+                            Kami mengirim tanda terima ke emailmu. Admin
+                            mengecek datanya dulu, lalu memberi kabar lewat
+                            email yang sama. Tempat itu muncul di daftar setelah
+                            ditambahkan.
                         </p>
                         <div className="flex flex-wrap gap-2">
                             <Button asChild className="rounded-full">
@@ -62,6 +66,14 @@ export default function SuggestionCreate({
                         {({ processing, errors }) => (
                             <>
                                 <Fastener id={1} />
+                                <p className="text-sm text-foreground/70">
+                                    Dikirim sebagai{' '}
+                                    <span className="font-semibold text-foreground">
+                                        {email}
+                                    </span>
+                                    . Tanda terima dan hasil usulan dikirim ke
+                                    email ini.
+                                </p>
                                 <div className={fieldClass}>
                                     <Label htmlFor="name">Nama tempat</Label>
                                     <Input
@@ -113,22 +125,6 @@ export default function SuggestionCreate({
                                         placeholder="Misalnya: jam buka, layanan, atau harga yang kamu tahu"
                                     />
                                     <InputError message={errors.note} />
-                                </div>
-                                <div className={fieldClass}>
-                                    <Label htmlFor="contact_email">
-                                        Emailmu (opsional)
-                                    </Label>
-                                    <Input
-                                        id="contact_email"
-                                        name="contact_email"
-                                        type="email"
-                                        maxLength={255}
-                                        className="bg-card"
-                                        placeholder="Diisi kalau mau dihubungi soal usulan ini"
-                                    />
-                                    <InputError
-                                        message={errors.contact_email}
-                                    />
                                 </div>
                                 <div aria-hidden className="hidden">
                                     <label htmlFor="website">Website</label>

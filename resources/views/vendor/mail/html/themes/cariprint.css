@@ -1,0 +1,296 @@
+/*
+ * Tema email CariPrint. Nilai warna disalin dari token di resources/css/app.css, karena email tidak
+ * bisa membaca variabel CSS: background #fcfdff, foreground #1d2147, primary #3558f0, secondary #eef1fb,
+ * muted #55597e, border #dfe3f5, note-yellow #fff1a6, note-mint #c8f1dc, note-pink #ffd5e3, highlight #ffd84d.
+ */
+
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
+    box-sizing: border-box;
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+        sans-serif;
+    position: relative;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    background-color: #eef1fb;
+    color: #1d2147;
+    height: 100%;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
+p,
+ul,
+ol,
+blockquote {
+    line-height: 1.5;
+    text-align: start;
+}
+
+a {
+    color: #3558f0;
+}
+
+a img {
+    border: none;
+}
+
+h1 {
+    color: #1d2147;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: 0;
+    text-align: start;
+}
+
+h2 {
+    color: #1d2147;
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 0;
+    text-align: start;
+}
+
+h3 {
+    color: #1d2147;
+    font-size: 15px;
+    font-weight: 800;
+    margin-top: 0;
+    text-align: left;
+}
+
+p {
+    color: #1d2147;
+    font-size: 16px;
+    margin-top: 0;
+    text-align: left;
+}
+
+p.sub {
+    font-size: 12px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.wrapper {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #eef1fb;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.content {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.header {
+    padding: 28px 0 20px;
+    text-align: center;
+}
+
+.header a {
+    color: #1d2147;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    text-decoration: none;
+}
+
+.header .brand-mark {
+    color: #3558f0;
+}
+
+.body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #eef1fb;
+    border-bottom: 1px solid #eef1fb;
+    border-top: 1px solid #eef1fb;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.inner-body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    background-color: #ffffff;
+    border: 2px solid #1d2147;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 #1d2147;
+    margin: 0 auto;
+    padding: 0;
+    width: 570px;
+}
+
+.inner-body a {
+    word-break: break-all;
+}
+
+.subcopy {
+    border-top: 1px solid #dfe3f5;
+    margin-top: 25px;
+    padding-top: 25px;
+}
+
+.subcopy p {
+    font-size: 14px;
+}
+
+.footer {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 570px;
+}
+
+.footer p {
+    color: #55597e;
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer a {
+    color: #55597e;
+    text-decoration: underline;
+}
+
+.table table {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.table th {
+    border-bottom: 1px solid #dfe3f5;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.table td {
+    color: #1d2147;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.content-cell {
+    max-width: 100vw;
+    padding: 32px;
+}
+
+.action {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    float: unset;
+}
+
+.button {
+    -webkit-text-size-adjust: none;
+    border-radius: 999px;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: 700;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.button-blue,
+.button-primary {
+    background-color: #3558f0;
+    border-bottom: 10px solid #3558f0;
+    border-left: 24px solid #3558f0;
+    border-right: 24px solid #3558f0;
+    border-top: 10px solid #3558f0;
+}
+
+.button-green,
+.button-success {
+    background-color: #137a4a;
+    border-bottom: 10px solid #137a4a;
+    border-left: 24px solid #137a4a;
+    border-right: 24px solid #137a4a;
+    border-top: 10px solid #137a4a;
+}
+
+.button-red,
+.button-error {
+    background-color: #b42318;
+    border-bottom: 10px solid #b42318;
+    border-left: 24px solid #b42318;
+    border-right: 24px solid #b42318;
+    border-top: 10px solid #b42318;
+}
+
+/* Panel = kertas catatan tempel. */
+
+.panel {
+    border: 2px solid #1d2147;
+    border-radius: 8px;
+    margin: 21px 0;
+}
+
+.panel-content {
+    background-color: #fff1a6;
+    border-radius: 6px;
+    color: #1d2147;
+    padding: 16px;
+}
+
+.panel-content p {
+    color: #1d2147;
+}
+
+.panel-mint .panel-content {
+    background-color: #c8f1dc;
+}
+
+.panel-pink .panel-content {
+    background-color: #ffd5e3;
+}
+
+.panel-sky .panel-content {
+    background-color: #d3e4ff;
+}
+
+.panel-item {
+    padding: 0;
+}
+
+.panel-item p:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.break-all {
+    word-break: break-all;
+}

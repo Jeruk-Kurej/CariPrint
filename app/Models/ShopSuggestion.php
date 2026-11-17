@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Enums\SuggestionStatus;
+use App\Observers\ShopSuggestionObserver;
 use Database\Factories\ShopSuggestionFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -24,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  */
 #[Fillable(['name', 'address', 'maps_url', 'note', 'contact_email', 'status', 'admin_note'])]
+#[ObservedBy(ShopSuggestionObserver::class)]
 class ShopSuggestion extends Model
 {
     /** @use HasFactory<ShopSuggestionFactory> */

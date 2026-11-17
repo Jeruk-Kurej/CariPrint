@@ -62,9 +62,22 @@ APP_LOCALE=id
 DB_CONNECTION=sqlite
 LOG_LEVEL=error
 ADMIN_EMAIL=<email admin>
-ADMIN_PASSWORD=<kata sandi admin yang kuat>
+ADMIN_NOTIFY_EMAILS=<email penerima notifikasi usulan, dipisah koma>
 GEMINI_API_KEY=<kunci Gemini, opsional>
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=<alamat Gmail pengirim>
+MAIL_PASSWORD=<app password Gmail, bukan kata sandi akun>
+MAIL_FROM_ADDRESS=<alamat Gmail pengirim>
+
+GOOGLE_CLIENT_ID=<dari Google Cloud Console>
+GOOGLE_CLIENT_SECRET=<dari Google Cloud Console>
+GOOGLE_REDIRECT_URI=https://cariprint.lius.my.id/masuk/google/callback
 ```
+
+Akun admin dibuat dengan `php artisan cariprint:create-admin <email>` (kata sandi diketik tersembunyi), bukan lewat `ADMIN_PASSWORD`. Di Google Cloud Console, tambahkan `https://cariprint.lius.my.id/masuk/google/callback` sebagai Authorized redirect URI.
 
 Setelah mengubah `.env`, jalankan `php artisan optimize`.
 

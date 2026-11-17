@@ -15,12 +15,13 @@ class ShopSuggestionController extends Controller
     {
         return Inertia::render('suggestions/create', [
             'submitted' => (bool) $request->session()->get('suggestion_submitted', false),
+            'email' => $request->user()?->email,
         ]);
     }
 
     public function store(StoreShopSuggestionRequest $request, SuggestionSubmitter $submitter): RedirectResponse
     {
-        $submitter->submit($request->safe()->except('website'));
+        $submitter->submit([...$request->safe()->except('website'), 'contact_email' => $request->user()?->email]);
 
         return to_route('suggestions.create')->with('suggestion_submitted', true);
     }

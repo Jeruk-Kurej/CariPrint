@@ -60,6 +60,12 @@ return [
     'admin' => [
         'email' => env('ADMIN_EMAIL'),
         'password' => env('ADMIN_PASSWORD'),
+
+        // Alamat yang menerima email "usulan tempat baru", dipisah koma. Kosong = pakai ADMIN_EMAIL.
+        'notify_emails' => array_values(array_filter(array_map(
+            'trim',
+            explode(',', (string) (env('ADMIN_NOTIFY_EMAILS') ?: env('ADMIN_EMAIL'))),
+        ))),
     ],
 
 ];

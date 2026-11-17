@@ -1,4 +1,5 @@
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, usePage } from '@inertiajs/react';
+import { GoogleIcon } from '@/components/google-icon';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import TextLink from '@/components/text-link';
@@ -7,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { redirect as googleLogin } from '@/routes/google';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 
@@ -16,9 +18,33 @@ type Props = {
 };
 
 export default function Login({ status, canResetPassword }: Props) {
+    const googleError = (
+        usePage().props.errors as Record<string, string | undefined>
+    ).google;
+
     return (
         <>
             <Head title="Masuk" />
+
+            <div className="mb-6 flex flex-col gap-3">
+                <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="w-full rounded-full"
+                >
+                    <a href={googleLogin().url}>
+                        <GoogleIcon />
+                        Masuk dengan Google
+                    </a>
+                </Button>
+                <InputError message={googleError} className="text-center" />
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <span className="h-px flex-1 bg-border" aria-hidden />
+                    atau masuk sebagai admin
+                    <span className="h-px flex-1 bg-border" aria-hidden />
+                </div>
+            </div>
 
             <Form
                 {...store.form()}
@@ -101,6 +127,7 @@ export default function Login({ status, canResetPassword }: Props) {
 }
 
 Login.layout = {
-    title: 'Masuk ke akunmu',
-    description: 'Masukkan email dan kata sandi untuk masuk',
+    title: 'Masuk ke CariPrint',
+    description:
+        'Masuk dengan akun Google untuk mengusulkan tempat. Admin masuk dengan email dan kata sandi.',
 };

@@ -28,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->brandName('CariPrint Admin')
+            ->favicon(asset('favicon.svg'))
             ->path('admin')
             ->login()
             ->darkMode(false)

@@ -18,7 +18,6 @@ class StoreShopSuggestionRequest extends FormRequest
             'address' => ['required', 'string', 'max:255'],
             'maps_url' => ['nullable', 'url:http,https', 'max:500'],
             'note' => ['nullable', 'string', 'max:500'],
-            'contact_email' => ['nullable', 'email', 'max:255'],
             'website' => ['prohibited'],
         ];
     }
@@ -33,7 +32,6 @@ class StoreShopSuggestionRequest extends FormRequest
             'address' => 'alamat',
             'maps_url' => 'tautan Google Maps',
             'note' => 'catatan',
-            'contact_email' => 'email',
         ];
     }
 }

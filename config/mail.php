@@ -115,4 +115,21 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Markdown mail theme
+    |--------------------------------------------------------------------------
+    |
+    | "cariprint" follows the website: notice-board colours, sticky-note panels.
+    | The theme file is resources/views/vendor/mail/html/themes/cariprint.css.
+    |
+    */
+
+    'markdown' => [
+        'theme' => 'cariprint',
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
+    ],
+
 ];
