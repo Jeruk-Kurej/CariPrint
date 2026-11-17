@@ -59,7 +59,7 @@ return [
 
     'contact' => [
         // Alamat email yang ditampilkan di halaman kebijakan privasi. Kosong = halaman tidak menampilkan alamat.
-        'email' => env('CONTACT_EMAIL'),
+        'email' => env('CONTACT_EMAIL') ?: null,
     ],
 
     'admin' => [
