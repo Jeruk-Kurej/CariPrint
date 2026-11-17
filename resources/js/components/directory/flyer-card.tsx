@@ -5,6 +5,7 @@ import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { formatDistance, formatRupiah } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
 import { directionsUrl } from '@/lib/maps';
+import { whatsappUrl } from '@/lib/whatsapp';
 import { show } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
 
@@ -24,11 +25,11 @@ type Props = {
 };
 
 const tab =
-    'flex flex-col justify-center gap-0.5 px-3 py-2.5 text-left text-sm font-semibold';
+    'flex min-h-11 flex-1 flex-col items-center justify-center gap-0.5 px-2 py-2.5 text-sm font-semibold hover:bg-card/50';
 
 /**
  * Satu tempat print sebagai pamflet di papan pengumuman kampus. Bagian bawahnya
- * disobek-sobek: harga, WhatsApp, rute, dan penanda peta.
+ * berisi harga, lalu sobekan WhatsApp, rute, dan penanda peta.
  */
 export function FlyerCard({
     shop,
@@ -67,60 +68,65 @@ export function FlyerCard({
                     {shop.services.slice(0, 3).map((service) => (
                         <li
                             key={service}
-                            className="rounded-full bg-white/70 px-2 py-0.5 text-xs font-medium"
+                            className="rounded-full bg-card/70 px-2 py-0.5 text-xs font-medium"
                         >
                             {serviceLabel(service)}
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className="relative z-10 flex divide-x-2 divide-dashed divide-foreground/25 border-t-2 border-dashed border-foreground/25 bg-inherit">
+            <div className="relative z-10 border-t-2 border-dashed border-foreground/25 bg-inherit">
                 <Scissors
                     aria-hidden
                     className="absolute -top-[11px] left-3 size-5 rotate-0 bg-inherit px-0.5 text-foreground/55"
                 />
-                <div className={`${tab} flex-1`}>
+                <p className="flex items-center justify-between gap-2 px-4 pt-3 pb-2.5">
                     <span className="text-xs font-medium text-foreground/70">
                         Mulai dari
                     </span>
-                    <span className="w-fit rounded-sm bg-highlight px-1.5 font-display text-xl font-extrabold tabular-nums">
+                    <span className="rounded-sm bg-highlight px-1.5 font-display text-xl font-extrabold tabular-nums">
                         {shop.startingPrice === null
                             ? '–'
                             : formatRupiah(shop.startingPrice)}
                     </span>
-                </div>
-                {shop.whatsapp && (
+                </p>
+                <div className="flex divide-x-2 divide-dashed divide-foreground/25 border-t-2 border-dashed border-foreground/25">
+                    {shop.whatsapp && (
+                        <a
+                            href={whatsappUrl(shop.whatsapp)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={tab}
+                        >
+                            <MessageCircle className="size-5" aria-hidden />
+                            WhatsApp
+                        </a>
+                    )}
                     <a
-                        href={`https://wa.me/${shop.whatsapp}`}
+                        href={directionsUrl(shop.latitude, shop.longitude)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`${tab} items-center hover:bg-white/50`}
+                        className={tab}
                     >
-                        <MessageCircle className="size-5" aria-hidden />
-                        WhatsApp
+                        <Navigation className="size-5" aria-hidden />
+                        Rute
+                        <span className="sr-only">
+                            {' '}
+                            di Google Maps (tab baru)
+                        </span>
                     </a>
-                )}
-                <a
-                    href={directionsUrl(shop.latitude, shop.longitude)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${tab} items-center hover:bg-white/50`}
-                >
-                    <Navigation className="size-5" aria-hidden />
-                    Rute
-                    <span className="sr-only"> di Google Maps (tab baru)</span>
-                </a>
-                {onSelect && (
-                    <button
-                        type="button"
-                        onClick={() => onSelect(shop.id)}
-                        aria-pressed={selected}
-                        className={`${tab} items-center hover:bg-white/50`}
-                    >
-                        <MapPin className="size-5" aria-hidden />
-                        Di peta
-                    </button>
-                )}
+                    {onSelect && (
+                        <button
+                            type="button"
+                            onClick={() => onSelect(shop.id)}
+                            aria-pressed={selected}
+                            className={tab}
+                        >
+                            <MapPin className="size-5" aria-hidden />
+                            Di peta
+                        </button>
+                    )}
+                </div>
             </div>
         </article>
     );

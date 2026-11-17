@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { BrandMark } from '@/components/brand-mark';
-import { homeUrl } from '@/lib/navigation';
+import { homeUrl, infoNav } from '@/lib/navigation';
 
 export function PublicFooter() {
     return (
@@ -23,10 +23,26 @@ export function PublicFooter() {
                     </span>
                 </div>
 
-                <p className="text-xs sm:text-sm">
-                    © {new Date().getFullYear()} CariPrint · Pemesanan langsung
-                    ke tempat printing.
-                </p>
+                <div className="flex flex-col gap-2 sm:items-end">
+                    <nav aria-label="Informasi">
+                        <ul className="flex flex-wrap gap-x-4 gap-y-1">
+                            {infoNav.map((item) => (
+                                <li key={item.href}>
+                                    <Link
+                                        href={item.href}
+                                        className="font-medium text-foreground hover:underline"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                    <p className="text-xs sm:text-sm">
+                        © {new Date().getFullYear()} CariPrint · Pesan dan bayar
+                        langsung ke tempat printing.
+                    </p>
+                </div>
             </div>
         </footer>
     );

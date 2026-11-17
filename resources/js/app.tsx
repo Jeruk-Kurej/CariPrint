@@ -17,6 +17,7 @@ void createInertiaApp({
             case name.startsWith('compare/'):
             case name.startsWith('agent/'):
             case name.startsWith('info/'):
+            case name.startsWith('suggestions/'):
                 return PublicLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;

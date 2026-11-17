@@ -90,7 +90,7 @@ export function HomeHero({
                 <form
                     onSubmit={search}
                     role="search"
-                    className="flex gap-2 rounded-full border-2 border-foreground bg-card p-1.5 shadow-[4px_4px_0_var(--foreground)]"
+                    className="flex gap-2 rounded-full sticker bg-card p-1.5"
                 >
                     <label htmlFor="cari-tempat" className="sr-only">
                         Cari nama tempat

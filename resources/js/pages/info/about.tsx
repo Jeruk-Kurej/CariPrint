@@ -49,8 +49,8 @@ export default function About() {
 
                 <Section title="Dibangun dengan">
                     <p>
-                        Laravel dan React untuk aplikasinya, serta peta
-                        OpenStreetMap yang gratis.
+                        Laravel dan React untuk aplikasinya, serta peta Leaflet
+                        dengan gambar peta dari Esri.
                     </p>
                 </Section>
 

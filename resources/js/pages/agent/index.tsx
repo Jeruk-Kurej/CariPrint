@@ -74,7 +74,7 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
 
                 <form
                     onSubmit={submit}
-                    className={`relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 paper-shadow sm:p-6`}
+                    className="relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 paper-shadow sm:p-6"
                 >
                     <Fastener id={2} />
                     <textarea
@@ -127,7 +127,10 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
                         <EstimateList estimates={estimates} />
                         <p className="text-sm text-muted-foreground">
                             Estimasi dari daftar harga yang tersimpan. Harga
-                            bisa berbeda saat dicek langsung di tempat.
+                            bisa berbeda saat dicek langsung di tempat.{' '}
+                            {estimates.some((shop) => shop.distanceKm !== null)
+                                ? 'Jarak dihitung garis lurus dari lokasimu, dan lokasimu tidak disimpan.'
+                                : 'Izinkan lokasi di browser lalu cari lagi untuk melihat jarak tiap tempat.'}
                         </p>
                     </section>
                 )}

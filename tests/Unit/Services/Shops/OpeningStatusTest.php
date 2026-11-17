@@ -92,3 +92,12 @@ test('split hours with a lunch break are closed during the break', function () {
     expect((new OpeningStatus)->evaluate($hours, at('2026-11-07 12:30'))->state)
         ->toBe(OpenState::Closed);
 });
+
+test('today hours lists every slot, or says the shop is closed today', function (array $slots, string $expected) {
+    expect((new OpeningStatus)->todayHours(hours(['sat' => $slots]), at('2026-11-07 10:00')))->toBe($expected);
+})->with([
+    'one slot' => [[['open' => '08:00', 'close' => '17:00']], '08:00–17:00'],
+    'split hours' => [[['open' => '08:00', 'close' => '12:00'], ['open' => '13:00', 'close' => '21:00']], '08:00–12:00, 13:00–21:00'],
+    'open all day' => [[['open' => '00:00', 'close' => '24:00']], '24 jam'],
+    'no slots' => [[], 'Tutup hari ini'],
+]);

@@ -7,18 +7,18 @@ const labels: Record<OpenState, string> = {
 };
 
 const styles: Record<OpenState, string> = {
-    open: 'bg-status-open/12 text-status-open',
+    open: 'bg-status-open/15 text-status-open',
     closing_soon: 'bg-status-closing/15 text-status-closing',
     closed: 'bg-muted text-muted-foreground',
 };
 
-/** Status buka berbentuk label lembut, warnanya dari token di app.css. */
+/** Status buka sebagai label yang mudah terlihat, warnanya dari token di app.css. */
 export function OpenStatusBadge({ state }: { state: OpenState }) {
     return (
         <span
-            className={`inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-semibold ${styles[state]}`}
+            className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-sm font-bold ${styles[state]}`}
         >
-            <span className="size-1.5 rounded-full bg-current" aria-hidden />
+            <span className="size-2 rounded-full bg-current" aria-hidden />
             {labels[state]}
         </span>
     );

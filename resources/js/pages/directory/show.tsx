@@ -10,7 +10,7 @@ import { WhatsAppButton } from '@/components/directory/whatsapp-button';
 import { PageTitle, SectionHeading } from '@/components/page-header';
 import { serviceLabel } from '@/lib/labels';
 import { todayKey } from '@/lib/weekday';
-import { home } from '@/routes';
+import { index as directory } from '@/routes/directory';
 import type { ShopDetail } from '@/types';
 
 export default function ShopShow({ shop }: { shop: ShopDetail }) {
@@ -21,7 +21,7 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
             <Head title={shop.name} />
             <main className="flex flex-col gap-8 px-4 py-6 sm:py-10">
                 <Link
-                    href={home()}
+                    href={directory().url}
                     className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
                 >
                     <ArrowLeft className="size-4" aria-hidden /> Semua tempat

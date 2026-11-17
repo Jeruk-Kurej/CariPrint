@@ -1,4 +1,4 @@
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { EmptyState } from '@/components/directory/empty-state';
@@ -11,6 +11,7 @@ import { useGeolocation } from '@/hooks/use-geolocation';
 import { useSelectedShop } from '@/hooks/use-selected-shop';
 import type { ShopSort } from '@/lib/shop-filter';
 import { nearby } from '@/routes/directory';
+import { create as suggest } from '@/routes/suggestions';
 import type { ShopSummary } from '@/types';
 
 export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
@@ -121,7 +122,14 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                                 <EmptyState
                                     title="Tidak ada yang cocok"
                                     hint="Ubah kata pencarian atau matikan sakelar Masih buka saja."
-                                />
+                                >
+                                    <Link
+                                        href={suggest().url}
+                                        className="mt-2 text-sm font-semibold text-primary hover:underline"
+                                    >
+                                        Tempatnya belum ada? Usulkan ke kami
+                                    </Link>
+                                </EmptyState>
                             ) : (
                                 <ShopList
                                     shops={filters.visibleShops}

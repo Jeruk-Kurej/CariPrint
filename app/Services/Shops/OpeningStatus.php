@@ -37,6 +37,27 @@ class OpeningStatus
     }
 
     /**
+     * Today's opening slots as text (e.g. "08:00–17:00"), so visitors can double-check the hours themselves.
+     *
+     * @param  array<string, list<array{open: string, close: string}>>  $openingHours
+     */
+    public function todayHours(array $openingHours, CarbonImmutable $now): string
+    {
+        $slots = $openingHours[self::DAYS[$now->dayOfWeekIso - 1]] ?? [];
+
+        if ($slots === []) {
+            return 'Tutup hari ini';
+        }
+
+        return implode(', ', array_map(
+            fn (array $slot) => $slot['open'] === '00:00' && $slot['close'] === '24:00'
+                ? '24 jam'
+                : "{$slot['open']}–{$slot['close']}",
+            $slots,
+        ));
+    }
+
+    /**
      * Intervals from yesterday (to catch overnight hours) through tomorrow, as absolute times.
      *
      * @param  array<string, list<array{open: string, close: string}>>  $openingHours

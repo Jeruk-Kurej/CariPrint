@@ -53,7 +53,7 @@ export function MapAndNotes({ shops }: { shops: ShopSummary[] }) {
                     heightClass="h-80 lg:h-[26rem]"
                 />
                 <p className="text-sm text-muted-foreground">
-                    Klik sebuah titik untuk membuka halaman tempatnya.
+                    Ketuk sebuah titik untuk membuka halaman tempatnya.
                 </p>
             </div>
             <ul className="flex flex-col justify-center gap-5">

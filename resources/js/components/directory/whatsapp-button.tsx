@@ -1,5 +1,6 @@
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { whatsappUrl } from '@/lib/whatsapp';
 
 type Props = {
     phone: string;
@@ -7,12 +8,10 @@ type Props = {
 };
 
 export function WhatsAppButton({ phone, message }: Props) {
-    const query = message ? `?text=${encodeURIComponent(message)}` : '';
-
     return (
         <Button asChild size="sm" variant="outline" className="rounded-full">
             <a
-                href={`https://wa.me/${phone}${query}`}
+                href={whatsappUrl(phone, message)}
                 target="_blank"
                 rel="noopener noreferrer"
             >
