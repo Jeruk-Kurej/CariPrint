@@ -12,10 +12,10 @@ type Props = {
 export function DirectionsButton({
     latitude,
     longitude,
-    variant = 'default',
+    variant = 'outline',
 }: Props) {
     return (
-        <Button asChild size="sm" variant={variant} className="rounded-full">
+        <Button asChild variant={variant} className="min-h-11 sm:min-h-9">
             <a
                 href={directionsUrl(latitude, longitude)}
                 target="_blank"

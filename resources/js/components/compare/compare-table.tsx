@@ -81,7 +81,7 @@ export function CompareTable({
 
     return (
         <div className="flex flex-col gap-2">
-            <div className="relative overflow-hidden rounded-lg border bg-card">
+            <div className="relative overflow-hidden paper-card">
                 <div
                     ref={scroll.ref}
                     className="max-w-full overflow-x-auto [contain:paint]"

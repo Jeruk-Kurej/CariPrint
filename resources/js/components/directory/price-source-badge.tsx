@@ -5,7 +5,10 @@ import type { ShopPrice } from '@/types/shop';
 export function PriceSourceBadge({ source }: { source: ShopPrice['source'] }) {
     if (source === 'verified') {
         return (
-            <Badge className="bg-price-verified text-brand-foreground">
+            <Badge
+                variant="outline"
+                className="border-status-open/40 bg-status-open/10 text-status-open"
+            >
                 Terverifikasi
             </Badge>
         );

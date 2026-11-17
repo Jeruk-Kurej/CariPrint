@@ -7,6 +7,7 @@ import { PdfAttachment } from '@/components/agent/pdf-attachment';
 import { SpecSummary } from '@/components/agent/spec-summary';
 import type { PrintSpec } from '@/components/agent/spec-summary';
 import { Fastener } from '@/components/directory/flyer-parts';
+import { PageTitle } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { useGeolocation } from '@/hooks/use-geolocation';
@@ -62,9 +63,7 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
             <Head title="Asisten cetak" />
             <main className="flex w-full flex-col gap-8 px-4 py-8 sm:py-12">
                 <header className="flex flex-col gap-3">
-                    <h1 className="font-display text-3xl leading-tight font-extrabold tracking-tight sm:text-5xl">
-                        Tulis kebutuhan cetakmu
-                    </h1>
+                    <PageTitle>Tulis kebutuhan cetakmu</PageTitle>
                     <p className="max-w-xl text-muted-foreground">
                         Asisten membaca permintaanmu dan menyusun
                         spesifikasinya. Biayanya dihitung dari daftar harga tiap
@@ -100,7 +99,6 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
                     <Button
                         type="submit"
                         size="lg"
-                        className="rounded-full"
                         disabled={
                             request.trim() === '' || processing || pdf.reading
                         }
@@ -108,6 +106,16 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
                         {processing && <Spinner />}
                         {processing ? 'Menghitung estimasi' : 'Cari estimasi'}
                     </Button>
+                    {location.status !== 'granted' && (
+                        <p
+                            aria-live="polite"
+                            className="text-sm text-foreground/70"
+                        >
+                            {location.status === 'loading'
+                                ? 'Mencari lokasimu. Jarak tampil kalau lokasi diizinkan.'
+                                : 'Lokasi tidak aktif, jadi jarak tidak ditampilkan.'}
+                        </p>
+                    )}
                 </form>
 
                 {spec && (

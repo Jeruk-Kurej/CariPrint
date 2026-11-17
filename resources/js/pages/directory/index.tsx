@@ -1,14 +1,16 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { EmptyState } from '@/components/directory/empty-state';
 import { ShopList } from '@/components/directory/shop-list';
 import { ShopMap } from '@/components/directory/shop-map';
+import { PageTitle } from '@/components/page-header';
+import { SearchField } from '@/components/search-field';
 import { SegmentedControl } from '@/components/segmented-control';
 import { SwitchField } from '@/components/switch-field';
 import { useDirectoryFilters } from '@/hooks/use-directory-filters';
 import { useGeolocation } from '@/hooks/use-geolocation';
 import { useSelectedShop } from '@/hooks/use-selected-shop';
+import { sortLabels } from '@/lib/shop-filter';
 import type { ShopSort } from '@/lib/shop-filter';
 import { nearby } from '@/routes/directory';
 import { create as suggest } from '@/routes/suggestions';
@@ -22,15 +24,30 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
     const hasDistance = location.status === 'granted';
     const filters = useDirectoryFilters(shops, hasDistance);
 
-    const sortOptions: {
-        value: ShopSort;
-        label: string;
-        disabled?: boolean;
-    }[] = [
-        { value: 'distance', label: 'Terdekat', disabled: !hasDistance },
-        { value: 'price', label: 'Termurah' },
-        { value: 'name', label: 'Nama' },
-    ];
+    const sortOptions = (Object.keys(sortLabels) as ShopSort[]).map(
+        (value) => ({
+            value,
+            label: sortLabels[value],
+            disabled: value === 'distance' && !hasDistance,
+        }),
+    );
+
+    function showOnMap(id: number) {
+        select(id);
+
+        if (window.matchMedia('(min-width: 1024px)').matches) {
+            return;
+        }
+
+        const reduceMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        document.getElementById('peta-tempat')?.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'center',
+        });
+    }
 
     useEffect(() => {
         if (!hasDistance) {
@@ -56,9 +73,7 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
             <Head title="Cari tempat printing" />
             <main className="flex flex-col gap-6 px-4 py-8 sm:py-12">
                 <header className="flex flex-col gap-2">
-                    <h1 className="font-display text-3xl leading-tight font-extrabold tracking-tight sm:text-5xl">
-                        Cari tempat printing
-                    </h1>
+                    <PageTitle>Cari tempat printing</PageTitle>
                     <p className="text-muted-foreground">
                         <span className="font-display font-bold text-foreground tabular-nums">
                             {filters.openCount}
@@ -76,25 +91,13 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                     <>
                         <section
                             aria-label="Pencarian dan filter tempat"
-                            className="flex flex-col gap-3 rounded-lg border bg-card p-4"
+                            className="flex flex-col gap-3 paper-card p-4"
                         >
                             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                                <div className="relative flex-1 sm:max-w-xs">
-                                    <Search
-                                        aria-hidden
-                                        className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-                                    />
-                                    <input
-                                        type="search"
-                                        value={filters.query}
-                                        onChange={(event) =>
-                                            filters.setQuery(event.target.value)
-                                        }
-                                        placeholder="Cari nama tempat..."
-                                        aria-label="Cari nama tempat"
-                                        className="w-full rounded-full border-2 border-foreground/15 bg-background py-1.5 pr-3 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                                    />
-                                </div>
+                                <SearchField
+                                    value={filters.query}
+                                    onChange={filters.setQuery}
+                                />
                                 <div className="flex flex-wrap items-center gap-4">
                                     <SwitchField
                                         label="Masih buka saja"
@@ -109,10 +112,14 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                                     />
                                 </div>
                             </div>
-                            {!hasDistance && (
-                                <p className="text-xs text-muted-foreground">
-                                    Izinkan lokasi di browser untuk mengurutkan
-                                    dari yang terdekat.
+                            {location.status !== 'granted' && (
+                                <p
+                                    aria-live="polite"
+                                    className="text-xs text-muted-foreground"
+                                >
+                                    {location.status === 'loading'
+                                        ? 'Mencari lokasimu...'
+                                        : 'Lokasi tidak aktif, jadi daftar diurutkan dari nama. Izinkan lokasi di browser untuk melihat yang terdekat.'}
                                 </p>
                             )}
                         </section>
@@ -134,11 +141,14 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                                 <ShopList
                                     shops={filters.visibleShops}
                                     selectedId={selectedId}
-                                    onSelect={select}
+                                    onSelect={showOnMap}
                                     sorting={sorting}
                                 />
                             )}
-                            <div className="lg:sticky lg:top-20">
+                            <div
+                                id="peta-tempat"
+                                className="lg:sticky lg:top-20"
+                            >
                                 <ShopMap
                                     shops={shops}
                                     selectedId={selectedId}

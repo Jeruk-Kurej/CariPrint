@@ -2,7 +2,7 @@ import { home } from '@/routes';
 import { index as agent } from '@/routes/agent';
 import { index as compare } from '@/routes/compare';
 import { index as directory } from '@/routes/directory';
-import { about, faq, howItWorks } from '@/routes/info';
+import { about, faq, howItWorks, privacy } from '@/routes/info';
 import { create as suggest } from '@/routes/suggestions';
 
 export type NavLink = { label: string; href: string };
@@ -20,6 +20,7 @@ export const infoNav: NavLink[] = [
     { label: 'Cara kerja', href: howItWorks().url },
     { label: 'Pertanyaan umum', href: faq().url },
     { label: 'Tentang', href: about().url },
+    { label: 'Privasi', href: privacy().url },
     { label: 'Usulkan tempat', href: suggest().url },
 ];
 

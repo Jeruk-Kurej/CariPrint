@@ -1,3 +1,4 @@
+import { Tag } from '@/components/tag';
 import { formatNumber, formatPageRuns } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
 
@@ -35,11 +36,8 @@ export function SpecSummary({ spec }: { spec: PrintSpec }) {
     return (
         <ul className="flex flex-wrap gap-2">
             {parts.map((part) => (
-                <li
-                    key={part}
-                    className="rounded-md bg-secondary px-2.5 py-1 text-sm font-medium"
-                >
-                    {part}
+                <li key={part}>
+                    <Tag>{part}</Tag>
                 </li>
             ))}
         </ul>

@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
-import { PageHeader, Section } from '@/components/info/page-header';
+import { Section } from '@/components/info/section';
+import { PageHeader } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
 import { index as directoryIndex } from '@/routes/directory';
 import { faq } from '@/routes/info';
@@ -10,6 +11,7 @@ export default function About() {
             <Head title="Tentang" />
             <main className="flex w-full flex-col gap-10 px-4 py-8 sm:py-12">
                 <PageHeader
+                    divided
                     title="Tentang CariPrint"
                     intro="Website untuk mahasiswa di sekitar CitraLand Surabaya yang ingin tahu tempat printing mana yang buka, berapa harganya, dan seberapa jauh."
                 />
@@ -32,18 +34,20 @@ export default function About() {
                         WhatsApp.
                     </p>
                     <p>
-                        Semua fitur utama bisa dipakai tanpa login: mencari
-                        tempat, membandingkan harga, dan memakai asisten cetak.
+                        Mencari tempat, membandingkan harga, dan memakai asisten
+                        cetak bisa dilakukan tanpa login. Login dengan Google
+                        hanya dibutuhkan kalau kamu ingin mengusulkan tempat
+                        baru.
                     </p>
                 </Section>
 
                 <Section title="Status proyek">
                     <p>
                         CariPrint adalah proyek mahasiswa Universitas Ciputra
-                        dan sedang berada di Milestone 1. Data tempat di website
-                        ini masih contoh untuk pengembangan, dan akan diganti
-                        dengan hasil survei langsung oleh tim ke tiap tempat.
-                        Harga hasil survei akan bertanda Terverifikasi.
+                        yang masih terus dikembangkan. Lokasi, alamat, dan jam
+                        buka tempat diambil dari Google Maps. Harga masih
+                        perkiraan sampai dikonfirmasi pemilik tempat, dan harga
+                        yang sudah dikonfirmasi bertanda Terverifikasi.
                     </p>
                 </Section>
 
@@ -55,15 +59,10 @@ export default function About() {
                 </Section>
 
                 <div className="flex flex-wrap gap-3">
-                    <Button asChild size="lg" className="rounded-full">
+                    <Button asChild size="lg">
                         <Link href={directoryIndex().url}>Cari tempat</Link>
                     </Button>
-                    <Button
-                        asChild
-                        size="lg"
-                        variant="outline"
-                        className="rounded-full"
-                    >
+                    <Button asChild size="lg" variant="outline">
                         <Link href={faq().url}>Pertanyaan umum</Link>
                     </Button>
                 </div>

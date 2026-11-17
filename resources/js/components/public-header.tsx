@@ -95,7 +95,10 @@ export function PublicHeader() {
                                     key={link.href}
                                     href={link.href}
                                     onClick={() => setOpen(false)}
-                                    className="rounded-md px-3 py-3 text-base font-medium hover:bg-accent"
+                                    aria-current={
+                                        path === link.href ? 'page' : undefined
+                                    }
+                                    className={`rounded-md px-3 py-3 text-base font-medium ${path === link.href ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'}`}
                                 >
                                     {link.label}
                                 </Link>

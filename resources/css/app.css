@@ -161,6 +161,16 @@
         0 10px 20px -10px color-mix(in srgb, var(--foreground) 35%, transparent);
 }
 
+/* Permukaan kertas untuk tabel, daftar, dan panel: putih, tepi tipis, bayangan lembut. */
+@utility paper-card {
+    background-color: var(--card);
+    border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+    border-radius: 0.375rem;
+    box-shadow:
+        0 1px 0 color-mix(in srgb, var(--foreground) 10%, transparent),
+        0 8px 16px -12px color-mix(in srgb, var(--foreground) 35%, transparent);
+}
+
 /* Pojok kertas yang terlipat. Elemennya harus relative. */
 @utility dog-ear {
     &::after {

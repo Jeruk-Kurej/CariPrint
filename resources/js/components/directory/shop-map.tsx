@@ -78,7 +78,11 @@ export function ShopMap({
                 fillColor: markerColor(shop.openState),
                 fillOpacity: 1,
             })
-                .bindTooltip(shop.name)
+                .bindTooltip(shop.name, {
+                    permanent: isSelected,
+                    direction: 'top',
+                    offset: [0, -8],
+                })
                 .on('click', () => onSelect?.(shop.id))
                 .addTo(markers);
         });
@@ -90,7 +94,7 @@ export function ShopMap({
 
     return (
         <div
-            className={`relative isolate w-full overflow-hidden rounded-lg border ${heightClass}`}
+            className={`relative isolate w-full overflow-hidden paper-card ${heightClass}`}
         >
             <div ref={containerRef} className="absolute inset-0" />
         </div>

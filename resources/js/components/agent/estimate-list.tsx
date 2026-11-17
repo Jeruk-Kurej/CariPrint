@@ -32,7 +32,7 @@ function missingLabel(missing: string[]): string {
 /** Termurah di atas dan harganya distabilo. Tiap kartu menampilkan status buka, jam hari ini, dan jarak garis lurus dari lokasi pengguna. */
 export function EstimateList({ estimates }: { estimates: Estimate[] }) {
     return (
-        <ul className="divide-y overflow-hidden rounded-lg border bg-card">
+        <ul className="divide-y overflow-hidden paper-card">
             {estimates.map((shop) => (
                 <li key={shop.slug}>
                     <Link

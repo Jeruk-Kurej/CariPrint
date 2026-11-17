@@ -19,7 +19,7 @@ export function OpeningHoursList({
     today: string;
 }) {
     return (
-        <ul className="divide-y overflow-hidden rounded-lg border bg-card text-sm">
+        <ul className="divide-y overflow-hidden paper-card text-sm">
             {Object.entries(dayLabels).map(([key, label]) => {
                 const slots = hours[key] ?? [];
 

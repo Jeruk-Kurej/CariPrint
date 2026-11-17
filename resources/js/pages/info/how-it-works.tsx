@@ -1,6 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 import { Fastener } from '@/components/directory/flyer-parts';
-import { PageHeader, Section } from '@/components/info/page-header';
+import { Section } from '@/components/info/section';
+import { PageHeader } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
 import { index as agentIndex } from '@/routes/agent';
 import { index as directoryIndex } from '@/routes/directory';
@@ -18,6 +19,7 @@ export default function HowItWorks() {
             <Head title="Cara kerja" />
             <main className="flex w-full flex-col gap-10 px-4 py-8 sm:py-12">
                 <PageHeader
+                    divided
                     title="Cara kerja CariPrint"
                     intro="CariPrint membantu kamu memilih tempat printing sebelum berangkat. Berikut apa yang terjadi di balik tiap halaman."
                 />
@@ -97,16 +99,12 @@ export default function HowItWorks() {
                             daftar harga yang tersimpan.
                         </p>
                         <div className="flex flex-wrap gap-2 pt-2">
-                            <Button asChild className="rounded-full">
+                            <Button asChild>
                                 <Link href={directoryIndex().url}>
                                     Mulai cari tempat
                                 </Link>
                             </Button>
-                            <Button
-                                asChild
-                                variant="outline"
-                                className="rounded-full"
-                            >
+                            <Button asChild variant="outline">
                                 <Link href={agentIndex().url}>
                                     Coba asisten cetak
                                 </Link>

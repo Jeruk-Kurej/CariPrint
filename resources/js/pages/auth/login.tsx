@@ -27,12 +27,7 @@ export default function Login({ status, canResetPassword }: Props) {
             <Head title="Masuk" />
 
             <div className="mb-6 flex flex-col gap-3">
-                <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="w-full rounded-full"
-                >
+                <Button asChild variant="outline" size="lg" className="w-full">
                     <a href={googleLogin().url}>
                         <GoogleIcon />
                         Masuk dengan Google

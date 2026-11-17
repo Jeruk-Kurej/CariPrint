@@ -8,7 +8,7 @@ export function OpenStatusLine({
     shop: Pick<ShopDetail, 'openState' | 'opensAt' | 'closesAt'>;
 }) {
     return (
-        <div className="flex flex-wrap items-center gap-2 text-sm">
+        <div className="flex flex-wrap items-center gap-2 text-base font-medium">
             <OpenStatusBadge state={shop.openState} />
             {shop.openState === 'closed' && shop.opensAt && (
                 <span>Buka lagi {shop.opensAt}</span>

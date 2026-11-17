@@ -57,6 +57,11 @@ return [
         'whatsapp_message' => "Halo kak, saya mahasiswa Universitas Ciputra. Kami sedang membuat website CariPrint untuk membantu mahasiswa mencari tempat print di sekitar CitraLand (gratis, tidak ada pemesanan lewat website). Boleh minta info untuk {tempat}?\n1. Daftar harga: print hitam-putih dan warna (A4/F4/A3), fotokopi, jilid, laminating, scan.\n2. Jam buka Senin sampai Minggu.\n3. Kalau ada logo atau gambar kecil berwarna di dokumen, dihitung warna atau hitam-putih?\nKalau ada foto daftar harganya boleh dikirim. Terima kasih kak.",
     ],
 
+    'contact' => [
+        // Alamat email yang ditampilkan di halaman kebijakan privasi. Kosong = halaman tidak menampilkan alamat.
+        'email' => env('CONTACT_EMAIL'),
+    ],
+
     'admin' => [
         'email' => env('ADMIN_EMAIL'),
         'password' => env('ADMIN_PASSWORD'),

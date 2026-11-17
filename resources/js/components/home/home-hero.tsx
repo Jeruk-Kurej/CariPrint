@@ -1,8 +1,9 @@
-import { Link, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { Paperclip, Search } from 'lucide-react';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { FlyerCard } from '@/components/directory/flyer-card';
+import { FilterChip } from '@/components/filter-chip';
 import { Button } from '@/components/ui/button';
 import { index as directoryIndex } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
@@ -103,7 +104,7 @@ export function HomeHero({
                         placeholder="Cari nama tempat print"
                         className="min-w-0 flex-1 bg-transparent px-4 text-base outline-none"
                     />
-                    <Button type="submit" size="lg" className="rounded-full">
+                    <Button type="submit" size="lg">
                         <Search aria-hidden />
                         Cari
                     </Button>
@@ -111,12 +112,11 @@ export function HomeHero({
                 <ul className="flex flex-wrap items-center gap-2">
                     {chips.map((chip) => (
                         <li key={chip.label}>
-                            <Link
+                            <FilterChip
                                 href={directoryIndex({ query: chip.query }).url}
-                                className="inline-flex rounded-full border-2 border-foreground/15 bg-card px-4 py-1.5 text-sm font-semibold hover:border-primary hover:text-primary"
                             >
                                 {chip.label}
-                            </Link>
+                            </FilterChip>
                         </li>
                     ))}
                 </ul>

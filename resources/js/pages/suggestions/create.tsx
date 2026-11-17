@@ -44,16 +44,12 @@ export default function SuggestionCreate({
                             ditambahkan.
                         </p>
                         <div className="flex flex-wrap gap-2">
-                            <Button asChild className="rounded-full">
+                            <Button asChild>
                                 <Link href={directory().url}>
                                     Lihat semua tempat
                                 </Link>
                             </Button>
-                            <Button
-                                asChild
-                                variant="outline"
-                                className="rounded-full"
-                            >
+                            <Button asChild variant="outline">
                                 <Link href={create().url}>Usulkan lagi</Link>
                             </Button>
                         </div>
@@ -138,7 +134,6 @@ export default function SuggestionCreate({
                                 <Button
                                     type="submit"
                                     size="lg"
-                                    className="rounded-full"
                                     disabled={processing}
                                 >
                                     {processing && <Spinner />}

@@ -1,5 +1,4 @@
 import { Head } from '@inertiajs/react';
-import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { CompareTable } from '@/components/compare/compare-table';
 import type {
@@ -7,6 +6,8 @@ import type {
     CompareShop,
 } from '@/components/compare/compare-table';
 import { EmptyState } from '@/components/directory/empty-state';
+import { PageTitle } from '@/components/page-header';
+import { SearchField } from '@/components/search-field';
 import { FilterChip } from '@/components/filter-chip';
 import { SegmentedControl } from '@/components/segmented-control';
 import { SwitchField } from '@/components/switch-field';
@@ -76,14 +77,11 @@ export default function CompareIndex({ shops, rows }: Props) {
             <Head title="Bandingkan harga" />
             <main className="flex w-full flex-col gap-6 px-4 py-8 sm:py-12">
                 <header className="flex flex-col gap-2">
-                    <h1 className="font-display text-3xl leading-tight font-extrabold tracking-tight sm:text-5xl">
-                        Bandingkan harga
-                    </h1>
+                    <PageTitle>Bandingkan harga</PageTitle>
                     <p className="max-w-2xl text-muted-foreground">
-                        Tiap baris adalah satu tempat printing dan tiap kolom
-                        adalah layanan, sehingga daftar tetap rapi ke bawah
-                        meski jumlah tempat bertambah. Harga paling murah di
-                        tiap kolom diberi warna kuning.
+                        Satu baris untuk tiap tempat, satu kolom untuk tiap
+                        layanan. Harga paling murah di tiap kolom diberi warna
+                        kuning.
                     </p>
                 </header>
 
@@ -96,25 +94,13 @@ export default function CompareIndex({ shops, rows }: Props) {
                     <>
                         <section
                             aria-label="Filter perbandingan harga"
-                            className="flex flex-col gap-3 rounded-lg border bg-card p-4"
+                            className="flex flex-col gap-3 paper-card p-4"
                         >
                             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                                <div className="relative flex-1 sm:max-w-xs">
-                                    <Search
-                                        aria-hidden
-                                        className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-                                    />
-                                    <input
-                                        type="search"
-                                        value={query}
-                                        onChange={(event) =>
-                                            setQuery(event.target.value)
-                                        }
-                                        placeholder="Cari nama tempat..."
-                                        aria-label="Cari nama tempat"
-                                        className="w-full rounded-full border-2 border-foreground/15 bg-background py-1.5 pr-3 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                                    />
-                                </div>
+                                <SearchField
+                                    value={query}
+                                    onChange={setQuery}
+                                />
                                 <div className="flex flex-wrap items-center gap-4">
                                     <SwitchField
                                         label="Masih buka saja"

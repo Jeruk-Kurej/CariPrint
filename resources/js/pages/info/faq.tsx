@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 import { FaqItem } from '@/components/info/faq-item';
-import { PageHeader } from '@/components/info/page-header';
+import { PageHeader } from '@/components/page-header';
 
 const questions: { question: string; answer: string }[] = [
     {
@@ -43,6 +43,7 @@ export default function Faq() {
             <Head title="Pertanyaan umum" />
             <main className="flex w-full flex-col gap-8 px-4 py-8 sm:py-12">
                 <PageHeader
+                    divided
                     title="Pertanyaan umum"
                     intro="Jawaban singkat untuk hal yang paling sering ditanyakan tentang CariPrint."
                 />

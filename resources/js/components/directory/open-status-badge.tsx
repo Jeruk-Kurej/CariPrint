@@ -7,9 +7,9 @@ const labels: Record<OpenState, string> = {
 };
 
 const styles: Record<OpenState, string> = {
-    open: 'bg-status-open/15 text-status-open',
-    closing_soon: 'bg-status-closing/15 text-status-closing',
-    closed: 'bg-muted text-muted-foreground',
+    open: 'bg-card text-status-open ring-1 ring-status-open/40',
+    closing_soon: 'bg-card text-status-closing ring-1 ring-status-closing/40',
+    closed: 'bg-card/70 text-muted-foreground ring-1 ring-foreground/20',
 };
 
 /** Status buka sebagai label yang mudah terlihat, warnanya dari token di app.css. */

@@ -13,7 +13,7 @@ export function PriceTable({ prices }: { prices: ShopPrice[] }) {
     }
 
     return (
-        <div className="overflow-x-auto rounded-lg border bg-card">
+        <div className="overflow-x-auto paper-card">
             <table className="w-full text-sm">
                 <thead className="bg-muted text-left text-xs text-muted-foreground">
                     <tr>

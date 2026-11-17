@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { MapPin, MessageCircle, Navigation, Scissors } from 'lucide-react';
 import { Fastener, paperFor } from '@/components/directory/flyer-parts';
+import { Tag } from '@/components/tag';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
 import { formatDistance, formatRupiah } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
@@ -66,11 +67,10 @@ export function FlyerCard({
                 </div>
                 <ul className="flex flex-wrap gap-1.5">
                     {shop.services.slice(0, 3).map((service) => (
-                        <li
-                            key={service}
-                            className="rounded-full bg-card/70 px-2 py-0.5 text-xs font-medium"
-                        >
-                            {serviceLabel(service)}
+                        <li key={service}>
+                            <Tag tone="paper" size="sm">
+                                {serviceLabel(service)}
+                            </Tag>
                         </li>
                     ))}
                 </ul>

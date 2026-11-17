@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ShopSuggestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
 Route::inertia('/cara-kerja', 'info/how-it-works')->name('info.how-it-works');
 Route::inertia('/tentang', 'info/about')->name('info.about');
 Route::inertia('/pertanyaan', 'info/faq')->name('info.faq');
+Route::get('/privasi', PrivacyController::class)->name('info.privacy');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');

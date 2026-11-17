@@ -7,13 +7,19 @@ import { OpeningHoursList } from '@/components/directory/opening-hours-list';
 import { PriceTable } from '@/components/directory/price-table';
 import { ShopMap } from '@/components/directory/shop-map';
 import { WhatsAppButton } from '@/components/directory/whatsapp-button';
+import { Tag } from '@/components/tag';
 import { PageTitle, SectionHeading } from '@/components/page-header';
+import { formatRupiah } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
 import { todayKey } from '@/lib/weekday';
 import { index as directory } from '@/routes/directory';
 import type { ShopDetail } from '@/types';
 
 export default function ShopShow({ shop }: { shop: ShopDetail }) {
+    const startingPrice =
+        shop.prices.length > 0
+            ? Math.min(...shop.prices.map((price) => price.price))
+            : null;
     const marker = { ...shop, distanceKm: null, startingPrice: null };
 
     return (
@@ -34,6 +40,16 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                     <OpenStatusLine shop={shop} />
                     <PageTitle>{shop.name}</PageTitle>
                     <p className="text-muted-foreground">{shop.address}</p>
+                    {startingPrice !== null && (
+                        <p className="flex flex-wrap items-baseline gap-x-3">
+                            <span className="text-sm font-medium text-foreground/70">
+                                Mulai dari
+                            </span>
+                            <span className="rounded-sm bg-highlight px-2 font-display text-3xl font-extrabold tabular-nums">
+                                {formatRupiah(startingPrice)}
+                            </span>
+                        </p>
+                    )}
                     <div className="flex flex-wrap gap-2">
                         <DirectionsButton
                             latitude={shop.latitude}
@@ -79,11 +95,8 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                             <SectionHeading>Layanan</SectionHeading>
                             <ul className="flex flex-wrap gap-2">
                                 {shop.services.map((service) => (
-                                    <li
-                                        key={service}
-                                        className="rounded-md bg-secondary px-2.5 py-1 text-sm font-medium"
-                                    >
-                                        {serviceLabel(service)}
+                                    <li key={service}>
+                                        <Tag>{serviceLabel(service)}</Tag>
                                     </li>
                                 ))}
                             </ul>

@@ -32,13 +32,17 @@ export function PageHeader({
     title,
     intro,
     children,
+    divided = false,
 }: {
     title: string;
     intro?: string;
     children?: ReactNode;
+    divided?: boolean;
 }) {
     return (
-        <header className="flex flex-col gap-3">
+        <header
+            className={`flex flex-col gap-3 ${divided ? 'border-b pb-8' : ''}`}
+        >
             <PageTitle>{title}</PageTitle>
             {intro && (
                 <p className="max-w-2xl text-lg text-muted-foreground">

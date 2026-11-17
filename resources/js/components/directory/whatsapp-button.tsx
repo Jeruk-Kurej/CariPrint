@@ -9,7 +9,7 @@ type Props = {
 
 export function WhatsAppButton({ phone, message }: Props) {
     return (
-        <Button asChild size="sm" variant="outline" className="rounded-full">
+        <Button asChild className="min-h-11 sm:min-h-9">
             <a
                 href={whatsappUrl(phone, message)}
                 target="_blank"
