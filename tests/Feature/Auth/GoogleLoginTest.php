@@ -2,7 +2,9 @@
 
 use App\Enums\UserRole;
 use App\Models\User;
+use Illuminate\Support\Facades\Exceptions;
 use Laravel\Socialite\Socialite;
+use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Socialite\Two\User as GoogleUser;
 
 function fakeGoogle(array $attributes = []): void
@@ -86,10 +88,36 @@ test('a Google email that is not verified is refused', function () {
     $this->assertGuest();
 });
 
-test('a declined or failed Google sign-in shows a message instead of an error page', function () {
-    Socialite::fake('google', fn () => throw new RuntimeException('access_denied'));
+test('a declined Google sign-in says so and is not treated as an error', function () {
+    Exceptions::fake();
+    Socialite::fake('google');
 
-    $this->get('/masuk/google/callback')->assertRedirect('/login')->assertSessionHasErrors('google');
+    $this->get('/masuk/google/callback?error=access_denied')
+        ->assertRedirect('/login')
+        ->assertSessionHasErrors(['google' => 'Masuk dengan Google dibatalkan.']);
+
+    Exceptions::assertNothingReported();
+    $this->assertGuest();
+});
+
+test('an expired sign-in session asks the visitor to try again', function () {
+    Socialite::fake('google', fn () => throw new InvalidStateException);
+
+    $this->get('/masuk/google/callback')
+        ->assertRedirect('/login')
+        ->assertSessionHasErrors(['google' => 'Sesi masuk kedaluwarsa. Tekan Masuk dengan Google sekali lagi.']);
+    $this->assertGuest();
+});
+
+test('an unexpected Google failure is logged so the cause can be found, and the visitor sees a plain message', function () {
+    Exceptions::fake();
+    Socialite::fake('google', fn () => throw new RuntimeException('invalid_client'));
+
+    $this->get('/masuk/google/callback')
+        ->assertRedirect('/login')
+        ->assertSessionHasErrors(['google' => 'Masuk dengan Google gagal. Coba lagi sebentar lagi.']);
+
+    Exceptions::assertReported(fn (RuntimeException $exception) => $exception->getMessage() === 'invalid_client');
     $this->assertGuest();
 });
 

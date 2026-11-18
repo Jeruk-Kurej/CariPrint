@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Socialite\Two\User as GoogleUser;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Throwable;
@@ -22,14 +23,22 @@ class GoogleLoginController extends Controller
 
     public function callback(Request $request, GoogleLogin $login): RedirectResponse
     {
+        if ($request->has('error')) {
+            return $this->failed('Masuk dengan Google dibatalkan.');
+        }
+
         try {
             /** @var GoogleUser $google */
             $google = Socialite::driver('google')->user();
             $user = $login->resolve($google);
         } catch (GoogleLoginRejected $exception) {
             return $this->failed($exception->getMessage());
-        } catch (Throwable) {
-            return $this->failed('Masuk dengan Google dibatalkan atau gagal. Coba lagi.');
+        } catch (InvalidStateException) {
+            return $this->failed('Sesi masuk kedaluwarsa. Tekan Masuk dengan Google sekali lagi.');
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return $this->failed('Masuk dengan Google gagal. Coba lagi sebentar lagi.');
         }
 
         Auth::login($user, remember: true);
