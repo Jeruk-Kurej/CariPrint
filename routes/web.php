@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\CompareController;
@@ -30,8 +31,9 @@ Route::inertia('/tentang', 'info/about')->name('info.about');
 Route::inertia('/pertanyaan', 'info/faq')->name('info.faq');
 Route::get('/privasi', PrivacyController::class)->name('info.privacy');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/akun', AccountController::class)->name('account');
+    Route::redirect('/dashboard', '/akun')->name('dashboard');
 });
 
 require __DIR__.'/settings.php';

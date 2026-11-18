@@ -1,6 +1,7 @@
-import { Link, router, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { AccountList, AccountMenu } from '@/components/account-menu';
 import { BrandMark } from '@/components/brand-mark';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,7 +12,7 @@ import {
     SheetTrigger,
 } from '@/components/ui/sheet';
 import { homeUrl, mainNav } from '@/lib/navigation';
-import { login, logout } from '@/routes';
+import { login } from '@/routes';
 import type { User } from '@/types';
 
 export function PublicHeader() {
@@ -50,21 +51,11 @@ export function PublicHeader() {
 
                 <div className="hidden items-center gap-2 md:flex">
                     {user ? (
-                        <Link
-                            href={logout()}
-                            as="button"
-                            onClick={() => router.flushAll()}
-                            className="rounded-full px-3.5 py-1.5 text-sm font-semibold text-muted-foreground hover:bg-accent hover:text-foreground"
-                        >
-                            Keluar
-                        </Link>
+                        <AccountMenu user={user} />
                     ) : (
-                        <Link
-                            href={login()}
-                            className="rounded-full px-3.5 py-1.5 text-sm font-semibold text-muted-foreground hover:bg-accent hover:text-foreground"
-                        >
-                            Masuk
-                        </Link>
+                        <Button asChild variant="outline" size="sm">
+                            <Link href={login()}>Masuk</Link>
+                        </Button>
                     )}
                 </div>
 
@@ -103,25 +94,24 @@ export function PublicHeader() {
                                     {link.label}
                                 </Link>
                             ))}
-                            {user ? (
-                                <Link
-                                    href={logout()}
-                                    as="button"
-                                    onClick={() => router.flushAll()}
-                                    className="rounded-md px-3 py-3 text-left text-base font-medium hover:bg-accent"
-                                >
-                                    Keluar
-                                </Link>
-                            ) : (
-                                <Link
-                                    href={login()}
-                                    onClick={() => setOpen(false)}
-                                    className="rounded-md px-3 py-3 text-base font-medium hover:bg-accent"
-                                >
-                                    Masuk
-                                </Link>
-                            )}
                         </nav>
+                        {user ? (
+                            <AccountList
+                                user={user}
+                                onNavigate={() => setOpen(false)}
+                            />
+                        ) : (
+                            <div className="px-4 pt-4">
+                                <Button asChild className="w-full">
+                                    <Link
+                                        href={login()}
+                                        onClick={() => setOpen(false)}
+                                    >
+                                        Masuk
+                                    </Link>
+                                </Button>
+                            </div>
+                        )}
                     </SheetContent>
                 </Sheet>
             </div>
