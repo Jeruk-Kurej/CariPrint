@@ -41,13 +41,13 @@ Situs untuk mahasiswa sekitar CitraLand Surabaya membandingkan tempat print: lok
 
 ## 4. Belum terbukti di produksi (perlu dicek manusia)
 
-- Login Google untuk **pengguna biasa**. Aplikasi OAuth masih berstatus _Testing_, hanya akun penguji yang bisa masuk.
+- Login Google untuk akun di luar tim sudah berhasil diuji di situs live (akun kampus baru langsung dibuatkan akun dan masuk ke `/akun`). Aplikasi OAuth sudah berstatus _In production_ sejak 18 November 2026.
 - Pengiriman email SMTP (tanda terima, email admin, email keputusan). Cek folder spam; port 587 bisa diblokir host.
 - Tampilan email dan tema admin di perangkat asli; favicon baru mungkin tertahan cache.
 
 ## 5. Pekerjaan tersisa (urut saran)
 
-1. **Publikasikan aplikasi Google OAuth.** Google Cloud Console → OAuth consent screen/Branding: halaman utama `https://cariprint.lius.my.id`, kebijakan privasi `/privasi`, domain resmi. Risiko: domain `lius.my.id` bukan milik tim, jadi Google mungkin meminta verifikasi domain. Cadangan: tambahkan teman satu per satu sebagai penguji (maks. 100). Redirect URI terdaftar: `https://cariprint.lius.my.id/masuk/google/callback` dan `http://127.0.0.1:8000/masuk/google/callback`.
+1. **Google OAuth: selesai.** Aplikasi sudah di-publish (In production), tanpa logo dan hanya scope dasar sehingga tidak butuh verifikasi. Jangan mengunggah logo di layar Branding Google Cloud Console, karena itu memicu kewajiban verifikasi. Redirect URI terdaftar: `https://cariprint.lius.my.id/masuk/google/callback` dan `http://127.0.0.1:8000/masuk/google/callback`.
 2. **Revisi dosen 1 (deteksi area baru) — belum dikerjakan.** Desain yang disepakati: aplikasi hanya mencatat area (sel kasar) yang belum punya tempat, **tidak pernah koordinat pengguna**. Setelah area punya tempat tersimpan, pengunjung berikutnya memakai data itu. Pengambilan data dipicu **admin** (kredit Apify terbatas, tanpa layanan berbayar), hasil masuk sebagai **draf** sampai admin memeriksa. Butuh status Draf/Terbit pada tempat dan semua query publik menyembunyikan draf. Belum dikonfirmasi apakah akun Apify dibuat tanpa kartu kredit.
 3. **Harga asli.** Harga sekarang berasal dari `EstimatedPriceSeeder` (angka karangan, berlabel Perkiraan). Kontak WhatsApp tempat print ada di `kontak-whatsapp.csv`; template pesan di `config/cariprint.php` (`survey.whatsapp_message`). Isi harga yang dibalas pemilik sebagai Terverifikasi. Foto daftar harga bisa dibaca dengan `php artisan survey:read-prices` lalu diperiksa manusia. Catatan: daftar harga Kozko hanya format besar, tidak cocok skema (A4/F4/A3).
 4. **Kuota AI belum ditegakkan.** `config('cariprint.ai.quota')` (tamu 3/hari, pengguna 15/hari) sudah ada tetapi belum ada limiter. Pasang sebelum situs dibagikan luas.
@@ -76,7 +76,7 @@ Situs untuk mahasiswa sekitar CitraLand Surabaya membandingkan tempat print: lok
 4. Buat akun admin lokal: `php artisan cariprint:create-admin`.
 5. Cek: `composer ci:check` harus hijau sebelum merge.
 6. Akses server (SSH/CloudPanel) dan secret GitHub Actions dipegang pemilik; lihat `docs/DEPLOY.md`.
-7. Untuk Google OAuth saat uji lokal, akun Google yang dipakai harus terdaftar sebagai penguji di Google Cloud Console.
+7. Untuk Google OAuth di lokal, akun Google apa pun bisa dipakai selama redirect URI lokal (`http://127.0.0.1:8000/masuk/google/callback`) terdaftar; tidak perlu lagi menjadi penguji.
 
 ## 8. Cara memulai sesi Claude Code
 
