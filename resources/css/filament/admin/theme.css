@@ -1,0 +1,86 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/*
+ * Tema panel admin: pakai bahasa visual website (papan pengumuman kampus) supaya admin dan situs terasa satu produk.
+ * Nilai warna disalin dari token di resources/css/app.css karena file ini dibangun terpisah:
+ * background #fcfdff, foreground #1d2147, primary #3558f0, secondary #eef1fb, border #dfe3f5.
+ */
+
+.fi-body {
+    background-color: #fcfdff;
+    background-image:
+        linear-gradient(rgba(53, 88, 240, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53, 88, 240, 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: #1d2147;
+}
+
+.fi-topbar,
+.fi-sidebar {
+    background-color: rgba(252, 253, 255, 0.95);
+    box-shadow: none;
+    border-color: #dfe3f5;
+}
+
+.fi-topbar {
+    border-bottom: 1px solid #dfe3f5;
+}
+
+.fi-sidebar {
+    border-right: 1px solid #dfe3f5;
+}
+
+/* Menu samping berbentuk pil, yang aktif berwarna biru seperti tombol utama di website. */
+.fi-sidebar-item-btn {
+    border-radius: 9999px;
+    font-weight: 600;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background-color: #3558f0;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-sidebar-item-label,
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn svg {
+    color: #ffffff;
+}
+
+/* Permukaan kertas untuk kartu, tabel, dan ringkasan, sama dengan paper-card di website. */
+.fi-section:not(.fi-section-not-contained),
+.fi-wi-stats-overview-stat,
+.fi-ta-ctn,
+.fi-dropdown-panel {
+    background-color: #ffffff;
+    border: 1px solid rgba(29, 33, 71, 0.14);
+    border-radius: 0.375rem;
+    box-shadow:
+        0 1px 0 rgba(29, 33, 71, 0.1),
+        0 8px 16px -12px rgba(29, 33, 71, 0.35);
+    --tw-ring-shadow: 0 0 #0000;
+}
+
+.fi-header-heading,
+.fi-wi-stats-overview-stat-value {
+    color: #1d2147;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* Tombol dan avatar mengikuti bentuk pil dan stiker di website. */
+.fi-btn {
+    border-radius: 9999px;
+}
+
+.fi-user-menu-trigger {
+    border-radius: 9999px;
+    padding: 0.125rem;
+    border: 2px solid transparent;
+}
+
+.fi-user-menu-trigger:hover,
+.fi-user-menu-trigger[aria-expanded='true'] {
+    border-color: #3558f0;
+}

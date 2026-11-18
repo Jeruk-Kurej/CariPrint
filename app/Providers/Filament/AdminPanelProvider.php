@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\InitialsAvatarProvider;
 use Filament\Actions\Action;
 use Filament\FontProviders\BunnyFontProvider;
 use Filament\Http\Middleware\Authenticate;
@@ -33,6 +34,8 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(fn () => view('filament.brand'))
             ->brandLogoHeight('2rem')
             ->favicon(asset('favicon.svg'))
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->defaultAvatarProvider(InitialsAvatarProvider::class)
             ->navigationItems([
                 NavigationItem::make('Lihat website')
                     ->url('/')

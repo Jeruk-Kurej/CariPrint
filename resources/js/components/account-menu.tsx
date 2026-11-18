@@ -40,6 +40,15 @@ export function AvatarSticker({
     );
 }
 
+/** Penanda peran, supaya nama akun tidak perlu ditulis "Admin ...". */
+function AdminChip() {
+    return (
+        <span className="shrink-0 rounded-full bg-note-sky px-2 py-0.5 text-[11px] leading-none font-bold">
+            Admin
+        </span>
+    );
+}
+
 export function isAdmin(user: User): boolean {
     return user.role === 'admin';
 }
@@ -73,8 +82,9 @@ export function AccountMenu({ user }: { user: User }) {
                 <DropdownMenuLabel className="flex items-center gap-3 p-2">
                     <AvatarSticker name={user.name} />
                     <span className="min-w-0">
-                        <span className="block truncate text-sm font-bold">
-                            {user.name}
+                        <span className="flex items-center gap-2 text-sm font-bold">
+                            <span className="truncate">{user.name}</span>
+                            {isAdmin(user) && <AdminChip />}
                         </span>
                         <span className="block truncate text-xs font-normal text-muted-foreground">
                             {user.email}
@@ -143,8 +153,9 @@ export function AccountList({
             <div className="flex items-center gap-3 px-3 pb-2">
                 <AvatarSticker name={user.name} className="size-11 text-base" />
                 <span className="min-w-0">
-                    <span className="block truncate font-bold">
-                        {user.name}
+                    <span className="flex items-center gap-2 font-bold">
+                        <span className="truncate">{user.name}</span>
+                        {isAdmin(user) && <AdminChip />}
                     </span>
                     <span className="block truncate text-sm text-muted-foreground">
                         {user.email}

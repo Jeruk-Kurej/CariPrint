@@ -71,8 +71,8 @@ test('an existing account with the same email is linked, and an admin stays an a
     $this->assertAuthenticatedAs($admin);
 });
 
-test('an account made by the create-admin command takes the Google name, but a chosen name is kept', function () {
-    $generic = User::factory()->admin()->create(['email' => 'siti@gmail.com', 'name' => 'Admin CariPrint']);
+test('an account made by the create-admin command takes the Google name, but a chosen name is kept', function (string $genericName) {
+    $generic = User::factory()->admin()->create(['email' => 'siti@gmail.com', 'name' => $genericName]);
     fakeGoogle(['name' => 'Siti Aminah']);
     $this->get('/masuk/google/callback');
     expect($generic->refresh()->name)->toBe('Siti Aminah');
@@ -81,7 +81,7 @@ test('an account made by the create-admin command takes the Google name, but a c
     $generic->forceFill(['google_id' => null, 'name' => 'Nama Pilihan Sendiri'])->save();
     $this->get('/masuk/google/callback');
     expect($generic->refresh()->name)->toBe('Nama Pilihan Sendiri');
-});
+})->with(['the current default' => ['Admin'], 'the earlier default' => ['Admin CariPrint']]);
 
 test('an email tied to a different Google account is refused', function () {
     User::factory()->create(['email' => 'siti@gmail.com', 'google_id' => 'google-OTHER']);

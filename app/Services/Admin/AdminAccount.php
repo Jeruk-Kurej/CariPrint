@@ -8,7 +8,10 @@ use App\Models\User;
 class AdminAccount
 {
     /** Name given to accounts made by the create-admin command, replaced by the Google name on first Google sign-in. */
-    public const DEFAULT_NAME = 'Admin CariPrint';
+    public const DEFAULT_NAME = 'Admin';
+
+    /** Names the command has used so far. Any of them counts as "no name chosen yet". */
+    public const GENERIC_NAMES = ['Admin', 'Admin CariPrint'];
 
     /**
      * Create or update an admin. Role is set explicitly because it is not mass assignable.

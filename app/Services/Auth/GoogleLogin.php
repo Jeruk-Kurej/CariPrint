@@ -48,7 +48,7 @@ class GoogleLogin
         }
 
         $user->forceFill([
-            'name' => $user->name === AdminAccount::DEFAULT_NAME ? ($google->getName() ?: $user->name) : $user->name,
+            'name' => in_array($user->name, AdminAccount::GENERIC_NAMES, true) ? ($google->getName() ?: $user->name) : $user->name,
             'google_id' => $googleId,
             'email_verified_at' => $user->email_verified_at ?? now(),
         ])->save();
