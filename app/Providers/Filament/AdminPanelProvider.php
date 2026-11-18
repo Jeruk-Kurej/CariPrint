@@ -2,15 +2,18 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Actions\Action;
 use Filament\FontProviders\BunnyFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -27,7 +30,19 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->brandName('CariPrint Admin')
+            ->brandLogo(fn () => view('filament.brand'))
+            ->brandLogoHeight('2rem')
             ->favicon(asset('favicon.svg'))
+            ->navigationItems([
+                NavigationItem::make('Lihat website')
+                    ->url('/')
+                    ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
+                    ->sort(100),
+            ])
+            ->userMenuItems([
+                Action::make('site')->label('Lihat website')->url('/')->icon(Heroicon::OutlinedGlobeAlt),
+                Action::make('account')->label('Akunku')->url('/akun')->icon(Heroicon::OutlinedUser),
+            ])
             ->path('admin')
             ->login()
             ->darkMode(false)

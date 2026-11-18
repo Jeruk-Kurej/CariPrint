@@ -17,3 +17,11 @@ test('regular users are forbidden from the admin panel', function () {
         ->get('/admin')
         ->assertForbidden();
 });
+
+test('the admin panel offers a way back to the public website and the account page', function () {
+    $this->actingAs(User::factory()->admin()->create())
+        ->get('/admin')
+        ->assertOk()
+        ->assertSee('Lihat website')
+        ->assertSee('Akunku');
+});

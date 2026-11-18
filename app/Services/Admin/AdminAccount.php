@@ -7,6 +7,9 @@ use App\Models\User;
 
 class AdminAccount
 {
+    /** Name given to accounts made by the create-admin command, replaced by the Google name on first Google sign-in. */
+    public const DEFAULT_NAME = 'Admin CariPrint';
+
     /**
      * Create or update an admin. Role is set explicitly because it is not mass assignable.
      */
@@ -15,7 +18,7 @@ class AdminAccount
         $user = User::firstOrNew(['email' => $email]);
 
         $user->forceFill([
-            'name' => 'Admin CariPrint',
+            'name' => self::DEFAULT_NAME,
             'password' => $password,
             'role' => UserRole::Admin,
             'email_verified_at' => now(),

@@ -3,6 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Models\User;
+use App\Services\Admin\AdminAccount;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Two\User as GoogleUser;
 
@@ -27,14 +28,14 @@ class GoogleLogin
         $googleId = (string) $google->getId();
 
         return User::where('google_id', $googleId)->first()
-            ?? $this->claimByEmail($email, $googleId)
+            ?? $this->claimByEmail($google, $email, $googleId)
             ?? $this->register($google, $email, $googleId);
     }
 
     /**
      * Links the Google account to a user that already has this email, unless that user is tied to another Google account.
      */
-    private function claimByEmail(string $email, string $googleId): ?User
+    private function claimByEmail(GoogleUser $google, string $email, string $googleId): ?User
     {
         $user = User::where('email', $email)->first();
 
@@ -46,7 +47,11 @@ class GoogleLogin
             throw new GoogleLoginRejected('Email ini sudah terhubung ke akun Google lain.');
         }
 
-        $user->forceFill(['google_id' => $googleId, 'email_verified_at' => $user->email_verified_at ?? now()])->save();
+        $user->forceFill([
+            'name' => $user->name === AdminAccount::DEFAULT_NAME ? ($google->getName() ?: $user->name) : $user->name,
+            'google_id' => $googleId,
+            'email_verified_at' => $user->email_verified_at ?? now(),
+        ])->save();
 
         return $user;
     }
