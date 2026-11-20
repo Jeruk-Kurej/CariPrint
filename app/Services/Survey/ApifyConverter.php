@@ -16,22 +16,29 @@ class ApifyConverter
         'fri' => 'Jumat', 'sat' => 'Sabtu', 'sun' => 'Minggu',
     ];
 
+    private const REQUIRED_COLUMNS = ['title', 'placeId', 'location/lat', 'location/lng'];
+
     private const RELEVANT = '/percetakan|cetak digital|fotokopi|fotocopy|print/i';
 
     private const NOT_RELEVANT = '/3d|tinta|alat tulis|bank/i';
 
     /**
-     * @param  array{min_latitude: float, max_latitude: float, min_longitude: float, max_longitude: float}  $area
      * @return array{shops: list<array<string, string>>, needsCheck: list<array<string, string>>, skipped: list<array{title: string, reason: string}>}
      */
-    public function convert(string $csvPath, array $area): array
+    public function convert(string $csvPath, SurveyArea $area): array
     {
         $shops = [];
         $needsCheck = [];
         $skipped = [];
         $slugs = [];
 
-        foreach (CsvFile::read($csvPath) as $row) {
+        $rows = CsvFile::read($csvPath);
+
+        if ($rows !== [] && array_diff(self::REQUIRED_COLUMNS, array_keys($rows[0])) !== []) {
+            throw new InvalidArgumentException('Berkas ini bukan hasil export Apify Google Maps Scraper (kolom title, placeId, atau lokasi tidak ada).');
+        }
+
+        foreach ($rows as $row) {
             $title = trim($row['title'] ?? '');
 
             if (($reason = $this->skipReason($row, $area)) !== null) {
@@ -56,9 +63,8 @@ class ApifyConverter
 
     /**
      * @param  array<string, string>  $row
-     * @param  array<string, float>  $area
      */
-    private function skipReason(array $row, array $area): ?string
+    private function skipReason(array $row, SurveyArea $area): ?string
     {
         $categories = $this->categories($row);
 
@@ -73,8 +79,8 @@ class ApifyConverter
         $lat = (float) ($row['location/lat'] ?? 0);
         $lng = (float) ($row['location/lng'] ?? 0);
 
-        if ($lat < $area['min_latitude'] || $lat > $area['max_latitude'] || $lng < $area['min_longitude'] || $lng > $area['max_longitude']) {
-            return 'di luar area CitraLand';
+        if (! $area->contains($lat, $lng)) {
+            return "di luar area {$area->label}";
         }
 
         return null;

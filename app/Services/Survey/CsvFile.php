@@ -25,10 +25,10 @@ class CsvFile
             throw new RuntimeException("Berkas tidak bisa dibuka: $path");
         }
 
-        $header = fgetcsv($handle) ?: [];
+        $header = fgetcsv($handle, escape: '\\') ?: [];
         $rows = [];
 
-        while (($line = fgetcsv($handle)) !== false) {
+        while (($line = fgetcsv($handle, escape: '\\')) !== false) {
             if ($line === [null]) {
                 continue;
             }
@@ -52,10 +52,10 @@ class CsvFile
             throw new RuntimeException("Berkas tidak bisa ditulis: $path");
         }
 
-        fputcsv($handle, $columns);
+        fputcsv($handle, $columns, escape: '\\');
 
         foreach ($rows as $row) {
-            fputcsv($handle, array_map(fn (string $column) => $row[$column] ?? '', $columns));
+            fputcsv($handle, array_map(fn (string $column) => $row[$column] ?? '', $columns), escape: '\\');
         }
 
         fclose($handle);

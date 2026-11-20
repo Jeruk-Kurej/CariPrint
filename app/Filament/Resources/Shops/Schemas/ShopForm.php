@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\Shops\Schemas;
 
 use App\Enums\ShopService;
+use App\Enums\ShopStatus;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -26,6 +28,9 @@ class ShopForm
                 TextInput::make('name')->label('Nama')->required()->live(onBlur: true)
                     ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug((string) $state))),
                 TextInput::make('slug')->required()->unique(ignoreRecord: true),
+                Select::make('status')->label('Status')->required()->default(ShopStatus::Published->value)
+                    ->options(collect(ShopStatus::cases())->mapWithKeys(fn (ShopStatus $status) => [$status->value => $status->label()]))
+                    ->helperText('Tempat berstatus Draf tidak tampil di website sampai diterbitkan.'),
                 TextInput::make('address')->label('Alamat')->required(),
                 TextInput::make('whatsapp')->label('WhatsApp (format 62...)')->tel()
                     ->regex('/^62\d{8,13}$/')
@@ -37,10 +42,10 @@ class ShopForm
 
             Section::make('Lokasi')->schema([
                 TextInput::make('latitude')->required()->numeric()
-                    ->minValue(config('cariprint.area.min_latitude'))->maxValue(config('cariprint.area.max_latitude'))
-                    ->helperText('Harus di dalam area CitraLand (lihat config/cariprint.php).'),
+                    ->minValue(config('cariprint.city_area.min_latitude'))->maxValue(config('cariprint.city_area.max_latitude'))
+                    ->helperText('Harus di dalam kota Surabaya (lihat config/cariprint.php).'),
                 TextInput::make('longitude')->required()->numeric()
-                    ->minValue(config('cariprint.area.min_longitude'))->maxValue(config('cariprint.area.max_longitude')),
+                    ->minValue(config('cariprint.city_area.min_longitude'))->maxValue(config('cariprint.city_area.max_longitude')),
             ])->columns(2),
 
             Section::make('Jam buka')->schema(

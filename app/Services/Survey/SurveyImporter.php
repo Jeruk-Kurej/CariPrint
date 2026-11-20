@@ -25,18 +25,7 @@ class SurveyImporter
         $prices = CsvFile::read($pricesCsv);
 
         foreach ($shops as $row) {
-            $shop = Shop::updateOrCreate(['slug' => $row['slug']], [
-                'name' => $row['name'],
-                'address' => $row['address'],
-                'latitude' => (float) $row['latitude'],
-                'longitude' => (float) $row['longitude'],
-                'whatsapp' => $row['whatsapp'] ?: null,
-                'place_id' => ($row['place_id'] ?? '') ?: null,
-                'opening_hours' => $this->openingHours($row),
-                'services' => $this->services($row['services']),
-                'color_page_rule' => $row['color_page_rule'] ?: null,
-                'last_surveyed_at' => CarbonImmutable::parse($row['surveyed_at'], 'Asia/Jakarta'),
-            ]);
+            $shop = Shop::updateOrCreate(['slug' => $row['slug']], $this->attributes($row));
 
             $shop->priceLists()->delete();
             foreach (array_filter($prices, fn (array $p) => $p['shop_slug'] === $row['slug']) as $price) {
@@ -45,6 +34,28 @@ class SurveyImporter
         }
 
         return count($shops);
+    }
+
+    /**
+     * The shop columns a survey row describes, apart from its slug.
+     *
+     * @param  array<string, string>  $row
+     * @return array<string, mixed>
+     */
+    public function attributes(array $row): array
+    {
+        return [
+            'name' => $row['name'],
+            'address' => $row['address'],
+            'latitude' => (float) $row['latitude'],
+            'longitude' => (float) $row['longitude'],
+            'whatsapp' => $row['whatsapp'] ?: null,
+            'place_id' => ($row['place_id'] ?? '') ?: null,
+            'opening_hours' => $this->openingHours($row),
+            'services' => $this->services($row['services']),
+            'color_page_rule' => $row['color_page_rule'] ?: null,
+            'last_surveyed_at' => CarbonImmutable::parse($row['surveyed_at'], 'Asia/Jakarta'),
+        ];
     }
 
     /**

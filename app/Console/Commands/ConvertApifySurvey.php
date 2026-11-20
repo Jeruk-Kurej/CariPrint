@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\Survey\ApifyConverter;
 use App\Services\Survey\CsvFile;
+use App\Services\Survey\SurveyArea;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -22,7 +23,7 @@ class ConvertApifySurvey extends Command
 
     public function handle(ApifyConverter $converter): int
     {
-        $result = $converter->convert($this->argument('file'), config('cariprint.area'));
+        $result = $converter->convert($this->argument('file'), SurveyArea::box(config('cariprint.area'), 'CitraLand'));
         $out = $this->option('out') ?: storage_path('app/survey');
 
         if (! is_dir($out)) {

@@ -41,6 +41,20 @@ return [
         'max_longitude' => 112.6600,
     ],
 
+    // Wider box around the whole city: the admin form accepts shops anywhere inside it (imported drafts included).
+    'city_area' => [
+        'min_latitude' => -7.4000,
+        'max_latitude' => -7.1500,
+        'min_longitude' => 112.5500,
+        'max_longitude' => 112.8700,
+    ],
+
+    'import' => [
+        // Apify imports keep only places within this many kilometres of the centre of the CitraLand box.
+        'default_radius_km' => 8,
+        'max_radius_km' => 30,
+    ],
+
     'uploads' => [
         // Uploaded files are deleted automatically after this many hours.
         'ttl_hours' => 24,

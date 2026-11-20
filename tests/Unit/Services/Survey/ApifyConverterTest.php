@@ -1,11 +1,12 @@
 <?php
 
 use App\Services\Survey\ApifyConverter;
+use App\Services\Survey\SurveyArea;
 
 beforeEach(function () {
     $this->result = (new ApifyConverter)->convert(
         base_path('tests/Fixtures/apify/places.csv'),
-        config('cariprint.area'),
+        SurveyArea::box(config('cariprint.area'), 'CitraLand'),
     );
     $this->shops = collect($this->result['shops'])->keyBy('slug');
 });
@@ -51,6 +52,14 @@ test('an unreadable hours format stops the conversion with a clear message', fun
     $bad = tempnam(sys_get_temp_dir(), 'apify');
     file_put_contents($bad, str_replace('08.00 to 12.00', 'pagi sampai siang', file_get_contents(base_path('tests/Fixtures/apify/places.csv'))));
 
-    expect(fn () => (new ApifyConverter)->convert($bad, config('cariprint.area')))
+    expect(fn () => (new ApifyConverter)->convert($bad, SurveyArea::box(config('cariprint.area'), 'CitraLand')))
         ->toThrow(InvalidArgumentException::class, 'Format jam tidak dikenal');
+});
+
+test('a csv without the Apify columns is rejected with a clear message', function () {
+    $bad = tempnam(sys_get_temp_dir(), 'csv');
+    file_put_contents($bad, "nama,umur\nBudi,20\n");
+
+    expect(fn () => (new ApifyConverter)->convert($bad, SurveyArea::box(config('cariprint.area'), 'CitraLand')))
+        ->toThrow(InvalidArgumentException::class, 'bukan hasil export Apify');
 });
