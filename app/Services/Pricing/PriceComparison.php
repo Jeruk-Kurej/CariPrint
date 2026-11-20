@@ -26,7 +26,7 @@ class PriceComparison
      */
     public function forAllShops(): array
     {
-        return $this->build(Shop::query()->with('priceLists')->orderBy('name')->get());
+        return $this->build(Shop::published()->with('priceLists')->orderBy('name')->get());
     }
 
     /**

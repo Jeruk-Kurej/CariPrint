@@ -19,6 +19,8 @@ class DirectoryController extends Controller
 
     public function show(Shop $shop, ShopDirectory $directory): Response
     {
+        abort_unless($shop->isPublished(), 404);
+
         return Inertia::render('directory/show', [
             'shop' => $directory->detail($shop),
         ]);

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ShopService;
+use App\Enums\ShopStatus;
 use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -37,6 +38,11 @@ class ShopFactory extends Factory
             'color_page_rule' => null,
             'last_surveyed_at' => null,
         ];
+    }
+
+    public function draft(): static
+    {
+        return $this->state(fn () => ['status' => ShopStatus::Draft]);
     }
 
     public function surveyed(): static

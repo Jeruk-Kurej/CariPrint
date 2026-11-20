@@ -27,7 +27,7 @@ class ShopDirectory
         $now = CarbonImmutable::now('Asia/Jakarta');
 
         /** @var Collection<int, array<string, mixed>> $cards */
-        $cards = Shop::query()->with('priceLists')->orderBy('name')->get()->map(function (Shop $shop) use ($now, $latitude, $longitude) {
+        $cards = Shop::published()->with('priceLists')->orderBy('name')->get()->map(function (Shop $shop) use ($now, $latitude, $longitude) {
             return [
                 'id' => $shop->id,
                 'slug' => $shop->slug,

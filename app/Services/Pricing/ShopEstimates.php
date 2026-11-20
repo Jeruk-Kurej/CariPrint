@@ -32,7 +32,7 @@ class ShopEstimates
         $now = CarbonImmutable::now('Asia/Jakarta');
 
         /** @var Collection<int, array<string, mixed>> $rows */
-        $rows = Shop::query()->with('priceLists')->orderBy('name')->get()
+        $rows = Shop::published()->with('priceLists')->orderBy('name')->get()
             ->map(function (Shop $shop) use ($spec, $coordinates, $now) {
                 $breakdown = $this->calculator->forShop($shop, $spec);
 

@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\PriceSource;
+use App\Enums\ShopStatus;
 use App\Enums\SuggestionStatus;
 use App\Filament\Resources\Shops\ShopResource;
 use App\Filament\Resources\ShopSuggestions\ShopSuggestionResource;
@@ -13,7 +14,7 @@ use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
 /**
- * Three numbers an admin checks first: how many shops are listed, how many prices still wait for the owner's
+ * Numbers an admin checks first: how many shops are listed, how many drafts wait for review, how many prices still wait for the owner's
  * confirmation, and how many suggestions wait for a decision.
  */
 class ShopOverview extends StatsOverviewWidget
@@ -24,13 +25,18 @@ class ShopOverview extends StatsOverviewWidget
 
     protected function getStats(): array
     {
+        $drafts = Shop::where('status', ShopStatus::Draft->value)->count();
         $pending = ShopSuggestion::where('status', SuggestionStatus::Pending->value)->count();
         $unconfirmed = PriceList::where('source', '!=', PriceSource::Verified->value)->count();
 
         return [
-            Stat::make('Tempat printing', Shop::count())
+            Stat::make('Tempat printing', Shop::published()->count())
                 ->description('Tampil di website')
                 ->url(ShopResource::getUrl('index')),
+            Stat::make('Draf menunggu diperiksa', $drafts)
+                ->description($drafts > 0 ? 'Belum tampil di website' : 'Tidak ada draf')
+                ->color($drafts > 0 ? 'warning' : 'success')
+                ->url(ShopResource::getUrl('index', ['filters' => ['status' => ['value' => ShopStatus::Draft->value]]])),
             Stat::make('Harga belum dikonfirmasi', $unconfirmed)
                 ->description('Masih berstatus Perkiraan')
                 ->color($unconfirmed > 0 ? 'warning' : 'success'),
