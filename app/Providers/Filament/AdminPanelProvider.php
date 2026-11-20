@@ -14,6 +14,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -50,6 +51,8 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->darkMode(false)
             ->unsavedChangesAlerts()
+            ->maxContentWidth(Width::Full)
+            ->sidebarCollapsibleOnDesktop()
             ->font('Gabarito', provider: BunnyFontProvider::class)
             ->colors([
                 'primary' => Color::hex('#3558f0'),

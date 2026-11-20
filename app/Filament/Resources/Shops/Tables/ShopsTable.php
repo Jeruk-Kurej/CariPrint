@@ -31,9 +31,11 @@ class ShopsTable
                     ->color(fn (ShopStatus $state) => $state === ShopStatus::Published ? 'success' : 'warning'),
                 IconColumn::make('hours')->label('Jam buka')->boolean()
                     ->state(fn (Shop $record) => $record->hasOpeningHours()),
-                TextColumn::make('address')->label('Alamat')->searchable()->limit(45)->tooltip(fn (Shop $record) => $record->address),
-                TextColumn::make('last_surveyed_at')->label('Terakhir disurvei')->dateTime('d M Y')->placeholder('Belum disurvei')->sortable(),
-                TextColumn::make('updated_at')->label('Diubah')->since()->sortable(),
+                TextColumn::make('address')->label('Alamat')->searchable()->limit(40)->tooltip(fn (Shop $record) => $record->address),
+                TextColumn::make('last_surveyed_at')->label('Terakhir disurvei')->dateTime('d M Y')->placeholder('Belum disurvei')->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->label('Diubah')->since()->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('status')->label('Status')
@@ -50,14 +52,14 @@ class ShopsTable
                     ),
             ])
             ->recordActions([
-                Action::make('publish')->label('Terbitkan')->icon('heroicon-o-eye')
+                Action::make('publish')->label('Terbitkan')->icon('heroicon-o-eye')->iconButton()->tooltip('Terbitkan')
                     ->visible(fn (Shop $record) => ! $record->isPublished())
                     ->requiresConfirmation()
                     ->modalDescription('Tempat ini akan tampil di website.')
                     ->action(fn (Shop $record) => self::publish(new Collection([$record]))),
-                Action::make('maps')->label('Cek di Maps')->icon('heroicon-o-map-pin')
+                Action::make('maps')->label('Cek di Maps')->icon('heroicon-o-map-pin')->iconButton()->tooltip('Cek di Maps')
                     ->url(fn (Shop $record) => self::mapsUrl($record), shouldOpenInNewTab: true),
-                EditAction::make(),
+                EditAction::make()->iconButton()->tooltip('Ubah'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
