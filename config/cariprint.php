@@ -50,8 +50,7 @@ return [
     ],
 
     'import' => [
-        // Apify imports keep only places within this many kilometres of the centre of the CitraLand box.
-        'default_radius_km' => 8,
+        // The admin may limit an Apify import to places within this many kilometres of CitraLand (its upper bound).
         'max_radius_km' => 30,
     ],
 

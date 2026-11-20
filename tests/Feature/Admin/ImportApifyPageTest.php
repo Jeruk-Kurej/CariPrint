@@ -16,7 +16,7 @@ test('an admin imports an export as drafts and sees what happened', function () 
     $this->actingAs(User::factory()->admin()->create());
 
     Livewire::test(ImportApify::class)
-        ->fillForm(['file' => apifyUpload(), 'radius' => 8])
+        ->fillForm(['file' => [apifyUpload()], 'radius' => 8])
         ->call('import')
         ->assertHasNoFormErrors()
         ->assertSee('4')
@@ -26,11 +26,11 @@ test('an admin imports an export as drafts and sees what happened', function () 
         ->and(Shop::published()->count())->toBe(0);
 });
 
-test('the radius is required and limited', function () {
+test('the radius is limited', function () {
     $this->actingAs(User::factory()->admin()->create());
 
     Livewire::test(ImportApify::class)
-        ->fillForm(['file' => apifyUpload(), 'radius' => 500])
+        ->fillForm(['file' => [apifyUpload()], 'radius' => 500])
         ->call('import')
         ->assertHasFormErrors(['radius']);
 
@@ -42,7 +42,7 @@ test('a csv that is not an Apify export is refused with a clear message', functi
 
     Livewire::test(ImportApify::class)
         ->fillForm([
-            'file' => UploadedFile::fake()->createWithContent('lain.csv', "nama,umur\nBudi,20\n"),
+            'file' => [UploadedFile::fake()->createWithContent('lain.csv', "nama,umur\nBudi,20\n")],
             'radius' => 8,
         ])
         ->call('import')
@@ -57,4 +57,27 @@ test('only admins can open the import page', function () {
     $this->actingAs(User::factory()->create())->get('/admin/import-apify')->assertForbidden();
 
     $this->actingAs(User::factory()->admin()->create())->get('/admin/import-apify')->assertOk()->assertSee('Impor dari Apify');
+});
+
+test('without a radius the whole city is accepted', function () {
+    $this->actingAs(User::factory()->admin()->create());
+
+    Livewire::test(ImportApify::class)
+        ->fillForm(['file' => [apifyUpload()]])
+        ->call('import')
+        ->assertHasNoFormErrors();
+
+    expect(Shop::where('place_id', 'ChIJjauh')->exists())->toBeTrue()
+        ->and(Shop::count())->toBe(5);
+});
+
+test('several files can be imported at once and a place found in both is added once', function () {
+    $this->actingAs(User::factory()->admin()->create());
+
+    Livewire::test(ImportApify::class)
+        ->fillForm(['file' => [apifyUpload('satu.csv'), apifyUpload('dua.csv')]])
+        ->call('import')
+        ->assertHasNoFormErrors();
+
+    expect(Shop::count())->toBe(5);
 });

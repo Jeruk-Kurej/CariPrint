@@ -49,7 +49,7 @@ class ImportApify extends Page
 
     public function mount(): void
     {
-        $this->form->fill(['radius' => config('cariprint.import.default_radius_km')]);
+        $this->form->fill();
     }
 
     public function form(Schema $schema): Schema
@@ -60,13 +60,15 @@ class ImportApify extends Page
             ->components([
                 Form::make([
                     FileUpload::make('file')->label('Berkas CSV dari Apify')->required()
+                        ->multiple()->maxFiles(10)
                         ->storeFiles(false)
                         ->acceptedFileTypes(['text/csv', 'text/plain', 'application/csv', 'application/vnd.ms-excel'])
                         ->maxSize(10240)
-                        ->helperText('Export dataset Apify Google Maps Scraper, format CSV. Berkas tidak disimpan.'),
-                    TextInput::make('radius')->label('Radius dari CitraLand (km)')->required()->numeric()
+                        ->helperText('Boleh beberapa berkas sekaligus. Berkas tidak disimpan, dan semua tempat masuk sebagai draf.'),
+                    TextInput::make('radius')->label('Batasi radius dari CitraLand (km), opsional')->numeric()
                         ->minValue(1)->maxValue($maxRadius)
-                        ->helperText("Hanya tempat dalam radius ini yang diimpor, maksimal {$maxRadius} km."),
+                        ->placeholder('Kosongkan untuk seluruh Surabaya')
+                        ->helperText("Isi hanya kalau ingin membatasi ke sekitar kampus, maksimal {$maxRadius} km."),
                 ])
                     ->livewireSubmitHandler('import')
                     ->footer([
@@ -81,30 +83,44 @@ class ImportApify extends Page
     public function import(ApifyDraftImporter $importer): void
     {
         $data = $this->form->getState();
-        $file = Arr::first(Arr::wrap($data['file']));
+        $paths = collect(Arr::wrap($data['file']))
+            ->filter(fn ($file) => $file instanceof TemporaryUploadedFile)
+            ->map(fn (TemporaryUploadedFile $file) => (string) $file->getRealPath())
+            ->values();
 
-        if (! $file instanceof TemporaryUploadedFile) {
+        if ($paths->isEmpty()) {
             return;
         }
 
-        $box = config('cariprint.area');
-        $area = SurveyArea::circle(
-            ($box['min_latitude'] + $box['max_latitude']) / 2,
-            ($box['min_longitude'] + $box['max_longitude']) / 2,
-            (float) $data['radius'],
-        );
-
         try {
-            $this->summary = $importer->import((string) $file->getRealPath(), $area);
+            $this->summary = $importer->importAll(array_values($paths->all()), $this->area($data['radius'] ?? null));
         } catch (InvalidArgumentException|RuntimeException $exception) {
             Notification::make()->danger()->title('Berkas tidak bisa diimpor')->body($exception->getMessage())->send();
 
             return;
         }
 
-        $file->delete();
-        $this->form->fill(['radius' => $data['radius']]);
+        collect(Arr::wrap($data['file']))->each(fn ($file) => $file instanceof TemporaryUploadedFile ? $file->delete() : null);
+        $this->form->fill(['radius' => $data['radius'] ?? null]);
 
         Notification::make()->success()->title("{$this->summary['created']} tempat ditambahkan sebagai draf")->send();
+    }
+
+    /**
+     * Without a radius the whole city is accepted; with one, only places near the middle of CitraLand.
+     */
+    private function area(mixed $radius): SurveyArea
+    {
+        if (blank($radius)) {
+            return SurveyArea::box(config('cariprint.city_area'), 'Surabaya');
+        }
+
+        $box = config('cariprint.area');
+
+        return SurveyArea::circle(
+            ($box['min_latitude'] + $box['max_latitude']) / 2,
+            ($box['min_longitude'] + $box['max_longitude']) / 2,
+            (float) $radius,
+        );
     }
 }

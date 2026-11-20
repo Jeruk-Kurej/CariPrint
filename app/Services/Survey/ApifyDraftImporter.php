@@ -18,6 +18,31 @@ class ApifyDraftImporter
     ) {}
 
     /**
+     * Imports several exports in a row and adds their results together, so one summary covers them all.
+     *
+     * @param  list<string>  $csvPaths
+     * @return array{created: int, existing: int, withoutHours: int, skipped: array<string, int>}
+     */
+    public function importAll(array $csvPaths, SurveyArea $area): array
+    {
+        $total = ['created' => 0, 'existing' => 0, 'withoutHours' => 0, 'skipped' => []];
+
+        foreach ($csvPaths as $path) {
+            $summary = $this->import($path, $area);
+
+            foreach (['created', 'existing', 'withoutHours'] as $key) {
+                $total[$key] += $summary[$key];
+            }
+
+            foreach ($summary['skipped'] as $reason => $count) {
+                $total['skipped'][$reason] = ($total['skipped'][$reason] ?? 0) + $count;
+            }
+        }
+
+        return $total;
+    }
+
+    /**
      * @return array{created: int, existing: int, withoutHours: int, skipped: array<string, int>}
      */
     public function import(string $csvPath, SurveyArea $area): array

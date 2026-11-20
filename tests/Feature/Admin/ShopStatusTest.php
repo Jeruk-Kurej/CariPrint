@@ -88,3 +88,44 @@ test('the shop form accepts a place anywhere in the city but not outside it', fu
         ->call('create')
         ->assertHasFormErrors(['latitude']);
 });
+
+test('the admin can filter shops by whether opening hours are filled', function () {
+    $filled = Shop::factory()->draft()->create();
+    $empty = Shop::factory()->draft()->create(['opening_hours' => ['mon' => [], 'tue' => [], 'wed' => [], 'thu' => [], 'fri' => [], 'sat' => [], 'sun' => []]]);
+
+    Livewire::test(ListShops::class)
+        ->filterTable('has_hours', false)
+        ->assertCanSeeTableRecords([$empty])
+        ->assertCanNotSeeTableRecords([$filled])
+        ->filterTable('has_hours', true)
+        ->assertCanSeeTableRecords([$filled])
+        ->assertCanNotSeeTableRecords([$empty]);
+});
+
+test('the admin can search shops by name or address', function () {
+    $byName = Shop::factory()->create(['name' => 'Print Mawar', 'address' => 'Jl. Pertama']);
+    $byAddress = Shop::factory()->create(['name' => 'Cetak Cepat', 'address' => 'Jl. Kenanga, Lakarsantri']);
+
+    Livewire::test(ListShops::class)
+        ->searchTable('Lakarsantri')
+        ->assertCanSeeTableRecords([$byAddress])
+        ->assertCanNotSeeTableRecords([$byName]);
+});
+
+test('drafts that are not print shops can be deleted in bulk', function () {
+    $drafts = Shop::factory()->count(3)->draft()->create();
+    $keep = Shop::factory()->create();
+
+    Livewire::test(ListShops::class)->callTableBulkAction('delete', $drafts);
+
+    expect(Shop::count())->toBe(1)->and(Shop::first()->is($keep))->toBeTrue();
+});
+
+test('each shop links to its Google Maps listing', function () {
+    $withPlace = Shop::factory()->create(['name' => 'Print A', 'place_id' => 'ChIJabc']);
+    $withoutPlace = Shop::factory()->create(['place_id' => null, 'latitude' => -7.25, 'longitude' => 112.7]);
+
+    Livewire::test(ListShops::class)
+        ->assertTableActionHasUrl('maps', 'https://www.google.com/maps/search/?api=1&query=Print%20A&query_place_id=ChIJabc', $withPlace)
+        ->assertTableActionHasUrl('maps', 'https://www.google.com/maps/search/?api=1&query=-7.25,112.7', $withoutPlace);
+});

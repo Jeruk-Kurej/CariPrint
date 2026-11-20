@@ -8,8 +8,10 @@ use App\Services\Shops\ShopPublisher;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -27,13 +29,20 @@ class ShopsTable
                 TextColumn::make('status')->label('Status')->badge()
                     ->formatStateUsing(fn (ShopStatus $state) => $state->label())
                     ->color(fn (ShopStatus $state) => $state === ShopStatus::Published ? 'success' : 'warning'),
-                TextColumn::make('slug')->searchable(),
+                IconColumn::make('hours')->label('Jam buka')->boolean()
+                    ->state(fn (Shop $record) => $record->hasOpeningHours()),
+                TextColumn::make('address')->label('Alamat')->searchable()->limit(45)->tooltip(fn (Shop $record) => $record->address),
                 TextColumn::make('last_surveyed_at')->label('Terakhir disurvei')->dateTime('d M Y')->placeholder('Belum disurvei')->sortable(),
                 TextColumn::make('updated_at')->label('Diubah')->since()->sortable(),
             ])
             ->filters([
                 SelectFilter::make('status')->label('Status')
                     ->options(collect(ShopStatus::cases())->mapWithKeys(fn (ShopStatus $status) => [$status->value => $status->label()])),
+                TernaryFilter::make('has_hours')->label('Jam buka terisi')
+                    ->queries(
+                        true: fn (Builder $query) => $query->whereIn('id', self::idsByHours(true)),
+                        false: fn (Builder $query) => $query->whereIn('id', self::idsByHours(false)),
+                    ),
                 TernaryFilter::make('surveyed')->label('Sudah disurvei')
                     ->queries(
                         true: fn (Builder $query) => $query->whereNotNull('last_surveyed_at'),
@@ -46,6 +55,8 @@ class ShopsTable
                     ->requiresConfirmation()
                     ->modalDescription('Tempat ini akan tampil di website.')
                     ->action(fn (Shop $record) => self::publish(new Collection([$record]))),
+                Action::make('maps')->label('Cek di Maps')->icon('heroicon-o-map-pin')
+                    ->url(fn (Shop $record) => self::mapsUrl($record), shouldOpenInNewTab: true),
                 EditAction::make(),
             ])
             ->toolbarActions([
@@ -55,8 +66,12 @@ class ShopsTable
                         ->modalDescription('Semua tempat yang dipilih akan tampil di website. Pastikan datanya sudah diperiksa.')
                         ->action(fn (Collection $records) => self::publish($records))
                         ->deselectRecordsAfterCompletion(),
+                    DeleteBulkAction::make()->label('Hapus terpilih')
+                        ->modalDescription('Tempat yang dipilih dihapus permanen, termasuk daftar harganya. Gunakan untuk draf yang bukan tempat print.'),
                 ]),
             ])
+            ->paginated([25, 50, 100])
+            ->defaultPaginationPageOption(50)
             ->defaultSort('updated_at', 'desc');
     }
 
@@ -77,5 +92,27 @@ class ShopsTable
         if ($result['published'] > 0) {
             Notification::make()->success()->title("{$result['published']} tempat diterbitkan")->send();
         }
+    }
+
+    /**
+     * Opens the shop in Google Maps so an admin can check its name, hours, and phone against the real listing.
+     */
+    private static function mapsUrl(Shop $shop): string
+    {
+        $query = $shop->place_id !== null
+            ? 'query='.rawurlencode($shop->name).'&query_place_id='.rawurlencode($shop->place_id)
+            : 'query='.$shop->latitude.','.$shop->longitude;
+
+        return "https://www.google.com/maps/search/?api=1&$query";
+    }
+
+    /**
+     * @return list<int>
+     */
+    private static function idsByHours(bool $hasHours): array
+    {
+        $ids = Shop::all()->filter(fn (Shop $shop) => $shop->hasOpeningHours() === $hasHours)->map(fn (Shop $shop) => $shop->id);
+
+        return array_values($ids->all());
     }
 }
