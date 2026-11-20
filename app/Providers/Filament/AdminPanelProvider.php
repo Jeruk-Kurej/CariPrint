@@ -49,6 +49,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->darkMode(false)
+            ->unsavedChangesAlerts()
             ->font('Gabarito', provider: BunnyFontProvider::class)
             ->colors([
                 'primary' => Color::hex('#3558f0'),
