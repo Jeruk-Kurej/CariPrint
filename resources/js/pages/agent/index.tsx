@@ -22,6 +22,7 @@ type Props = {
     quota: AiQuotaStatus;
     spec?: PrintSpec;
     estimates?: Estimate[];
+    shopsWithoutPrices?: number;
 };
 
 export default function AgentIndex({
@@ -29,6 +30,7 @@ export default function AgentIndex({
     quota,
     spec,
     estimates,
+    shopsWithoutPrices = 0,
 }: Props) {
     const [request, setRequest] = useState('');
     const [processing, setProcessing] = useState(false);
@@ -149,6 +151,12 @@ export default function AgentIndex({
                                 ? 'Jarak dihitung garis lurus dari lokasimu, dan lokasimu tidak disimpan.'
                                 : 'Izinkan lokasi di browser lalu cari lagi untuk melihat jarak tiap tempat.'}
                         </p>
+                        {shopsWithoutPrices > 0 && (
+                            <p className="text-sm text-muted-foreground">
+                                {shopsWithoutPrices} tempat lain belum punya
+                                daftar harga, jadi tidak ikut dihitung.
+                            </p>
+                        )}
                     </section>
                 )}
             </main>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Ai\Agents\PrintRequestAgent;
+use App\Enums\ShopService;
 use App\Models\PriceList;
 use App\Models\Shop;
 use App\Services\Location\DistanceService;
@@ -25,7 +26,7 @@ test('every shop that shares the lowest total is flagged as cheapest', function 
 });
 
 test('a shop that cannot price the request is never flagged as cheapest', function () {
-    Shop::factory()->create();
+    PriceList::factory()->for(Shop::factory()->create())->create(['service' => ShopService::Photocopy]);
 
     $this->post('/agent', ['request' => 'print 10 halaman'])
         ->assertInertia(fn (Assert $page) => $page
@@ -47,4 +48,15 @@ test('cards have no distance when the browser sends no location', function () {
 
     $this->post('/agent', ['request' => 'print 10 halaman'])
         ->assertInertia(fn (Assert $page) => $page->where('estimates.0.distanceKm', null));
+});
+
+test('shops without any price list are left out of the estimates and counted instead', function () {
+    PriceList::factory()->for(Shop::factory()->create(['name' => 'Ada Harga']))->create(['price' => 500]);
+    Shop::factory()->count(3)->create();
+
+    $this->post('/agent', ['request' => 'print 10 halaman'])
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('estimates', 1)
+            ->where('estimates.0.name', 'Ada Harga')
+            ->where('shopsWithoutPrices', 3));
 });

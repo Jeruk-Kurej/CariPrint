@@ -47,6 +47,7 @@ class AgentController extends Controller
                 'binding' => $spec->binding?->value,
             ],
             'estimates' => $estimates->forSpec($spec, $request->coordinates()),
+            'shopsWithoutPrices' => $estimates->withoutPrices(),
         ]);
     }
 

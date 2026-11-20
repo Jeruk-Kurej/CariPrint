@@ -63,3 +63,13 @@ test('a csv without the Apify columns is rejected with a clear message', functio
     expect(fn () => (new ApifyConverter)->convert($bad, SurveyArea::box(config('cariprint.area'), 'CitraLand')))
         ->toThrow(InvalidArgumentException::class, 'bukan hasil export Apify');
 });
+
+test('a place whose name is only punctuation is skipped', function () {
+    $file = tempnam(sys_get_temp_dir(), 'csv');
+    file_put_contents($file, "title,placeId,location/lat,location/lng,categoryName\n.,ChIJtitik,-7.285,112.64,Layanan cetak digital\n");
+
+    $result = (new ApifyConverter)->convert($file, SurveyArea::box(config('cariprint.area'), 'CitraLand'));
+
+    expect($result['shops'])->toBeEmpty()
+        ->and($result['skipped'][0]['reason'])->toBe('nama tidak valid');
+});

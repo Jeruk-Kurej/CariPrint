@@ -66,6 +66,10 @@ class ApifyConverter
      */
     private function skipReason(array $row, SurveyArea $area): ?string
     {
+        if (preg_match_all('/[\p{L}\p{N}]/u', $row['title'] ?? '') < 2) {
+            return 'nama tidak valid';
+        }
+
         $categories = $this->categories($row);
 
         if (! preg_match(self::RELEVANT, $categories) || preg_match(self::NOT_RELEVANT, $categories)) {

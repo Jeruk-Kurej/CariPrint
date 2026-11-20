@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 import { CompareTable } from '@/components/compare/compare-table';
 import type {
@@ -11,6 +11,7 @@ import { SearchField } from '@/components/search-field';
 import { FilterChip } from '@/components/filter-chip';
 import { SegmentedControl } from '@/components/segmented-control';
 import { SwitchField } from '@/components/switch-field';
+import { index as directory } from '@/routes/directory';
 
 type ServiceFilter = 'all' | 'print-a4' | 'print-f4' | 'print-a3' | 'other';
 type ColorFilter = 'all' | 'bw' | 'color';
@@ -46,9 +47,10 @@ function matchesService(row: CompareRow, filter: ServiceFilter): boolean {
 type Props = {
     shops: CompareShop[];
     rows: CompareRow[];
+    withoutPrices: number;
 };
 
-export default function CompareIndex({ shops, rows }: Props) {
+export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
     const [serviceFilter, setServiceFilter] = useState<ServiceFilter>('all');
     const [colorFilter, setColorFilter] = useState<ColorFilter>('all');
     const [onlyOpen, setOnlyOpen] = useState(false);
@@ -83,6 +85,19 @@ export default function CompareIndex({ shops, rows }: Props) {
                         layanan. Harga paling murah di tiap kolom diberi warna
                         kuning.
                     </p>
+                    {withoutPrices > 0 && (
+                        <p className="max-w-2xl text-sm text-muted-foreground">
+                            {withoutPrices} tempat lain belum punya daftar harga
+                            dan tidak ikut dibandingkan. Lihat semuanya di{' '}
+                            <Link
+                                href={directory().url}
+                                className="font-medium text-foreground underline"
+                            >
+                                Cari tempat
+                            </Link>
+                            .
+                        </p>
+                    )}
                 </header>
 
                 {rows.length === 0 ? (

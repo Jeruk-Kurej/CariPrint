@@ -21,6 +21,14 @@ class ShopEstimates
     ) {}
 
     /**
+     * Published shops that have no price list yet, so they cannot be part of an estimate.
+     */
+    public function withoutPrices(): int
+    {
+        return Shop::published()->doesntHave('priceLists')->count();
+    }
+
+    /**
      * Cheapest first; shops that cannot price the request go last. Coordinates are used for this one
      * calculation only and are never stored or logged.
      *
@@ -32,7 +40,7 @@ class ShopEstimates
         $now = CarbonImmutable::now('Asia/Jakarta');
 
         /** @var Collection<int, array<string, mixed>> $rows */
-        $rows = Shop::published()->with('priceLists')->orderBy('name')->get()
+        $rows = Shop::published()->has('priceLists')->with('priceLists')->orderBy('name')->get()
             ->map(function (Shop $shop) use ($spec, $coordinates, $now) {
                 $breakdown = $this->calculator->forShop($shop, $spec);
 

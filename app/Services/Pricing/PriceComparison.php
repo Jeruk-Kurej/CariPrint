@@ -22,11 +22,17 @@ class PriceComparison
     ) {}
 
     /**
-     * @return array{shops: array<int, array{id: int, name: string, slug: string, openState: string}>, rows: list<array<string, mixed>>}
+     * Only shops with a price list are lined up: a column of dashes would bury the shops that can be compared.
+     * How many published shops have no prices yet is returned too, so the page can say so.
+     *
+     * @return array{shops: array<int, array{id: int, name: string, slug: string, openState: string}>, rows: list<array<string, mixed>>, withoutPrices: int}
      */
     public function forAllShops(): array
     {
-        return $this->build(Shop::published()->with('priceLists')->orderBy('name')->get());
+        return [
+            ...$this->build(Shop::published()->has('priceLists')->with('priceLists')->orderBy('name')->get()),
+            'withoutPrices' => Shop::published()->doesntHave('priceLists')->count(),
+        ];
     }
 
     /**

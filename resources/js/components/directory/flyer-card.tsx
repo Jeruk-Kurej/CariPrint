@@ -81,14 +81,20 @@ export function FlyerCard({
                     className="absolute -top-[11px] left-3 size-5 rotate-0 bg-inherit px-0.5 text-foreground/55"
                 />
                 <p className="flex items-center justify-between gap-2 px-4 pt-3 pb-2.5">
-                    <span className="text-xs font-medium text-foreground/70">
-                        Mulai dari
-                    </span>
-                    <span className="rounded-sm bg-highlight px-1.5 font-display text-xl font-extrabold tabular-nums">
-                        {shop.startingPrice === null
-                            ? '–'
-                            : formatRupiah(shop.startingPrice)}
-                    </span>
+                    {shop.startingPrice === null ? (
+                        <span className="text-xs font-medium text-foreground/70">
+                            Harga belum tersedia
+                        </span>
+                    ) : (
+                        <>
+                            <span className="text-xs font-medium text-foreground/70">
+                                Mulai dari
+                            </span>
+                            <span className="rounded-sm bg-highlight px-1.5 font-display text-xl font-extrabold tabular-nums">
+                                {formatRupiah(shop.startingPrice)}
+                            </span>
+                        </>
+                    )}
                 </p>
                 <div className="flex divide-x-2 divide-dashed divide-foreground/25 border-t-2 border-dashed border-foreground/25">
                     {shop.whatsapp && (
