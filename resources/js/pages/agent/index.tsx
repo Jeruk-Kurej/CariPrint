@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { EstimateList } from '@/components/agent/estimate-list';
 import type { Estimate } from '@/components/agent/estimate-list';
 import { PdfAttachment } from '@/components/agent/pdf-attachment';
+import { QuotaNote } from '@/components/agent/quota-note';
+import type { AiQuotaStatus } from '@/components/agent/quota-note';
 import { SpecSummary } from '@/components/agent/spec-summary';
 import type { PrintSpec } from '@/components/agent/spec-summary';
 import { Fastener } from '@/components/directory/flyer-parts';
@@ -17,11 +19,17 @@ import { parse } from '@/routes/agent';
 
 type Props = {
     fileLimits: FileLimits;
+    quota: AiQuotaStatus;
     spec?: PrintSpec;
     estimates?: Estimate[];
 };
 
-export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
+export default function AgentIndex({
+    fileLimits,
+    quota,
+    spec,
+    estimates,
+}: Props) {
     const [request, setRequest] = useState('');
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -106,6 +114,7 @@ export default function AgentIndex({ fileLimits, spec, estimates }: Props) {
                         {processing && <Spinner />}
                         {processing ? 'Menghitung estimasi' : 'Cari estimasi'}
                     </Button>
+                    <QuotaNote quota={quota} />
                     {location.status !== 'granted' && (
                         <p
                             aria-live="polite"

@@ -21,10 +21,16 @@ return [
     */
 
     'ai' => [
+        // Requests per day. Guests are counted per browser session; ip_ceiling only stops scripts that
+        // clear cookies, and is high enough that a campus network sharing one IP never hits it. Admins are unlimited.
         'quota' => [
             'guest' => 3,
             'user' => 15,
+            'ip_ceiling' => 60,
         ],
+
+        // The quota resets at midnight in this timezone.
+        'reset_timezone' => 'Asia/Jakarta',
     ],
 
     'area' => [
