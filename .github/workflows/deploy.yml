@@ -134,6 +134,8 @@ jobs:
             rm -f bootstrap/cache/packages.php bootstrap/cache/services.php bootstrap/cache/config.php
 
             php artisan package:discover --ansi
+            php artisan filament:assets
+            php artisan livewire:publish --assets
             php artisan migrate --force --no-interaction
             php artisan optimize:clear
             php artisan optimize
