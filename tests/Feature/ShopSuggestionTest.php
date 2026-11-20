@@ -34,13 +34,23 @@ test('the suggestion form opens for a signed-in visitor and shows their email', 
             ->where('email', 'pengusul@example.com'));
 });
 
-test('a visitor who is not signed in is sent to the login page and cannot submit', function () {
+test('a visitor who is not signed in can read the page but cannot submit', function () {
     auth()->logout();
 
-    $this->get('/usul-tempat')->assertRedirect('/login');
+    $this->get('/usul-tempat')
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->component('suggestions/create')->where('email', null));
     $this->post('/usul-tempat', suggestion())->assertRedirect('/login');
 
     expect(ShopSuggestion::count())->toBe(0);
+});
+
+test('a guest who signs in from the suggestion page comes back to it', function () {
+    auth()->logout();
+
+    $this->get('/usul-tempat');
+
+    expect(session('url.intended'))->toEndWith('/usul-tempat');
 });
 
 test('the receipt and decision go to the account email, whatever the form sends', function () {

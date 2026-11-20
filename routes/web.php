@@ -21,8 +21,9 @@ Route::post('/agent', [AgentController::class, 'parse'])->name('agent.parse');
 Route::get('/masuk/google', [GoogleLoginController::class, 'redirect'])->middleware('guest')->name('google.redirect');
 Route::get('/masuk/google/callback', [GoogleLoginController::class, 'callback'])->name('google.callback');
 
+Route::get('/usul-tempat', [ShopSuggestionController::class, 'create'])->name('suggestions.create');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/usul-tempat', [ShopSuggestionController::class, 'create'])->name('suggestions.create');
     Route::post('/usul-tempat', [ShopSuggestionController::class, 'store'])->middleware('throttle:5,60')->name('suggestions.store');
 });
 

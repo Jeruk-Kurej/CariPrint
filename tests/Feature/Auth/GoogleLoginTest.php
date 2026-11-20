@@ -55,7 +55,7 @@ test('a returning Google visitor reuses the same account', function () {
 test('signing in with Google goes back to the page the visitor wanted', function () {
     fakeGoogle();
 
-    $this->get('/usul-tempat')->assertRedirect('/login');
+    $this->get('/usul-tempat')->assertOk();
     $this->get('/masuk/google/callback')->assertRedirect('/usul-tempat');
 });
 

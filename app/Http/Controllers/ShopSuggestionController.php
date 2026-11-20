@@ -11,8 +11,16 @@ use Inertia\Response;
 
 class ShopSuggestionController extends Controller
 {
+    /**
+     * Anyone can read about suggesting a place; only a signed-in user sees the form. A guest who signs in from here
+     * comes back to this page.
+     */
     public function create(Request $request): Response
     {
+        if ($request->user() === null) {
+            $request->session()->put('url.intended', $request->url());
+        }
+
         return Inertia::render('suggestions/create', [
             'submitted' => (bool) $request->session()->get('suggestion_submitted', false),
             'email' => $request->user()?->email,

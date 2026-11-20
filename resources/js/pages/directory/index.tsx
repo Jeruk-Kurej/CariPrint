@@ -7,6 +7,7 @@ import { PageTitle } from '@/components/page-header';
 import { SearchField } from '@/components/search-field';
 import { SegmentedControl } from '@/components/segmented-control';
 import { SwitchField } from '@/components/switch-field';
+import { Button } from '@/components/ui/button';
 import { useDirectoryFilters } from '@/hooks/use-directory-filters';
 import { useGeolocation } from '@/hooks/use-geolocation';
 import { useSelectedShop } from '@/hooks/use-selected-shop';
@@ -156,6 +157,21 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                                 />
                             </div>
                         </div>
+
+                        <aside className="relative flex flex-col items-start gap-2 rounded-sm bg-note-mint p-5 paper-shadow sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <h2 className="font-display text-lg font-extrabold">
+                                    Tempatnya belum ada?
+                                </h2>
+                                <p className="text-sm text-foreground/80">
+                                    Kirim datanya, kami cek lalu tambahkan ke
+                                    daftar.
+                                </p>
+                            </div>
+                            <Button asChild>
+                                <Link href={suggest().url}>Usulkan tempat</Link>
+                            </Button>
+                        </aside>
                     </>
                 )}
             </main>

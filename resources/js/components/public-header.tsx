@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/sheet';
 import { homeUrl, mainNav } from '@/lib/navigation';
 import { login } from '@/routes';
+import { create as suggest } from '@/routes/suggestions';
 import type { User } from '@/types';
 
 export function PublicHeader() {
@@ -53,9 +54,17 @@ export function PublicHeader() {
                     {user ? (
                         <AccountMenu user={user} />
                     ) : (
-                        <Button asChild variant="outline" size="sm">
-                            <Link href={login()}>Masuk</Link>
-                        </Button>
+                        <>
+                            <Link
+                                href={suggest()}
+                                className="px-2 text-sm font-semibold text-muted-foreground hover:text-foreground"
+                            >
+                                Usulkan tempat
+                            </Link>
+                            <Button asChild variant="outline" size="sm">
+                                <Link href={login()}>Masuk</Link>
+                            </Button>
+                        </>
                     )}
                 </div>
 
@@ -101,7 +110,19 @@ export function PublicHeader() {
                                 onNavigate={() => setOpen(false)}
                             />
                         ) : (
-                            <div className="px-4 pt-4">
+                            <div className="flex flex-col gap-2 px-4 pt-4">
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    className="w-full"
+                                >
+                                    <Link
+                                        href={suggest()}
+                                        onClick={() => setOpen(false)}
+                                    >
+                                        Usulkan tempat
+                                    </Link>
+                                </Button>
                                 <Button asChild className="w-full">
                                     <Link
                                         href={login()}

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { login } from '@/routes';
 import { index as directory } from '@/routes/directory';
 import { create, store } from '@/routes/suggestions';
 
@@ -17,7 +18,7 @@ export default function SuggestionCreate({
     email,
 }: {
     submitted: boolean;
-    email: string;
+    email: string | null;
 }) {
     return (
         <>
@@ -28,7 +29,23 @@ export default function SuggestionCreate({
                     intro="Tahu tempat print yang belum ada di CariPrint? Kirim datanya. Tim kami mengecek dulu, lalu menambahkannya ke daftar."
                 />
 
-                {submitted ? (
+                {email === null ? (
+                    <section className="relative flex max-w-2xl flex-col items-start gap-3 rounded-sm bg-note-sky p-6 paper-shadow">
+                        <Fastener id={1} />
+                        <h2 className="font-display text-2xl font-extrabold">
+                            Masuk dulu untuk mengusulkan
+                        </h2>
+                        <p>
+                            Kami meminta masuk dengan Google supaya tanda terima
+                            dan hasil usulanmu bisa dikirim ke emailmu, dan
+                            supaya kamu bisa melihat status usulanmu di halaman
+                            Akunku. Setelah masuk, kamu kembali ke halaman ini.
+                        </p>
+                        <Button asChild size="lg">
+                            <Link href={login()}>Masuk untuk mengusulkan</Link>
+                        </Button>
+                    </section>
+                ) : submitted ? (
                     <section
                         role="status"
                         className="relative flex max-w-2xl flex-col items-start gap-3 rounded-sm bg-note-mint p-6 paper-shadow"
