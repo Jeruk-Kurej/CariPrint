@@ -84,7 +84,7 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
                     variant="outline"
                     size="sm"
                     onClick={pdf.browse}
-                    className="self-start"
+                    className="min-h-11 self-start"
                 >
                     <Paperclip />
                     Lampirkan PDF

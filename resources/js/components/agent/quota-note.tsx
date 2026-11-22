@@ -21,7 +21,7 @@ export function QuotaNote({ quota }: { quota: AiQuotaStatus }) {
                     {' '}
                     <Link
                         href={login()}
-                        className="font-medium text-foreground underline"
+                        className="-my-3 inline-block py-3 font-medium text-foreground underline"
                     >
                         Masuk
                     </Link>{' '}

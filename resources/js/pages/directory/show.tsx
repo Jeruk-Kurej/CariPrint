@@ -25,7 +25,7 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
             <main className="flex flex-col gap-8 px-4 py-6 sm:py-10">
                 <Link
                     href={directory().url}
-                    className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+                    className="inline-flex min-h-11 items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
                 >
                     <ArrowLeft className="size-4" aria-hidden /> Semua tempat
                 </Link>
