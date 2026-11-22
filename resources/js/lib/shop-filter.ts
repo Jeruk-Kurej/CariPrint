@@ -37,9 +37,9 @@ type Options = {
 };
 
 /** Tempat tanpa data jarak atau harga selalu ditaruh di bawah. */
-function ascendingWithMissingLast(
-    valueOf: (shop: ShopSummary) => number | null,
-): (a: ShopSummary, b: ShopSummary) => number {
+export function ascendingWithMissingLast<T>(
+    valueOf: (item: T) => number | null,
+): (a: T, b: T) => number {
     return (a, b) => {
         const left = valueOf(a);
         const right = valueOf(b);
