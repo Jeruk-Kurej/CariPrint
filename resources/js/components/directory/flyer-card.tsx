@@ -26,7 +26,7 @@ type Props = {
 };
 
 const tab =
-    'flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 px-2 py-2 text-sm font-semibold hover:bg-card/50';
+    'flex min-h-11 flex-1 flex-row items-center justify-center gap-1.5 px-1 py-2 text-sm font-semibold hover:bg-card/50 sm:min-h-12 sm:flex-col sm:gap-0.5 sm:px-2';
 
 /**
  * Satu tempat print sebagai pamflet di papan pengumuman kampus. Bagian bawahnya
@@ -46,7 +46,7 @@ export function FlyerCard({
             className={`group relative flex flex-col rounded-sm text-foreground paper-shadow hover:z-10 hover:-translate-y-1 hover:rotate-0 motion-safe:transition-transform motion-safe:duration-200 ${paper} ${tilt} ${selected ? 'ring-2 ring-primary' : ''}`}
         >
             <Fastener id={shop.id} />
-            <div className="flex flex-1 flex-col gap-2 p-3.5 pt-5 sm:p-4 sm:pt-5">
+            <div className="flex flex-1 flex-col gap-1.5 p-3.5 pt-5 sm:gap-2 sm:p-4 sm:pt-5">
                 <h3 className="font-display text-xl leading-tight font-extrabold sm:text-2xl">
                     <Link
                         href={show({ shop: shop.slug }).url}
@@ -55,7 +55,7 @@ export function FlyerCard({
                         {shop.name}
                     </Link>
                 </h3>
-                <p className="line-clamp-2 text-sm text-foreground/70">
+                <p className="line-clamp-1 text-sm text-foreground/70 sm:line-clamp-2">
                     {shop.address}
                 </p>
                 <div className="flex flex-wrap items-center gap-2">
@@ -82,7 +82,7 @@ export function FlyerCard({
                     aria-hidden
                     className="absolute -top-[11px] left-3 size-5 rotate-0 bg-inherit px-0.5 text-foreground/55"
                 />
-                <p className="flex items-center justify-between gap-2 px-4 pt-3 pb-2.5">
+                <p className="flex items-center justify-between gap-2 px-4 pt-2.5 pb-2 sm:pt-3 sm:pb-2.5">
                     {shop.startingPrice === null ? (
                         <span className="text-xs font-medium text-foreground/70">
                             Harga belum tersedia
@@ -92,7 +92,7 @@ export function FlyerCard({
                             <span className="text-xs font-medium text-foreground/70">
                                 Print mulai dari
                             </span>
-                            <span className="rounded-sm bg-highlight px-1.5 font-display text-xl font-extrabold tabular-nums">
+                            <span className="rounded-sm bg-highlight px-1.5 font-display text-lg font-extrabold tabular-nums sm:text-xl">
                                 {formatRupiah(shop.startingPrice)}
                             </span>
                         </>
