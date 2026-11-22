@@ -45,6 +45,7 @@ class AgentController extends Controller
                 'colorRuns' => $spec->pages?->colorRuns() ?? [],
                 'copies' => $spec->copies,
                 'binding' => $spec->binding?->value,
+                'assumed' => $spec->assumed,
             ],
             'estimates' => $estimates->forSpec($spec, $request->coordinates()),
             'shopsWithoutPrices' => $estimates->withoutPrices(),

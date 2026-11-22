@@ -31,13 +31,20 @@ class PrintRequestReader
             ? null
             : $this->selector->select($ranges, $documentPages ?? $this->statedLength($parsed), $coloredPages);
 
+        $paperSize = PaperSize::tryFrom((string) ($parsed['paper_size'] ?? ''));
+        $copies = (int) ($parsed['copies'] ?? 0);
+
         return new PrintSpec(
-            paperSize: PaperSize::from($parsed['paper_size']),
+            paperSize: $paperSize ?? PaperSize::A4,
             bwPages: $pages === null ? (int) $parsed['bw_pages'] : count($pages->blackWhite),
             colorPages: $pages === null ? (int) $parsed['color_pages'] : count($pages->color),
-            copies: (int) $parsed['copies'],
+            copies: max($copies, 1),
             binding: ShopService::tryFrom((string) ($parsed['binding'] ?? '')),
             pages: $pages,
+            assumed: array_values(array_filter([
+                $paperSize === null ? 'paperSize' : null,
+                $copies < 1 ? 'copies' : null,
+            ])),
         );
     }
 

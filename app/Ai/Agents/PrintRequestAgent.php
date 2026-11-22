@@ -23,7 +23,7 @@ class PrintRequestAgent implements Agent, HasStructuredOutput
         You turn a student's printing request into a print specification.
         Return only the fields in the schema.
         A note in square brackets after the request says whether a PDF document is attached.
-        - paper_size: a4, f4 or a3. Use a4 when the user does not say.
+        - paper_size: a4, f4 or a3. Use null when the user does not say. The application then assumes a4 and tells the user.
         - page_ranges: fill this when the user points at pages by number or position, or wants a whole document
           printed ("file ini", "dokumen ini", "semua"). Leave it empty when the user only gives a number of pages.
           Each item covers the pages from..to, counted from 1. A negative number counts from the end:
@@ -46,7 +46,7 @@ class PrintRequestAgent implements Agent, HasStructuredOutput
           Set both to 0 when page_ranges is not empty.
         - total_pages: the length of the whole document, only if the user states it, such as "dokumen saya 24 halaman".
           Otherwise null.
-        - copies: how many copies. Use 1 when the user does not say.
+        - copies: how many copies. Use null when the user does not say. The application then assumes 1 and tells the user.
         - binding: spiral_binding, tape_binding or hardcover_binding if the user asks for binding, otherwise null.
         Never guess prices, distances, or opening hours.
         PROMPT;
@@ -58,7 +58,7 @@ class PrintRequestAgent implements Agent, HasStructuredOutput
     public function schema(JsonSchema $schema): array
     {
         return [
-            'paper_size' => $schema->string()->enum(['a4', 'f4', 'a3'])->required(),
+            'paper_size' => $schema->string()->enum(['a4', 'f4', 'a3'])->nullable(),
             'page_ranges' => $schema->array()->items($schema->object([
                 'from' => $schema->integer()->required(),
                 'to' => $schema->integer()->required(),
@@ -67,7 +67,7 @@ class PrintRequestAgent implements Agent, HasStructuredOutput
             'bw_pages' => $schema->integer()->min(0)->required(),
             'color_pages' => $schema->integer()->min(0)->required(),
             'total_pages' => $schema->integer()->min(1)->nullable(),
-            'copies' => $schema->integer()->min(1)->required(),
+            'copies' => $schema->integer()->min(1)->nullable(),
             'binding' => $schema->string()->enum(['spiral_binding', 'tape_binding', 'hardcover_binding'])->nullable(),
         ];
     }

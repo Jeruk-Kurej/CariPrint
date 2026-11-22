@@ -289,3 +289,37 @@ test('estimate cards include open status, today hours, and distance when coordin
             ->whereType('estimates.0.todayHours', 'string')
             ->whereType('estimates.0.distanceKm', 'double'));
 });
+
+test('values the user never stated are filled with defaults and reported as assumed', function () {
+    PrintRequestAgent::fake([[
+        'paper_size' => null, 'page_ranges' => [], 'bw_pages' => 5, 'color_pages' => 0, 'copies' => null, 'binding' => null,
+    ]]);
+
+    $this->post('/agent', ['request' => 'print 5 halaman'])
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('spec.paperSize', 'a4')
+            ->where('spec.copies', 1)
+            ->where('spec.assumed', ['paperSize', 'copies']));
+});
+
+test('values the user stated are not reported as assumed', function () {
+    PrintRequestAgent::fake([[
+        'paper_size' => 'f4', 'page_ranges' => [], 'bw_pages' => 5, 'color_pages' => 0, 'copies' => 2, 'binding' => null,
+    ]]);
+
+    $this->post('/agent', ['request' => 'print 5 halaman F4, 2 rangkap'])
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('spec.paperSize', 'f4')
+            ->where('spec.copies', 2)
+            ->where('spec.assumed', []));
+});
+
+test('only the missing value is reported as assumed', function () {
+    PrintRequestAgent::fake([[
+        'paper_size' => 'a3', 'page_ranges' => [], 'bw_pages' => 1, 'color_pages' => 0, 'copies' => null, 'binding' => null,
+    ]]);
+
+    $this->post('/agent', ['request' => 'print poster A3'])
+        ->assertInertia(fn (Assert $page) => $page->where('spec.assumed', ['copies']));
+});
