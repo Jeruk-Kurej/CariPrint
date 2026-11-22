@@ -131,7 +131,7 @@ export function CompareTable({
                                                             shop: shop.slug,
                                                         }).url
                                                     }
-                                                    className="font-display font-semibold text-foreground hover:underline"
+                                                    className="inline-flex min-h-11 items-center font-display font-semibold text-foreground hover:underline"
                                                 >
                                                     {shop.name}
                                                 </Link>

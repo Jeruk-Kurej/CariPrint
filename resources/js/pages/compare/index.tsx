@@ -8,6 +8,7 @@ import type {
 import { EmptyState } from '@/components/directory/empty-state';
 import { PageTitle } from '@/components/page-header';
 import { SearchField } from '@/components/search-field';
+import { ChipRow } from '@/components/chip-row';
 import { FilterChip } from '@/components/filter-chip';
 import { SegmentedControl } from '@/components/segmented-control';
 import { SwitchField } from '@/components/switch-field';
@@ -91,7 +92,7 @@ export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
                             dan tidak ikut dibandingkan. Lihat semuanya di{' '}
                             <Link
                                 href={directory().url}
-                                className="font-medium text-foreground underline"
+                                className="-my-3 inline-block py-3 font-medium text-foreground underline"
                             >
                                 Cari tempat
                             </Link>
@@ -131,18 +132,20 @@ export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap items-center gap-2 border-t pt-3">
-                                {serviceFilters.map((item) => (
-                                    <FilterChip
-                                        key={item.id}
-                                        active={serviceFilter === item.id}
-                                        onClick={() =>
-                                            setServiceFilter(item.id)
-                                        }
-                                    >
-                                        {item.label}
-                                    </FilterChip>
-                                ))}
+                            <div className="border-t pt-3">
+                                <ChipRow label="Layanan">
+                                    {serviceFilters.map((item) => (
+                                        <FilterChip
+                                            key={item.id}
+                                            active={serviceFilter === item.id}
+                                            onClick={() =>
+                                                setServiceFilter(item.id)
+                                            }
+                                        >
+                                            {item.label}
+                                        </FilterChip>
+                                    ))}
+                                </ChipRow>
                             </div>
                         </section>
 
