@@ -28,11 +28,12 @@ export function FlyerBoard({ featured, shops }: Props) {
                     Yang masih buka sekarang
                 </h2>
                 <p className="w-full text-sm text-muted-foreground">
-                    Diurutkan dari harga print termurah.
+                    Tempat buka yang sudah punya harga, dari print termurah.
+                    Yang belum punya harga ada di Lihat semua tempat.
                 </p>
                 <Link
                     href={directoryIndex().url}
-                    className="text-sm font-semibold text-primary underline underline-offset-4"
+                    className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4"
                 >
                     Lihat semua tempat
                 </Link>
