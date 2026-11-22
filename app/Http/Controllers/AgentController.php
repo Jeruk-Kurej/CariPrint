@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AgentRequest;
+use App\Http\Requests\RecalculateRequest;
 use App\Services\Ai\AiQuota;
 use App\Services\Pricing\PrintRequestReader;
+use App\Services\Pricing\PrintSpec;
 use App\Services\Pricing\ShopEstimates;
 use App\Services\Pricing\UnreadablePrintRequest;
 use Illuminate\Http\Request;
@@ -35,6 +37,22 @@ class AgentController extends Controller
 
         $this->quota->consume($request);
 
+        return $this->result($request, $spec, $estimates, $request->coordinates());
+    }
+
+    /**
+     * Prices a spec the user edited on the slip. No AI is called, so it does not use the daily quota.
+     */
+    public function recalculate(RecalculateRequest $request, ShopEstimates $estimates): Response
+    {
+        return $this->result($request, $request->spec(), $estimates, $request->coordinates());
+    }
+
+    /**
+     * @param  array{0: float, 1: float}|null  $coordinates
+     */
+    private function result(Request $request, PrintSpec $spec, ShopEstimates $estimates, ?array $coordinates): Response
+    {
         return Inertia::render('agent/index', [
             ...$this->formProps($request),
             'spec' => [
@@ -47,7 +65,7 @@ class AgentController extends Controller
                 'binding' => $spec->binding?->value,
                 'assumed' => $spec->assumed,
             ],
-            'estimates' => $estimates->forSpec($spec, $request->coordinates()),
+            'estimates' => $estimates->forSpec($spec, $coordinates),
             'shopsWithoutPrices' => $estimates->withoutPrices(),
         ]);
     }

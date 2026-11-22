@@ -17,6 +17,22 @@ readonly class PageSelection
     ) {}
 
     /**
+     * Rebuilds a selection from the runs the browser sends back, for a recalculation that skips the AI.
+     *
+     * @param  list<array{from: int, to: int}>  $blackWhiteRuns
+     * @param  list<array{from: int, to: int}>  $colorRuns
+     */
+    public static function fromRuns(array $blackWhiteRuns, array $colorRuns): self
+    {
+        $expand = fn (array $runs) => array_merge(...array_map(
+            fn (array $run) => range($run['from'], $run['to']),
+            $runs,
+        )) ?: [];
+
+        return new self($expand($blackWhiteRuns), $expand($colorRuns));
+    }
+
+    /**
      * @return list<array{from: int, to: int}>
      */
     public function blackWhiteRuns(): array

@@ -17,6 +17,7 @@ Route::post('/shops/nearby', [DirectoryController::class, 'nearby'])->name('dire
 Route::get('/bandingkan', [CompareController::class, 'index'])->name('compare.index');
 Route::get('/agent', [AgentController::class, 'index'])->name('agent.index');
 Route::post('/agent', [AgentController::class, 'parse'])->name('agent.parse');
+Route::post('/agent/hitung-ulang', [AgentController::class, 'recalculate'])->middleware('throttle:60,1')->name('agent.recalculate');
 
 Route::get('/masuk/google', [GoogleLoginController::class, 'redirect'])->middleware('guest')->name('google.redirect');
 Route::get('/masuk/google/callback', [GoogleLoginController::class, 'callback'])->name('google.callback');

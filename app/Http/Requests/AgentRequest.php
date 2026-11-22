@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\ReadsCoordinates;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
 class AgentRequest extends FormRequest
 {
+    use ReadsCoordinates;
+
     /**
      * @return array<string, list<string>>
      */
@@ -19,8 +22,7 @@ class AgentRequest extends FormRequest
             'total_pages' => ['nullable', 'integer', 'min:1', "max:{$maxPages}"],
             'colored_pages' => ['nullable', 'array', "max:{$maxPages}"],
             'colored_pages.*' => ['integer', 'min:1', 'distinct'],
-            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
-            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            ...$this->coordinateRules(),
         ];
     }
 
@@ -78,19 +80,5 @@ class AgentRequest extends FormRequest
         $pages = $this->input('colored_pages');
 
         return is_array($pages) ? array_values(array_map('intval', $pages)) : null;
-    }
-
-    /**
-     * User coordinates sent transiently to compute straight-line distance (never stored or logged).
-     *
-     * @return array{0: float, 1: float}|null
-     */
-    public function coordinates(): ?array
-    {
-        if (! $this->filled('latitude') || ! $this->filled('longitude')) {
-            return null;
-        }
-
-        return [(float) $this->input('latitude'), (float) $this->input('longitude')];
     }
 }
