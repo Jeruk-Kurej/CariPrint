@@ -2,6 +2,7 @@
 
 namespace App\Services\Directory;
 
+use App\Enums\ShopService;
 use App\Models\PriceList;
 use App\Models\Shop;
 use App\Services\Location\DistanceService;
@@ -40,7 +41,7 @@ class ShopDirectory
                 'distanceKm' => $latitude === null || $longitude === null
                     ? null
                     : round($this->distance->kilometers($latitude, $longitude, $shop->latitude, $shop->longitude), 2),
-                'startingPrice' => $shop->priceLists->min('price'),
+                'startingPrice' => $this->printStartingPrice($shop),
                 'services' => $shop->services->map(fn ($service) => $service->name)->values(),
             ];
         });
@@ -48,6 +49,14 @@ class ShopDirectory
         return $latitude === null || $longitude === null
             ? $cards
             : $cards->sortBy('distanceKm')->values();
+    }
+
+    /**
+     * Cheapest print price only, so a cheap scan or lamination never makes a shop look cheapest for printing.
+     */
+    private function printStartingPrice(Shop $shop): ?int
+    {
+        return $shop->priceLists->where('service', ShopService::Print)->min('price');
     }
 
     private function localTime(?CarbonImmutable $time): ?string
@@ -80,6 +89,7 @@ class ShopDirectory
             'opensAt' => $this->localTime($status->opensAt),
             'openingHours' => $shop->opening_hours,
             'services' => $shop->services->map(fn ($service) => $service->name)->values(),
+            'startingPrice' => $this->printStartingPrice($shop),
             'prices' => $shop->priceLists->map(fn (PriceList $p) => [
                 'service' => $p->service->name,
                 'paperSize' => $p->paper_size?->value,

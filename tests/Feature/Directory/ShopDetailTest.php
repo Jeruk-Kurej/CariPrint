@@ -36,3 +36,25 @@ test('shop page uses the slug in the URL', function () {
 test('unknown shop returns not found', function () {
     $this->get('/shops/tidak-ada')->assertNotFound();
 });
+
+test('starting price counts print prices only, not cheaper services', function () {
+    $shop = Shop::factory()
+        ->has(PriceList::factory()->state(['service' => ShopService::Print, 'price' => 500]))
+        ->has(PriceList::factory()->state(['service' => ShopService::Scan, 'price' => 100]))
+        ->create(['slug' => 'harga-print']);
+
+    $this->get(route('directory.show', $shop))
+        ->assertInertia(fn (Assert $page) => $page->where('shop.startingPrice', 500));
+
+    $this->get('/tempat')
+        ->assertInertia(fn (Assert $page) => $page->where('shops.0.startingPrice', 500));
+});
+
+test('a shop without print prices has no starting price', function () {
+    $shop = Shop::factory()
+        ->has(PriceList::factory()->state(['service' => ShopService::Scan, 'price' => 100]))
+        ->create(['slug' => 'hanya-scan']);
+
+    $this->get(route('directory.show', $shop))
+        ->assertInertia(fn (Assert $page) => $page->where('shop.startingPrice', null));
+});

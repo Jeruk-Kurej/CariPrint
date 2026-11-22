@@ -16,11 +16,8 @@ import { index as directory } from '@/routes/directory';
 import type { ShopDetail } from '@/types';
 
 export default function ShopShow({ shop }: { shop: ShopDetail }) {
-    const startingPrice =
-        shop.prices.length > 0
-            ? Math.min(...shop.prices.map((price) => price.price))
-            : null;
-    const marker = { ...shop, distanceKm: null, startingPrice: null };
+    const { startingPrice } = shop;
+    const marker = { ...shop, distanceKm: null };
 
     return (
         <>
@@ -43,7 +40,7 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                     {startingPrice !== null && (
                         <p className="flex flex-wrap items-baseline gap-x-3">
                             <span className="text-sm font-medium text-foreground/70">
-                                Mulai dari
+                                Print mulai dari
                             </span>
                             <span className="rounded-sm bg-highlight px-2 font-display text-3xl font-extrabold tabular-nums">
                                 {formatRupiah(startingPrice)}

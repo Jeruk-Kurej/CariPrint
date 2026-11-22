@@ -27,6 +27,9 @@ export function FlyerBoard({ featured, shops }: Props) {
                 >
                     Yang masih buka sekarang
                 </h2>
+                <p className="w-full text-sm text-muted-foreground">
+                    Diurutkan dari harga print termurah.
+                </p>
                 <Link
                     href={directoryIndex().url}
                     className="text-sm font-semibold text-primary underline underline-offset-4"

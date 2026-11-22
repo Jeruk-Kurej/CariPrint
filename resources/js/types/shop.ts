@@ -36,6 +36,7 @@ export type ShopDetail = {
     opensAt: string | null;
     openingHours: Record<string, { open: string; close: string }[]>;
     services: string[];
+    startingPrice: number | null;
     prices: ShopPrice[];
     updatedAt: string | null;
 };
