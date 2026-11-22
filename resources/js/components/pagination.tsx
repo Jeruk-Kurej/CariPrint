@@ -93,7 +93,7 @@ export function Pagination({ page, totalPages, onChange }: Props) {
                         <span
                             key={`gap-${index}`}
                             aria-hidden
-                            className="px-1 text-muted-foreground"
+                            className="hidden px-1 text-muted-foreground sm:inline"
                         >
                             …
                         </span>
