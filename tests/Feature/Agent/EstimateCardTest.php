@@ -60,3 +60,22 @@ test('shops without any price list are left out of the estimates and counted ins
             ->where('estimates.0.name', 'Ada Harga')
             ->where('shopsWithoutPrices', 3));
 });
+
+test('a shop with a WhatsApp number gets a ready message that carries its own total', function () {
+    PriceList::factory()->for(Shop::factory()->create(['whatsapp' => '6281234567890']))->create(['price' => 500]);
+
+    $this->post('/agent', ['request' => 'print 10 halaman'])
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('estimates.0.whatsapp', '6281234567890')
+            ->where('estimates.0.whatsappMessage', fn ($message) => str_contains($message, 'Rp 5.000') && str_contains($message, '10 halaman hitam-putih')));
+});
+
+test('no message is made for a shop without a number or one that cannot price the request', function () {
+    PriceList::factory()->for(Shop::factory()->create(['whatsapp' => null]))->create(['price' => 500]);
+    PriceList::factory()->for(Shop::factory()->create(['whatsapp' => '6281234567890']))->create(['service' => ShopService::Photocopy]);
+
+    $this->post('/agent', ['request' => 'print 10 halaman'])
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('estimates.0.whatsappMessage', null)
+            ->where('estimates.1.whatsappMessage', null));
+});

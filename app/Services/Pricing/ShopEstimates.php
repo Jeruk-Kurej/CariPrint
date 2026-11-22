@@ -18,6 +18,7 @@ class ShopEstimates
         private readonly PriceCalculator $calculator,
         private readonly OpeningStatus $openingStatus,
         private readonly DistanceService $distance,
+        private readonly WhatsAppMessage $whatsAppMessage,
     ) {}
 
     /**
@@ -43,6 +44,7 @@ class ShopEstimates
         $rows = Shop::published()->has('priceLists')->with('priceLists')->orderBy('name')->get()
             ->map(function (Shop $shop) use ($spec, $coordinates, $now) {
                 $breakdown = $this->calculator->forShop($shop, $spec);
+                $total = $breakdown->total();
 
                 return [
                     'name' => $shop->name,
@@ -52,7 +54,11 @@ class ShopEstimates
                     'distanceKm' => $coordinates === null
                         ? null
                         : round($this->distance->kilometers($coordinates[0], $coordinates[1], $shop->latitude, $shop->longitude), 2),
-                    'total' => $breakdown->total(),
+                    'total' => $total,
+                    'whatsapp' => $shop->whatsapp,
+                    'whatsappMessage' => $total === null || $shop->whatsapp === null
+                        ? null
+                        : $this->whatsAppMessage->compose($spec, $total),
                     'missing' => $breakdown->missing,
                 ];
             })
