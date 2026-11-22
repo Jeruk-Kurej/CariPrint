@@ -1,3 +1,4 @@
+import { ChipRow } from '@/components/chip-row';
 import { FilterChip } from '@/components/filter-chip';
 import { SearchField } from '@/components/search-field';
 import { SegmentedControl } from '@/components/segmented-control';
@@ -29,7 +30,7 @@ export function FilterPanel({ filters, hasDistance, locationStatus }: Props) {
     return (
         <section
             aria-label="Pencarian dan filter tempat"
-            className="flex flex-col gap-3 paper-card p-4"
+            className="flex flex-col gap-2.5 paper-card p-3 sm:gap-3 sm:p-4"
         >
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <SearchField
@@ -50,11 +51,7 @@ export function FilterPanel({ filters, hasDistance, locationStatus }: Props) {
                     />
                 </div>
             </div>
-            <div
-                role="group"
-                aria-label="Layanan yang tersedia"
-                className="flex flex-wrap items-center gap-2"
-            >
+            <ChipRow label="Layanan yang tersedia">
                 {(Object.keys(serviceGroups) as ServiceGroup[]).map((group) => (
                     <FilterChip
                         key={group}
@@ -64,14 +61,12 @@ export function FilterPanel({ filters, hasDistance, locationStatus }: Props) {
                         {serviceGroups[group].label}
                     </FilterChip>
                 ))}
-            </div>
+            </ChipRow>
             {hasDistance && (
-                <div
-                    role="group"
-                    aria-label="Batas jarak"
-                    className="flex flex-wrap items-center gap-2"
-                >
-                    <span className="text-sm font-semibold">Jarak</span>
+                <ChipRow label="Batas jarak">
+                    <span className="shrink-0 text-sm font-semibold">
+                        Jarak
+                    </span>
                     {distanceOptionsKm.map((km) => (
                         <FilterChip
                             key={km}
@@ -85,13 +80,13 @@ export function FilterPanel({ filters, hasDistance, locationStatus }: Props) {
                             {`≤ ${km} km`}
                         </FilterChip>
                     ))}
-                </div>
+                </ChipRow>
             )}
             {locationStatus !== 'granted' && (
                 <p aria-live="polite" className="text-xs text-muted-foreground">
                     {locationStatus === 'loading'
                         ? 'Mencari lokasimu...'
-                        : 'Lokasi tidak aktif, jadi daftar diurutkan dari nama. Izinkan lokasi di browser untuk melihat yang terdekat dan memakai filter jarak.'}
+                        : 'Lokasi mati, jadi urut nama. Izinkan lokasi untuk urutan terdekat dan filter jarak.'}
                 </p>
             )}
         </section>
