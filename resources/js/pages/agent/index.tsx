@@ -1,6 +1,7 @@
 import { Head, router } from '@inertiajs/react';
 import type { FormEvent } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { ExamplePrompts } from '@/components/agent/example-prompts';
 import { EstimateList } from '@/components/agent/estimate-list';
 import type { Estimate } from '@/components/agent/estimate-list';
 import { PdfAttachment } from '@/components/agent/pdf-attachment';
@@ -33,10 +34,17 @@ export default function AgentIndex({
     shopsWithoutPrices = 0,
 }: Props) {
     const [request, setRequest] = useState('');
+    const textarea = useRef<HTMLTextAreaElement>(null);
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const pdf = usePdfAttachment(fileLimits, () => setError(null));
     const location = useGeolocation();
+
+    function fillRequest(text: string) {
+        setRequest(text);
+        setError(null);
+        textarea.current?.focus();
+    }
 
     function submit(event: FormEvent) {
         event.preventDefault();
@@ -73,11 +81,13 @@ export default function AgentIndex({
             <Head title="Asisten cetak" />
             <main className="flex w-full flex-col gap-8 px-4 py-8 sm:py-12">
                 <header className="flex flex-col gap-3">
-                    <PageTitle>Tulis kebutuhan cetakmu</PageTitle>
+                    <PageTitle>Mau print apa hari ini?</PageTitle>
                     <p className="max-w-xl text-muted-foreground">
-                        Asisten membaca permintaanmu dan menyusun
-                        spesifikasinya. Biayanya dihitung dari daftar harga tiap
-                        tempat, bukan ditebak.
+                        Ceritakan dengan kalimat biasa: ukuran kertas (A4, F4,
+                        A3), hitam-putih atau warna, jumlah rangkap, jilid, atau
+                        halaman tertentu. Asisten menyusun spesifikasinya, lalu
+                        biayanya dihitung dari daftar harga tiap tempat, bukan
+                        ditebak.
                     </p>
                 </header>
 
@@ -86,7 +96,12 @@ export default function AgentIndex({
                     className="relative flex flex-col gap-3 rounded-sm bg-note-yellow p-5 paper-shadow sm:p-6"
                 >
                     <Fastener id={2} />
+                    <ExamplePrompts
+                        hasPdf={pdf.pages !== null}
+                        onPick={fillRequest}
+                    />
                     <textarea
+                        ref={textarea}
                         value={request}
                         onChange={(event) => setRequest(event.target.value)}
                         maxLength={500}
