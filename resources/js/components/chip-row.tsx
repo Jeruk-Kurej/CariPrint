@@ -7,9 +7,12 @@ import { useScrollHint } from '@/hooks/use-scroll-hint';
  */
 export function ChipRow({
     label,
+    fadeFrom = 'from-card',
     children,
 }: {
     label: string;
+    /** Kelas warna awal bayangan, harus sama dengan latar di belakang deretan chip. */
+    fadeFrom?: string;
     children: ReactNode;
 }) {
     const scroll = useScrollHint<HTMLDivElement>();
@@ -27,7 +30,7 @@ export function ChipRow({
             {scroll.hasMoreOnRight && (
                 <span
                     aria-hidden
-                    className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-card to-transparent lg:hidden"
+                    className={`pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l ${fadeFrom} to-transparent lg:hidden`}
                 />
             )}
         </div>
