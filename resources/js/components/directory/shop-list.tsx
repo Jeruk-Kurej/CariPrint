@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FlyerCard } from '@/components/directory/flyer-card';
 import { ShopListSkeleton } from '@/components/directory/shop-list-skeleton';
-import { Button } from '@/components/ui/button';
+import { Pagination } from '@/components/pagination';
 import type { ShopSummary } from '@/types';
 
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 12;
 
 type Props = {
     shops: ShopSummary[];
@@ -13,29 +13,52 @@ type Props = {
     sorting?: boolean;
 };
 
-/** Menampilkan 24 tempat dulu supaya halaman tetap ringan di ponsel. Tempat yang dipilih dari peta selalu ikut tampil. */
+/** Menampilkan 12 tempat per halaman supaya halaman tetap ringan dan pendek di ponsel. Tempat yang dipilih dari peta membuka halamannya. */
 export function ShopList({
     shops,
     selectedId,
     onSelect,
     sorting = false,
 }: Props) {
-    const [visible, setVisible] = useState(PAGE_SIZE);
+    const [page, setPage] = useState(1);
+    const top = useRef<HTMLDivElement>(null);
+    const shopsRef = useRef(shops);
 
-    useEffect(() => setVisible(PAGE_SIZE), [shops]);
+    shopsRef.current = shops;
+    const totalPages = Math.max(1, Math.ceil(shops.length / PAGE_SIZE));
+
+    useEffect(() => setPage(1), [shops]);
+
+    useEffect(() => {
+        const index = shopsRef.current.findIndex(
+            (shop) => shop.id === selectedId,
+        );
+
+        if (index >= 0) {
+            setPage(Math.floor(index / PAGE_SIZE) + 1);
+        }
+    }, [selectedId]);
+
+    function goTo(next: number) {
+        setPage(next);
+        top.current?.scrollIntoView({ block: 'start' });
+    }
 
     if (sorting) {
         return <ShopListSkeleton count={Math.min(shops.length || 4, 4)} />;
     }
 
-    const selectedIndex = shops.findIndex((shop) => shop.id === selectedId);
-    const count = Math.max(visible, selectedIndex + 1);
-    const remaining = shops.length - count;
+    const start = (Math.min(page, totalPages) - 1) * PAGE_SIZE;
 
     return (
-        <div className="flex flex-col gap-6">
+        <div ref={top} className="flex scroll-mt-20 flex-col gap-6">
+            <p className="text-sm text-muted-foreground">
+                Menampilkan {start + 1}–
+                {Math.min(start + PAGE_SIZE, shops.length)} dari {shops.length}{' '}
+                tempat
+            </p>
             <div className="grid gap-6 pt-3 sm:grid-cols-2">
-                {shops.slice(0, count).map((shop) => (
+                {shops.slice(start, start + PAGE_SIZE).map((shop) => (
                     <FlyerCard
                         key={shop.id}
                         shop={shop}
@@ -44,15 +67,11 @@ export function ShopList({
                     />
                 ))}
             </div>
-            {remaining > 0 && (
-                <Button
-                    variant="outline"
-                    className="self-center"
-                    onClick={() => setVisible(count + PAGE_SIZE)}
-                >
-                    Tampilkan lebih banyak ({remaining} lagi)
-                </Button>
-            )}
+            <Pagination
+                page={Math.min(page, totalPages)}
+                totalPages={totalPages}
+                onChange={goTo}
+            />
         </div>
     );
 }
