@@ -7,7 +7,7 @@ type Props = {
 /** Sakelar untuk pilihan ya atau tidak, misalnya "hanya yang masih buka". */
 export function SwitchField({ label, checked, onChange }: Props) {
     return (
-        <label className="inline-flex cursor-pointer items-center gap-3 text-sm font-semibold">
+        <label className="inline-flex min-h-11 cursor-pointer items-center gap-3 text-sm font-semibold">
             <button
                 type="button"
                 role="switch"

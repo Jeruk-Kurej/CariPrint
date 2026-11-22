@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 import type { ReactNode } from 'react';
 
 const base =
-    'inline-flex items-center rounded-full border-2 px-4 py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50';
+    'inline-flex min-h-11 items-center rounded-full border-2 px-4 py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50';
 const idle =
     'border-foreground/15 bg-card hover:border-primary hover:text-primary';
 const active = 'border-primary bg-primary text-primary-foreground';

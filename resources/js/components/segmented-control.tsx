@@ -32,7 +32,7 @@ export function SegmentedControl<T extends string>({
                     aria-checked={value === option.value}
                     disabled={option.disabled}
                     onClick={() => onChange(option.value)}
-                    className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40 ${value === option.value ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'}`}
+                    className={`min-h-11 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40 ${value === option.value ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'}`}
                 >
                     {option.label}
                 </button>

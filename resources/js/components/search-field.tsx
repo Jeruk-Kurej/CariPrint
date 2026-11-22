@@ -20,7 +20,7 @@ export function SearchField({
                 onChange={(event) => onChange(event.target.value)}
                 placeholder="Cari nama tempat..."
                 aria-label="Cari nama tempat"
-                className="w-full rounded-full border-2 border-foreground/15 bg-background py-1.5 pr-3 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="min-h-11 w-full rounded-full border-2 border-foreground/15 bg-background py-1.5 pr-3 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
         </div>
     );
