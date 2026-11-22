@@ -10,7 +10,7 @@ type Props = {
 };
 
 const button =
-    'inline-flex size-11 items-center justify-center rounded-full border-2 text-sm font-semibold tabular-nums transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40';
+    'size-11 items-center justify-center rounded-full border-2 text-sm font-semibold tabular-nums transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40';
 
 const JUMP_FROM_PAGES = 7;
 
@@ -78,7 +78,7 @@ export function Pagination({ page, totalPages, onChange }: Props) {
                     aria-label="Halaman sebelumnya"
                     disabled={page === 1}
                     onClick={() => onChange(page - 1)}
-                    className={`${button} border-foreground/15 bg-card hover:border-primary`}
+                    className={`${button} inline-flex border-foreground/15 bg-card hover:border-primary`}
                 >
                     <ChevronLeft className="size-5" aria-hidden />
                 </button>
@@ -115,7 +115,7 @@ export function Pagination({ page, totalPages, onChange }: Props) {
                     aria-label="Halaman berikutnya"
                     disabled={page === totalPages}
                     onClick={() => onChange(page + 1)}
-                    className={`${button} border-foreground/15 bg-card hover:border-primary`}
+                    className={`${button} inline-flex border-foreground/15 bg-card hover:border-primary`}
                 >
                     <ChevronRight className="size-5" aria-hidden />
                 </button>
