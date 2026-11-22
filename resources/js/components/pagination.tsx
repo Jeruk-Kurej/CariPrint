@@ -82,6 +82,12 @@ export function Pagination({ page, totalPages, onChange }: Props) {
                 >
                     <ChevronLeft className="size-5" aria-hidden />
                 </button>
+                <span
+                    aria-live="polite"
+                    className="min-w-24 text-center text-sm font-semibold tabular-nums sm:hidden"
+                >
+                    Hal. {page} dari {totalPages}
+                </span>
                 {pageItems(page, totalPages).map((item, index) =>
                     item === 'gap' ? (
                         <span
@@ -98,7 +104,7 @@ export function Pagination({ page, totalPages, onChange }: Props) {
                             aria-label={`Halaman ${item}`}
                             aria-current={item === page ? 'page' : undefined}
                             onClick={() => onChange(item)}
-                            className={`${button} ${item === page ? 'border-primary bg-primary text-primary-foreground' : 'border-foreground/15 bg-card hover:border-primary'}`}
+                            className={`${button} hidden sm:inline-flex ${item === page ? 'border-primary bg-primary text-primary-foreground' : 'border-foreground/15 bg-card hover:border-primary'}`}
                         >
                             {item}
                         </button>

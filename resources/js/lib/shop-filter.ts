@@ -92,3 +92,14 @@ export const sortLabels: Record<ShopSort, string> = {
 export function parseSort(value: string | null): ShopSort | null {
     return value !== null && value in sortLabels ? (value as ShopSort) : null;
 }
+
+/** Kelompok layanan yang disediakan sedikitnya satu tempat, sesuai urutan di serviceGroups. */
+export function offeredServiceGroups(shops: ShopSummary[]): ServiceGroup[] {
+    return (Object.keys(serviceGroups) as ServiceGroup[]).filter((group) =>
+        shops.some((shop) =>
+            shop.services.some((name) =>
+                serviceGroups[group].services.includes(name),
+            ),
+        ),
+    );
+}

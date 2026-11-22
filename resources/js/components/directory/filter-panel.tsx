@@ -13,12 +13,19 @@ import type { ServiceGroup, ShopSort } from '@/lib/shop-filter';
 
 type Props = {
     filters: DirectoryFilters;
+    /** Kelompok layanan yang disediakan sedikitnya satu tempat. Yang belum ada tempatnya tidak ditampilkan. */
+    offeredServices: ServiceGroup[];
     hasDistance: boolean;
     locationStatus: 'loading' | 'granted' | 'denied';
 };
 
 /** Pencarian, sakelar buka, urutan, layanan, dan batas jarak untuk daftar tempat. */
-export function FilterPanel({ filters, hasDistance, locationStatus }: Props) {
+export function FilterPanel({
+    filters,
+    offeredServices,
+    hasDistance,
+    locationStatus,
+}: Props) {
     const sortOptions = (Object.keys(sortLabels) as ShopSort[]).map(
         (value) => ({
             value,
@@ -51,17 +58,19 @@ export function FilterPanel({ filters, hasDistance, locationStatus }: Props) {
                     />
                 </div>
             </div>
-            <ChipRow label="Layanan yang tersedia">
-                {(Object.keys(serviceGroups) as ServiceGroup[]).map((group) => (
-                    <FilterChip
-                        key={group}
-                        active={filters.services.includes(group)}
-                        onClick={() => filters.toggleService(group)}
-                    >
-                        {serviceGroups[group].label}
-                    </FilterChip>
-                ))}
-            </ChipRow>
+            {offeredServices.length > 1 && (
+                <ChipRow label="Layanan yang tersedia">
+                    {offeredServices.map((group) => (
+                        <FilterChip
+                            key={group}
+                            active={filters.services.includes(group)}
+                            onClick={() => filters.toggleService(group)}
+                        >
+                            {serviceGroups[group].label}
+                        </FilterChip>
+                    ))}
+                </ChipRow>
+            )}
             {hasDistance && (
                 <ChipRow label="Batas jarak">
                     <span className="shrink-0 text-sm font-semibold">
