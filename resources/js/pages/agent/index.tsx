@@ -7,8 +7,8 @@ import type { Estimate } from '@/components/agent/estimate-list';
 import { PdfAttachment } from '@/components/agent/pdf-attachment';
 import { QuotaNote } from '@/components/agent/quota-note';
 import type { AiQuotaStatus } from '@/components/agent/quota-note';
-import { SpecSummary } from '@/components/agent/spec-summary';
-import type { PrintSpec } from '@/components/agent/spec-summary';
+import { SpecSlip } from '@/components/agent/spec-slip';
+import type { PrintSpec } from '@/components/agent/spec-slip';
 import { Fastener } from '@/components/directory/flyer-parts';
 import { PageTitle } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
@@ -149,7 +149,12 @@ export default function AgentIndex({
                         <h2 className="font-display text-xl font-bold">
                             Yang kami pahami
                         </h2>
-                        <SpecSummary spec={spec} />
+                        <SpecSlip
+                            spec={spec}
+                            coordinates={
+                                location.status === 'granted' ? location : null
+                            }
+                        />
                     </section>
                 )}
 
