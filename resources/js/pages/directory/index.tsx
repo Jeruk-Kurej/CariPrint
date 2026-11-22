@@ -1,18 +1,14 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { EmptyState } from '@/components/directory/empty-state';
+import { FilterPanel } from '@/components/directory/filter-panel';
 import { ShopList } from '@/components/directory/shop-list';
 import { ShopMap } from '@/components/directory/shop-map';
 import { PageTitle } from '@/components/page-header';
-import { SearchField } from '@/components/search-field';
-import { SegmentedControl } from '@/components/segmented-control';
-import { SwitchField } from '@/components/switch-field';
 import { Button } from '@/components/ui/button';
 import { useDirectoryFilters } from '@/hooks/use-directory-filters';
 import { useGeolocation } from '@/hooks/use-geolocation';
 import { useSelectedShop } from '@/hooks/use-selected-shop';
-import { sortLabels } from '@/lib/shop-filter';
-import type { ShopSort } from '@/lib/shop-filter';
 import { nearby } from '@/routes/directory';
 import { create as suggest } from '@/routes/suggestions';
 import type { ShopSummary } from '@/types';
@@ -24,14 +20,6 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
 
     const hasDistance = location.status === 'granted';
     const filters = useDirectoryFilters(shops, hasDistance);
-
-    const sortOptions = (Object.keys(sortLabels) as ShopSort[]).map(
-        (value) => ({
-            value,
-            label: sortLabels[value],
-            disabled: value === 'distance' && !hasDistance,
-        }),
-    );
 
     function showOnMap(id: number) {
         select(id);
@@ -90,46 +78,17 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                     />
                 ) : (
                     <>
-                        <section
-                            aria-label="Pencarian dan filter tempat"
-                            className="flex flex-col gap-3 paper-card p-4"
-                        >
-                            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                                <SearchField
-                                    value={filters.query}
-                                    onChange={filters.setQuery}
-                                />
-                                <div className="flex flex-wrap items-center gap-4">
-                                    <SwitchField
-                                        label="Masih buka saja"
-                                        checked={filters.openOnly}
-                                        onChange={filters.setOpenOnly}
-                                    />
-                                    <SegmentedControl
-                                        label="Urutkan berdasarkan"
-                                        value={filters.sort}
-                                        options={sortOptions}
-                                        onChange={filters.setSort}
-                                    />
-                                </div>
-                            </div>
-                            {location.status !== 'granted' && (
-                                <p
-                                    aria-live="polite"
-                                    className="text-xs text-muted-foreground"
-                                >
-                                    {location.status === 'loading'
-                                        ? 'Mencari lokasimu...'
-                                        : 'Lokasi tidak aktif, jadi daftar diurutkan dari nama. Izinkan lokasi di browser untuk melihat yang terdekat.'}
-                                </p>
-                            )}
-                        </section>
+                        <FilterPanel
+                            filters={filters}
+                            hasDistance={hasDistance}
+                            locationStatus={location.status}
+                        />
 
                         <div className="grid min-w-0 items-start gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
                             {filters.visibleShops.length === 0 ? (
                                 <EmptyState
                                     title="Tidak ada yang cocok"
-                                    hint="Ubah kata pencarian atau matikan sakelar Masih buka saja."
+                                    hint="Ubah kata pencarian atau kurangi filter yang aktif."
                                 >
                                     <Link
                                         href={suggest().url}

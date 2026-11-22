@@ -2,7 +2,39 @@ import type { ShopSummary } from '@/types';
 
 export type ShopSort = 'distance' | 'price' | 'name';
 
-type Options = { openOnly: boolean; sort: ShopSort; query?: string };
+export type ServiceGroup =
+    | 'print'
+    | 'photocopy'
+    | 'binding'
+    | 'scan'
+    | 'laminating';
+
+/** Nama layanan dari server yang masuk tiap kelompok. Tiga jenis jilid digabung jadi satu pilihan. */
+export const serviceGroups: Record<
+    ServiceGroup,
+    { label: string; services: string[] }
+> = {
+    print: { label: 'Print', services: ['Print'] },
+    photocopy: { label: 'Fotokopi', services: ['Photocopy'] },
+    binding: {
+        label: 'Jilid',
+        services: ['SpiralBinding', 'TapeBinding', 'HardcoverBinding'],
+    },
+    scan: { label: 'Scan', services: ['Scan'] },
+    laminating: { label: 'Laminating', services: ['Laminating'] },
+};
+
+export const distanceOptionsKm = [1, 2, 5];
+
+type Options = {
+    openOnly: boolean;
+    sort: ShopSort;
+    query?: string;
+    /** Tempat harus menyediakan semua kelompok layanan yang dipilih. */
+    services?: ServiceGroup[];
+    /** Batas jarak dalam km. Diabaikan kalau null. */
+    maxKm?: number | null;
+};
 
 /** Tempat tanpa data jarak atau harga selalu ditaruh di bawah. */
 function ascendingWithMissingLast(
@@ -32,13 +64,20 @@ const comparators: Record<
 /** "Masih buka" membuang tempat yang sedang tutup, tapi tetap menampilkan yang segera tutup. */
 export function filterAndSortShops(
     shops: ShopSummary[],
-    { openOnly, sort, query = '' }: Options,
+    { openOnly, sort, query = '', services = [], maxKm = null }: Options,
 ): ShopSummary[] {
     const needle = query.trim().toLowerCase();
     const visible = shops.filter(
         (shop) =>
             (!openOnly || shop.openState !== 'closed') &&
-            (needle === '' || shop.name.toLowerCase().includes(needle)),
+            (needle === '' || shop.name.toLowerCase().includes(needle)) &&
+            services.every((group) =>
+                shop.services.some((name) =>
+                    serviceGroups[group].services.includes(name),
+                ),
+            ) &&
+            (maxKm === null ||
+                (shop.distanceKm !== null && shop.distanceKm <= maxKm)),
     );
 
     return [...visible].sort(comparators[sort]);

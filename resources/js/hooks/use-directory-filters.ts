@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { filterAndSortShops, parseSort } from '@/lib/shop-filter';
-import type { ShopSort } from '@/lib/shop-filter';
+import type { ServiceGroup, ShopSort } from '@/lib/shop-filter';
 import type { ShopSummary } from '@/types';
 
 /** Pencarian, urutan, dan filter bisa dibawa lewat alamat, misalnya dari chip di beranda. */
@@ -20,13 +20,32 @@ export function useDirectoryFilters(
         parseSort(initialParams().get('urut')),
     );
 
+    const [services, setServices] = useState<ServiceGroup[]>([]);
+    const [chosenMaxKm, setMaxKm] = useState<number | null>(null);
+
+    function toggleService(group: ServiceGroup) {
+        setServices((current) =>
+            current.includes(group)
+                ? current.filter((item) => item !== group)
+                : [...current, group],
+        );
+    }
+
+    const maxKm = hasDistance ? chosenMaxKm : null;
     const wanted = chosenSort ?? 'distance';
     const sort: ShopSort =
         wanted === 'distance' && !hasDistance ? 'name' : wanted;
 
     const visibleShops = useMemo(
-        () => filterAndSortShops(shops, { openOnly, sort, query }),
-        [shops, openOnly, sort, query],
+        () =>
+            filterAndSortShops(shops, {
+                openOnly,
+                sort,
+                query,
+                services,
+                maxKm,
+            }),
+        [shops, openOnly, sort, query, services, maxKm],
     );
     const openCount = shops.filter(
         (shop) => shop.openState !== 'closed',
@@ -39,6 +58,10 @@ export function useDirectoryFilters(
         setQuery,
         sort,
         setSort,
+        services,
+        toggleService,
+        maxKm,
+        setMaxKm,
         visibleShops,
         openCount,
     };
