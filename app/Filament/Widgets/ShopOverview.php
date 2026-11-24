@@ -2,13 +2,16 @@
 
 namespace App\Filament\Widgets;
 
+use App\Enums\ContactStatus;
 use App\Enums\PriceSource;
 use App\Enums\ReportStatus;
 use App\Enums\ShopStatus;
 use App\Enums\SuggestionStatus;
+use App\Filament\Resources\ContactMessages\ContactMessageResource;
 use App\Filament\Resources\Reports\ReportResource;
 use App\Filament\Resources\Shops\ShopResource;
 use App\Filament\Resources\ShopSuggestions\ShopSuggestionResource;
+use App\Models\ContactMessage;
 use App\Models\PriceList;
 use App\Models\Report;
 use App\Models\Shop;
@@ -18,7 +21,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 /**
  * Numbers an admin checks first: how many shops are listed, how many drafts wait for review, how many prices still wait for the owner's
- * confirmation, how many suggestions wait for a decision, and how many reports wait for a review.
+ * confirmation, how many suggestions wait for a decision, how many reports wait for a review, and how many contact messages are new.
  */
 class ShopOverview extends StatsOverviewWidget
 {
@@ -31,6 +34,7 @@ class ShopOverview extends StatsOverviewWidget
         $drafts = Shop::where('status', ShopStatus::Draft->value)->count();
         $pending = ShopSuggestion::where('status', SuggestionStatus::Pending->value)->count();
         $reports = Report::where('status', ReportStatus::Pending->value)->count();
+        $messages = ContactMessage::where('status', ContactStatus::New->value)->count();
         $unconfirmed = PriceList::where('source', '!=', PriceSource::Verified->value)->count();
 
         return [
@@ -52,6 +56,10 @@ class ShopOverview extends StatsOverviewWidget
                 ->description($reports > 0 ? 'Perlu diperiksa' : 'Semua sudah diputuskan')
                 ->color($reports > 0 ? 'warning' : 'success')
                 ->url(ReportResource::getUrl('index')),
+            Stat::make('Pesan baru', $messages)
+                ->description($messages > 0 ? 'Perlu dibalas' : 'Semua sudah ditangani')
+                ->color($messages > 0 ? 'warning' : 'success')
+                ->url(ContactMessageResource::getUrl('index')),
         ];
     }
 }

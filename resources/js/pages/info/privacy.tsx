@@ -1,13 +1,10 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Section } from '@/components/info/section';
 import { PageHeader } from '@/components/page-header';
+import { contactUrl } from '@/lib/navigation';
 
 /** Kebijakan privasi. Isinya harus selalu cocok dengan data yang benar-benar diproses aplikasi. */
-export default function Privacy({
-    contactEmail,
-}: {
-    contactEmail: string | null;
-}) {
+export default function Privacy() {
     return (
         <>
             <Head title="Kebijakan privasi" />
@@ -102,23 +99,25 @@ export default function Privacy({
                         lewat halaman Akunku. Datanya langsung terhapus permanen
                         dan tidak bisa dikembalikan.
                     </p>
-                    {contactEmail ? (
-                        <p>
-                            Kalau ada kendala, kirim permintaanmu ke{' '}
-                            <a
-                                href={`mailto:${contactEmail}`}
-                                className="font-medium text-primary underline underline-offset-2"
-                            >
-                                {contactEmail}
-                            </a>
-                            .
-                        </p>
-                    ) : (
-                        <p>
-                            Kalau ada kendala, hubungi tim pengembang CariPrint,
-                            mahasiswa Universitas Ciputra.
-                        </p>
-                    )}
+                    <p>
+                        Kalau ada kendala, tulis lewat{' '}
+                        <Link
+                            href={contactUrl}
+                            className="font-medium text-primary underline underline-offset-2"
+                        >
+                            formulir Hubungi kami
+                        </Link>
+                        . Kami membalas lewat email.
+                    </p>
+                </Section>
+
+                <Section title="Pesan lewat Hubungi kami">
+                    <p>
+                        Kalau kamu menulis lewat formulir Hubungi kami, kami
+                        menyimpan emailmu, jenis pesan, dan isi pesanmu. Hanya
+                        admin CariPrint yang melihatnya, dan pesan dari emailmu
+                        ikut terhapus saat kamu menghapus akun.
+                    </p>
                 </Section>
 
                 <p className="text-sm text-muted-foreground">

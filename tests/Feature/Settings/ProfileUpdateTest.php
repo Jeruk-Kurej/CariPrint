@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ContactMessage;
 use App\Models\ShopSuggestion;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -162,3 +163,14 @@ test('the profile page tells the client when the email is locked', function (?st
     'linked to Google' => ['g-123', true],
     'password account' => [null, false],
 ]);
+
+test('deleting an account also deletes the contact messages sent from its email', function () {
+    $user = User::factory()->create(['email' => 'siti@example.com']);
+    ContactMessage::factory()->count(2)->create(['email' => 'siti@example.com']);
+    $others = ContactMessage::factory()->create(['email' => 'orang-lain@example.com']);
+
+    $this->actingAs($user)->delete(route('profile.destroy'), ['email' => 'siti@example.com']);
+
+    expect(ContactMessage::where('email', 'siti@example.com')->count())->toBe(0)
+        ->and($others->fresh())->not->toBeNull();
+});

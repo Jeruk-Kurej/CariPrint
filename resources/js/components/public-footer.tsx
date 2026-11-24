@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { BrandMark } from '@/components/brand-mark';
-import { homeUrl, privacyUrl } from '@/lib/navigation';
+import { contactUrl, homeUrl, privacyUrl } from '@/lib/navigation';
 
 export function PublicFooter() {
     return (
@@ -31,6 +31,13 @@ export function PublicFooter() {
                         className="-my-3.5 inline-block py-3.5 font-medium text-foreground hover:underline"
                     >
                         Privasi
+                    </Link>{' '}
+                    ·{' '}
+                    <Link
+                        href={contactUrl}
+                        className="-my-3.5 inline-block py-3.5 font-medium text-foreground hover:underline"
+                    >
+                        Hubungi kami
                     </Link>
                 </p>
             </div>

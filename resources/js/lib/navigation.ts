@@ -2,6 +2,7 @@ import { home } from '@/routes';
 import { index as agent } from '@/routes/agent';
 import { index as compare } from '@/routes/compare';
 import { index as directory } from '@/routes/directory';
+import { create as contact } from '@/routes/contact';
 import { howItWorks, privacy } from '@/routes/info';
 
 export type NavLink = { label: string; href: string };
@@ -15,5 +16,7 @@ export const mainNav: NavLink[] = [
 ];
 
 export const privacyUrl = privacy().url;
+
+export const contactUrl = contact().url;
 
 export const homeUrl = home().url;

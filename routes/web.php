@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\CompareController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\FileCheckController;
 use App\Http\Controllers\HomeController;
@@ -36,6 +37,8 @@ Route::inertia('/cara-kerja', 'info/how-it-works')->name('info.how-it-works');
 Route::inertia('/tentang', 'info/about')->name('info.about');
 Route::inertia('/pertanyaan', 'info/faq')->name('info.faq');
 Route::get('/privasi', PrivacyController::class)->name('info.privacy');
+Route::get('/hubungi-kami', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/hubungi-kami', [ContactController::class, 'store'])->middleware('throttle:5,60')->name('contact.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/akun', AccountController::class)->name('account');
