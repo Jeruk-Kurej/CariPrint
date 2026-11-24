@@ -104,7 +104,7 @@ export function HomeHero({
                         placeholder="Cari nama tempat print"
                         className="min-w-0 flex-1 bg-transparent px-4 text-base outline-none"
                     />
-                    <Button type="submit" size="lg">
+                    <Button type="submit" size="lg" className="min-h-11">
                         <Search aria-hidden />
                         Cari
                     </Button>

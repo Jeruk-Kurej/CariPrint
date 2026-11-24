@@ -124,6 +124,7 @@ export default function AgentIndex({
                     <Button
                         type="submit"
                         size="lg"
+                        className="min-h-11"
                         disabled={
                             request.trim() === '' || processing || pdf.reading
                         }

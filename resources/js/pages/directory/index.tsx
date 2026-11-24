@@ -129,7 +129,7 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                                     daftar.
                                 </p>
                             </div>
-                            <Button asChild>
+                            <Button asChild className="min-h-11">
                                 <Link href={suggest().url}>Usulkan tempat</Link>
                             </Button>
                         </aside>
