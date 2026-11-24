@@ -10,7 +10,7 @@ const steps = [
     'Buka halaman Cari tempat. Izinkan lokasi kalau kamu mau daftar diurutkan dari yang terdekat.',
     'Lihat status buka, harga mulai dari, dan jarak tiap tempat. Pakai filter Masih buka kalau sedang buru-buru.',
     'Buka halaman sebuah tempat untuk melihat daftar harga lengkap, jam buka, layanan, dan lokasinya di peta.',
-    'Hubungi tempatnya lewat tombol WhatsApp. Pemesanan dan pembayaran terjadi di antara kamu dan tempat itu, bukan di CariPrint.',
+    'Hubungi tempatnya lewat tombol WhatsApp. Pesan dan bayarnya langsung ke tempat itu.',
 ];
 
 export default function HowItWorks() {
@@ -21,7 +21,7 @@ export default function HowItWorks() {
                 <PageHeader
                     divided
                     title="Cara kerja CariPrint"
-                    intro="CariPrint membantu kamu memilih tempat printing sebelum berangkat. Berikut apa yang terjadi di balik tiap halaman."
+                    intro="CariPrint membantu kamu memilih tempat print sebelum berangkat."
                 />
 
                 <section className="flex flex-col gap-4">
@@ -67,14 +67,14 @@ export default function HowItWorks() {
                                 Perkiraan
                             </strong>{' '}
                             berarti belum disurvei, jadi bisa berbeda di
-                            lapangan. Tanggal pembaruan tertera di tiap halaman
+                            lapangan. Tanggal pembaruannya ada di halaman tiap
                             tempat.
                         </p>
                         <p>
                             <strong className="text-foreground">Jarak</strong>{' '}
-                            adalah garis lurus dari lokasimu ke tempat itu,
-                            bukan jarak berkendara. Lokasimu hanya dipakai untuk
-                            menghitung jarak dan tidak disimpan.
+                            adalah garis lurus dari lokasimu ke tempatnya, jadi
+                            rute sebenarnya bisa lebih jauh. Lokasimu hanya
+                            dipakai untuk menghitung jarak dan tidak disimpan.
                         </p>
                     </Section>
 
@@ -90,13 +90,14 @@ export default function HowItWorks() {
                             mengubahnya menjadi spesifikasi: ukuran kertas,
                             jumlah halaman hitam-putih dan warna, jumlah
                             rangkap, dan jilid. Kalau kamu melampirkan PDF,
-                            jumlah halaman warna dan hitam-putih diperiksa
-                            langsung di perangkatmu tanpa diunggah ke server.
+                            browsermu menghitung halaman warna dan
+                            hitam-putihnya, dan filenya tidak diunggah ke
+                            server.
                         </p>
                         <p className="text-sm text-foreground/85">
-                            Biaya, jarak, dan status buka tidak pernah dihitung
-                            oleh AI. Semuanya dihitung dari data tempat dan
-                            daftar harga yang tersimpan.
+                            AI tidak pernah menghitung biaya, jarak, atau status
+                            buka. Semuanya dihitung dari data tempat dan daftar
+                            harga yang tersimpan.
                         </p>
                         <div className="flex flex-wrap gap-2 pt-2">
                             <Button asChild>

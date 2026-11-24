@@ -36,10 +36,10 @@ export default function SuggestionCreate({
                             Masuk dulu untuk mengusulkan
                         </h2>
                         <p>
-                            Kami meminta masuk dengan Google supaya tanda terima
-                            dan hasil usulanmu bisa dikirim ke emailmu, dan
-                            supaya kamu bisa melihat status usulanmu di halaman
-                            Akunku. Setelah masuk, kamu kembali ke halaman ini.
+                            Kami minta kamu masuk dengan Google supaya tanda
+                            terima dan hasil usulan bisa dikirim ke emailmu, dan
+                            kamu bisa melihat statusnya di halaman Akunku.
+                            Setelah masuk, kamu kembali ke halaman ini.
                         </p>
                         <Button asChild size="lg">
                             <Link href={login()}>Masuk untuk mengusulkan</Link>
@@ -84,8 +84,8 @@ export default function SuggestionCreate({
                                     <span className="font-semibold text-foreground">
                                         {email}
                                     </span>
-                                    . Tanda terima dan hasil usulan dikirim ke
-                                    email ini.
+                                    . Tanda terima dan hasil usulannya kami
+                                    kirim ke email ini.
                                 </p>
                                 <div className={fieldClass}>
                                     <Label htmlFor="name">Nama tempat</Label>

@@ -15,32 +15,26 @@ export default function Privacy({
                 <PageHeader
                     divided
                     title="Kebijakan privasi"
-                    intro="Singkatnya: CariPrint tidak menjual datamu dan tidak menyimpan lokasimu. Di bawah ini yang kami proses, untuk apa, dan siapa yang bisa melihatnya."
+                    intro="CariPrint tidak menjual datamu dan tidak menyimpan lokasimu. Di bawah ini yang kami proses, untuk apa, dan siapa yang bisa melihatnya."
                 />
 
                 <Section title="Data yang kami simpan">
                     <p>
-                        <strong className="text-foreground">
-                            Saat masuk dengan Google:
-                        </strong>{' '}
-                        nama, alamat email, dan ID akun Google-mu. Kami memakai
-                        ini untuk mengenali akunmu dan mengabari usulan tempat
-                        yang kamu kirim. Kami tidak menerima kata sandi
-                        Google-mu dan tidak membaca Gmail, kontak, atau data
-                        Google lain.
+                        Kalau kamu masuk dengan Google, kami menyimpan nama,
+                        alamat email, dan ID akun Google-mu. Datanya dipakai
+                        untuk mengenali akunmu dan mengabari usulan tempat yang
+                        kamu kirim. Kami tidak menerima kata sandi Google-mu dan
+                        tidak membaca Gmail, kontak, atau data Google lain.
                     </p>
                     <p>
-                        <strong className="text-foreground">
-                            Saat mengusulkan tempat:
-                        </strong>{' '}
-                        nama tempat, alamat, tautan Google Maps, catatan yang
-                        kamu tulis, dan emailmu. Hanya admin CariPrint yang
+                        Kalau kamu mengusulkan tempat, kami menyimpan nama
+                        tempat, alamat, tautan Google Maps, catatan yang kamu
+                        tulis, dan emailmu. Hanya admin CariPrint yang
                         melihatnya, dan usulan itu tidak tampil di website
                         sebelum admin menambahkannya.
                     </p>
                     <p>
-                        <strong className="text-foreground">Sesi:</strong> agar
-                        kamu tetap masuk, sistem menyimpan sesi sementara,
+                        Agar kamu tetap masuk, sistem menyimpan sesi sementara,
                         termasuk alamat IP dan jenis browser. Pembatas jumlah
                         kiriman juga memakai alamat IP untuk sementara waktu.
                     </p>
@@ -66,7 +60,7 @@ export default function Privacy({
                         pribadi di kolom itu.
                     </p>
                     <p>
-                        File PDF yang kamu lampirkan dibaca di browser-mu dan{' '}
+                        File PDF yang kamu lampirkan dibaca di browsermu dan{' '}
                         <strong className="text-foreground">
                             tidak diunggah
                         </strong>

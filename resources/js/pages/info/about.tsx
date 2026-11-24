@@ -21,32 +21,29 @@ export default function About() {
                         Sebelum kelas, mahasiswa sering berkeliling dari satu
                         tempat printing ke tempat lain untuk mencari yang masih
                         buka dan harganya cocok. CariPrint mengumpulkan
-                        informasi itu di satu tempat supaya kamu bisa memutuskan
+                        informasinya di satu website, jadi kamu bisa memutuskan
                         dari HP sebelum berangkat.
                     </p>
                 </Section>
 
-                <Section title="Yang CariPrint lakukan dan tidak lakukan">
+                <Section title="Yang bisa dan tidak bisa dilakukan CariPrint">
                     <p>
-                        CariPrint hanya menghubungkan mahasiswa dengan tempat
-                        printing. Tidak ada pemesanan dan tidak ada pembayaran
-                        di website ini. Kamu menghubungi tempatnya sendiri lewat
-                        WhatsApp.
+                        CariPrint hanya mempertemukan kamu dengan tempat print.
+                        Pesan dan bayarnya langsung ke tempatnya lewat WhatsApp.
                     </p>
                     <p>
-                        Mencari tempat, membandingkan harga, dan memakai asisten
-                        cetak bisa dilakukan tanpa login. Login dengan Google
-                        hanya dibutuhkan kalau kamu ingin mengusulkan tempat
-                        baru.
+                        Kamu bisa mencari tempat, membandingkan harga, dan
+                        memakai asisten cetak tanpa login. Login dengan Google
+                        hanya perlu kalau kamu mau mengusulkan tempat baru.
                     </p>
                 </Section>
 
                 <Section title="Status proyek">
                     <p>
                         CariPrint adalah proyek mahasiswa Universitas Ciputra
-                        yang masih terus dikembangkan. Lokasi, alamat, dan jam
-                        buka tempat diambil dari Google Maps. Harga masih
-                        perkiraan sampai dikonfirmasi pemilik tempat, dan harga
+                        dan masih terus dikembangkan. Lokasi, alamat, dan jam
+                        buka tempat berasal dari Google Maps. Harga yang belum
+                        dikonfirmasi pemilik tempat masih berupa perkiraan, dan
                         yang sudah dikonfirmasi bertanda Terverifikasi.
                     </p>
                 </Section>

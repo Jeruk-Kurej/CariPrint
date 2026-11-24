@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/page-header';
 const questions: { question: string; answer: string }[] = [
     {
         question: 'Apakah saya bisa memesan atau membayar lewat CariPrint?',
-        answer: 'Tidak. CariPrint hanya menampilkan informasi tempat printing. Pemesanan dan pembayaran terjadi langsung antara kamu dan tempatnya, biasanya lewat WhatsApp.',
+        answer: 'Tidak bisa. CariPrint cuma menampilkan informasi tempat print. Kamu pesan dan bayar langsung ke tempatnya, biasanya lewat WhatsApp.',
     },
     {
         question: 'Apakah CariPrint menyimpan lokasi saya?',
@@ -13,11 +13,11 @@ const questions: { question: string; answer: string }[] = [
     },
     {
         question: 'Apa bedanya harga Terverifikasi dan Perkiraan?',
-        answer: 'Terverifikasi berarti harga diambil dari survei langsung tim CariPrint. Perkiraan berarti belum disurvei, jadi bisa berbeda saat kamu cek ke tempatnya. Tanggal pembaruan tertera di halaman tiap tempat.',
+        answer: 'Terverifikasi berarti harga diambil dari survei langsung tim CariPrint. Perkiraan berarti belum disurvei, jadi bisa berbeda saat kamu cek ke tempatnya. Tanggal pembaruannya ada di halaman tiap tempat.',
     },
     {
         question: 'Bagaimana status Buka dan Tutup ditentukan?',
-        answer: 'Dihitung dari jam buka yang tercatat untuk tiap tempat dan waktu sekarang di Surabaya. Kalau ada tempat yang libur mendadak, informasinya bisa belum terkini, jadi hubungi dulu lewat WhatsApp.',
+        answer: 'Dihitung dari jam buka tiap tempat dan waktu sekarang di Surabaya. Kalau ada tempat yang libur mendadak, datanya bisa belum berubah, jadi hubungi dulu lewat WhatsApp.',
     },
     {
         question: 'Jarak yang ditampilkan itu jarak berkendara?',
@@ -25,7 +25,7 @@ const questions: { question: string; answer: string }[] = [
     },
     {
         question: 'Apakah AI yang menentukan harga?',
-        answer: 'Tidak. AI hanya membaca permintaanmu menjadi spesifikasi cetak. Biaya selalu dihitung dari daftar harga tiap tempat.',
+        answer: 'Tidak. AI hanya mengubah permintaanmu jadi spesifikasi cetak. Biayanya selalu dihitung dari daftar harga tiap tempat.',
     },
     {
         question: 'Dari mana data tempatnya?',
@@ -42,11 +42,7 @@ export default function Faq() {
         <>
             <Head title="Pertanyaan umum" />
             <main className="flex w-full flex-col gap-8 px-4 py-8 sm:py-12">
-                <PageHeader
-                    divided
-                    title="Pertanyaan umum"
-                    intro="Jawaban singkat untuk hal yang paling sering ditanyakan tentang CariPrint."
-                />
+                <PageHeader divided title="Pertanyaan umum" />
                 <div className="max-w-3xl border-t">
                     {questions.map((item) => (
                         <FaqItem key={item.question} question={item.question}>
