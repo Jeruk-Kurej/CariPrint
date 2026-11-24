@@ -62,11 +62,12 @@ export default function HowItWorks() {
                             <strong className="text-foreground">
                                 Terverifikasi
                             </strong>{' '}
-                            berarti harga diambil dari survei tim CariPrint.{' '}
+                            berarti harganya sudah dikonfirmasi langsung ke
+                            tempatnya.{' '}
                             <strong className="text-foreground">
                                 Perkiraan
                             </strong>{' '}
-                            berarti belum disurvei, jadi bisa berbeda di
+                            berarti belum dikonfirmasi, jadi bisa berbeda di
                             lapangan. Tanggal pembaruannya ada di halaman tiap
                             tempat.
                         </p>

@@ -41,10 +41,11 @@ export default function About() {
                 <Section title="Status proyek">
                     <p>
                         CariPrint adalah proyek mahasiswa Universitas Ciputra
-                        dan masih terus dikembangkan. Lokasi, alamat, dan jam
-                        buka tempat berasal dari Google Maps. Harga yang belum
-                        dikonfirmasi pemilik tempat masih berupa perkiraan, dan
-                        yang sudah dikonfirmasi bertanda Terverifikasi.
+                        dan masih terus dikembangkan. Lokasi, alamat, nomor
+                        telepon, dan jam buka tempat berasal dari Google Maps.
+                        Harga yang belum dikonfirmasi pemilik tempat masih
+                        berupa perkiraan, dan yang sudah dikonfirmasi bertanda
+                        Terverifikasi.
                     </p>
                 </Section>
 

@@ -13,7 +13,7 @@ const questions: { question: string; answer: string }[] = [
     },
     {
         question: 'Apa bedanya harga Terverifikasi dan Perkiraan?',
-        answer: 'Terverifikasi berarti harga diambil dari survei langsung tim CariPrint. Perkiraan berarti belum disurvei, jadi bisa berbeda saat kamu cek ke tempatnya. Tanggal pembaruannya ada di halaman tiap tempat.',
+        answer: 'Terverifikasi berarti harganya sudah dikonfirmasi langsung ke tempatnya oleh tim CariPrint. Perkiraan berarti belum dikonfirmasi, jadi bisa berbeda saat kamu cek ke tempatnya. Tanggal pembaruannya ada di halaman tiap tempat.',
     },
     {
         question: 'Bagaimana status Buka dan Tutup ditentukan?',
@@ -29,7 +29,7 @@ const questions: { question: string; answer: string }[] = [
     },
     {
         question: 'Dari mana data tempatnya?',
-        answer: 'Dari survei langsung tim CariPrint ke tiap tempat. Selama survei berjalan, sebagian data di website ini masih contoh dan ditandai sebagai contoh.',
+        answer: 'Lokasi, alamat, nomor telepon, dan jam buka berasal dari Google Maps. Harganya masih perkiraan sampai tim CariPrint mengonfirmasinya langsung ke tempatnya.',
     },
     {
         question: 'Apakah memakai CariPrint berbayar?',

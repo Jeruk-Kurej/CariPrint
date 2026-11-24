@@ -69,11 +69,13 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                             <span className="font-medium text-foreground">
                                 Terverifikasi
                             </span>{' '}
-                            berarti dari survei tim CariPrint.{' '}
+                            berarti harganya sudah dikonfirmasi langsung ke
+                            tempatnya.{' '}
                             <span className="font-medium text-foreground">
                                 Perkiraan
                             </span>{' '}
-                            berarti belum disurvei dan bisa berbeda di lapangan.
+                            berarti belum dikonfirmasi dan bisa berbeda di
+                            lapangan.
                             {shop.updatedAt &&
                                 ` Terakhir diperbarui ${shop.updatedAt}.`}
                         </p>
