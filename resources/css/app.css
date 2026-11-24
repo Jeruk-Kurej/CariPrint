@@ -239,3 +239,13 @@
         box-shadow: 2px 2px 0 var(--foreground);
     }
 }
+
+/* Tombol zoom peta (Leaflet) setinggi 44px di HP supaya mudah disentuh. */
+@media (max-width: 767px) {
+    .leaflet-touch .leaflet-bar .leaflet-control-zoom-in,
+    .leaflet-touch .leaflet-bar .leaflet-control-zoom-out {
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+    }
+}
