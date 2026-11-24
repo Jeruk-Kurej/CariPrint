@@ -1,12 +1,12 @@
-import { needsColor } from '@/lib/page-colour';
+import { coloredShare } from '@/lib/page-colour';
 
 /** Lebar gambar kecil tiap halaman yang diperiksa warnanya. Cukup untuk menilai luas warna dan tetap cepat. */
 const THUMBNAIL_WIDTH = 240;
 
 export type PdfAnalysis = {
     pages: number;
-    /** Nomor halaman (mulai dari 1) yang perlu dicetak berwarna. */
-    coloredPages: number[];
+    /** Bagian tiap halaman yang berwarna (0 sampai 1), halaman 1 lebih dulu. Hanya angka ini yang dikirim ke server. */
+    shares: number[];
 };
 
 /** PDF lebih panjang dari batas, jadi warnanya tidak diperiksa. */
@@ -26,7 +26,7 @@ type AnalyzeOptions = {
 };
 
 /**
- * Membaca PDF di perangkat pengguna: jumlah halamannya dan halaman mana yang berwarna. Filenya tidak
+ * Membaca PDF di perangkat pengguna: jumlah halamannya dan seberapa banyak tiap halaman berwarna. Filenya tidak
  * dikirim ke mana pun, dan gambar halaman hanya dipakai sebentar untuk menghitung piksel.
  *
  * pdf.js baru dimuat saat fungsi ini dipanggil supaya halaman lain tetap ringan. Yang dipakai build
@@ -55,7 +55,7 @@ export async function analyzePdf(
             throw new PdfTooLongError(pdf.numPages);
         }
 
-        const coloredPages: number[] = [];
+        const shares: number[] = [];
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d', { willReadFrequently: true });
 
@@ -92,9 +92,7 @@ export async function analyzePdf(
                 canvas.height,
             );
 
-            if (needsColor(pixels.data)) {
-                coloredPages.push(number);
-            }
+            shares.push(Math.round(coloredShare(pixels.data) * 1000) / 1000);
 
             page.cleanup();
             onProgress(number, pdf.numPages);
@@ -103,7 +101,7 @@ export async function analyzePdf(
             await new Promise((resolve) => setTimeout(resolve, 0));
         }
 
-        return { pages: pdf.numPages, coloredPages };
+        return { pages: pdf.numPages, shares };
     } finally {
         await loading.destroy();
     }

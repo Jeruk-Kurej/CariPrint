@@ -54,6 +54,13 @@ return [
         'max_radius_km' => 30,
     ],
 
+    // Halaman PDF dinilai dari bagian halaman yang berwarna (0 sampai 1). Sampai batas bawah dianggap hitam-putih,
+    // dari batas atas jelas perlu warna, dan di antaranya mungkin cukup hitam-putih (misalnya judul atau logo berwarna).
+    'color_check' => [
+        'bw_up_to' => 0.02,
+        'color_from' => 0.10,
+    ],
+
     'uploads' => [
         // Uploaded files are deleted automatically after this many hours.
         'ttl_hours' => 24,

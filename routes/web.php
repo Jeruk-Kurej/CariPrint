@@ -5,6 +5,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DirectoryController;
+use App\Http\Controllers\FileCheckController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ReportController;
@@ -18,6 +19,7 @@ Route::post('/shops/nearby', [DirectoryController::class, 'nearby'])->name('dire
 Route::get('/bandingkan', [CompareController::class, 'index'])->name('compare.index');
 Route::get('/agent', [AgentController::class, 'index'])->name('agent.index');
 Route::post('/agent', [AgentController::class, 'parse'])->name('agent.parse');
+Route::post('/agent/cek-warna', FileCheckController::class)->middleware('throttle:60,1')->name('agent.file-check');
 Route::post('/agent/hitung-ulang', [AgentController::class, 'recalculate'])->middleware('throttle:60,1')->name('agent.recalculate');
 
 Route::get('/masuk/google', [GoogleLoginController::class, 'redirect'])->middleware('guest')->name('google.redirect');

@@ -2,13 +2,12 @@ import { FileText, Paperclip, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import type { PdfAttachmentState } from '@/hooks/use-pdf-attachment';
-import { formatNumber, formatPageNumbers } from '@/lib/format';
+import { ColorCheckPanel } from '@/components/agent/color-check-panel';
+import { formatNumber } from '@/lib/format';
 
-/** Baris lampiran di form asisten: tombol pilih PDF, lalu kartu ringkasan jumlah halaman warna dan hitam-putih. */
+/** Baris lampiran di form asisten: tombol pilih PDF, lalu kartu dengan jumlah halaman dan hasil cek warna. */
 export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
     const { file } = pdf;
-    const bwPages =
-        file.status === 'ready' ? file.pages - file.coloredPages.length : 0;
 
     return (
         <div className="flex flex-col gap-1.5">
@@ -16,7 +15,7 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
                 ref={pdf.input}
                 type="file"
                 accept="application/pdf,.pdf"
-                onChange={pdf.choose}
+                onChange={pdf.selectFile}
                 className="hidden"
             />
 
@@ -53,30 +52,7 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
                         </Button>
                     </div>
 
-                    {file.status === 'ready' && (
-                        <div className="flex flex-wrap gap-2 border-t pt-2.5">
-                            {file.coloredPages.length === 0 ? (
-                                <span className="rounded-md bg-secondary px-2.5 py-1 text-xs font-medium">
-                                    Semua {formatNumber(file.pages)} halaman
-                                    hitam-putih
-                                </span>
-                            ) : (
-                                <>
-                                    <span className="rounded-md bg-note-pink px-2.5 py-1 text-xs font-semibold text-foreground">
-                                        {formatNumber(file.coloredPages.length)}{' '}
-                                        halaman berwarna (hal.{' '}
-                                        {formatPageNumbers(file.coloredPages)})
-                                    </span>
-                                    {bwPages > 0 && (
-                                        <span className="rounded-md bg-secondary px-2.5 py-1 text-xs font-medium text-foreground">
-                                            {formatNumber(bwPages)} halaman
-                                            hitam-putih
-                                        </span>
-                                    )}
-                                </>
-                            )}
-                        </div>
-                    )}
+                    <ColorCheckPanel pdf={pdf} />
                 </div>
             ) : (
                 <Button
@@ -98,8 +74,9 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
             )}
 
             <p className="text-xs text-muted-foreground">
-                Opsional. Browsermu menghitung halaman warna dan hitam-putihnya,
-                dan filenya tidak ikut dikirim ke server.
+                Opsional. Browsermu mengukur warna tiap halaman, dan filenya
+                tidak ikut dikirim ke server. Yang dikirim hanya persentase
+                warna tiap halaman.
             </p>
         </div>
     );
