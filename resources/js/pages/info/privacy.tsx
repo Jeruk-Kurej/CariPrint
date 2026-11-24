@@ -64,8 +64,8 @@ export default function Privacy({
                         <strong className="text-foreground">
                             tidak diunggah
                         </strong>
-                        . Server hanya menerima jumlah halaman dan nomor halaman
-                        yang berwarna.
+                        . Server hanya menerima jumlah halaman dan berapa persen
+                        tiap halaman berwarna, tidak pernah isi halamannya.
                     </p>
                 </Section>
 

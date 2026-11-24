@@ -91,8 +91,9 @@ export default function HowItWorks() {
                             mengubahnya menjadi spesifikasi: ukuran kertas,
                             jumlah halaman hitam-putih dan warna, jumlah
                             rangkap, dan jilid. Kalau kamu melampirkan PDF,
-                            browsermu menghitung halaman warna dan
-                            hitam-putihnya, dan filenya tidak diunggah ke
+                            browsermu mengukur warna tiap halaman, lalu aturan
+                            di server (bukan AI) menilai halaman mana yang perlu
+                            warna dan berapa hematnya. Filenya tidak diunggah ke
                             server.
                         </p>
                         <p className="text-sm text-foreground/85">
