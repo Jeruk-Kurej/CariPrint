@@ -2,6 +2,7 @@
 
 use App\Models\ShopSuggestion;
 use App\Models\User;
+use Inertia\Testing\AssertableInertia as Assert;
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
@@ -114,3 +115,50 @@ test('an admin cannot delete the account from here', function () {
 
     expect($admin->fresh())->not->toBeNull();
 });
+
+test('an account linked to Google cannot change its email', function () {
+    $user = User::factory()->create(['email' => 'siti@example.com', 'google_id' => 'g-123']);
+
+    $this->actingAs($user)
+        ->from(route('profile.edit'))
+        ->patch(route('profile.update'), ['name' => 'Siti', 'email' => 'korban@example.com'])
+        ->assertSessionHasErrors(['email' => 'Email akun Google tidak bisa diubah.'])
+        ->assertRedirect(route('profile.edit'));
+
+    expect($user->fresh()->email)->toBe('siti@example.com');
+});
+
+test('an account linked to Google can still change its name', function () {
+    $user = User::factory()->create(['email' => 'siti@example.com', 'name' => 'Siti', 'google_id' => 'g-123']);
+
+    $this->actingAs($user)
+        ->patch(route('profile.update'), ['name' => 'Siti Aminah', 'email' => 'siti@example.com'])
+        ->assertSessionHasNoErrors();
+
+    expect($user->fresh()->name)->toBe('Siti Aminah')
+        ->and($user->fresh()->email_verified_at)->not->toBeNull();
+});
+
+test('deleting an account is limited to a few attempts per minute', function () {
+    $user = User::factory()->create(['email' => 'siti@example.com']);
+
+    foreach (range(1, 6) as $attempt) {
+        $this->actingAs($user)->delete(route('profile.destroy'), ['email' => "salah{$attempt}@example.com"])
+            ->assertSessionHasErrors('email');
+    }
+
+    $this->actingAs($user)->delete(route('profile.destroy'), ['email' => 'siti@example.com'])
+        ->assertStatus(429);
+
+    expect($user->fresh())->not->toBeNull();
+});
+
+test('the profile page tells the client when the email is locked', function (?string $googleId, bool $locked) {
+    $user = User::factory()->create(['google_id' => $googleId]);
+
+    $this->actingAs($user)->get(route('profile.edit'))
+        ->assertInertia(fn (Assert $page) => $page->component('settings/profile')->where('emailLocked', $locked));
+})->with([
+    'linked to Google' => ['g-123', true],
+    'password account' => [null, false],
+]);

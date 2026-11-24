@@ -12,7 +12,7 @@ type PageProps = {
     auth: Auth;
 };
 
-export default function Profile() {
+export default function Profile({ emailLocked }: { emailLocked: boolean }) {
     const { auth } = usePage<PageProps>().props;
 
     return (
@@ -68,7 +68,14 @@ export default function Profile() {
                                     required
                                     autoComplete="username"
                                     placeholder="Alamat email"
+                                    readOnly={emailLocked}
                                 />
+
+                                {emailLocked && (
+                                    <p className="text-sm text-muted-foreground">
+                                        Email akun Google tidak bisa diubah.
+                                    </p>
+                                )}
 
                                 <InputError
                                     className="mt-2"
