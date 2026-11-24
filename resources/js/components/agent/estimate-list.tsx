@@ -35,7 +35,7 @@ export function EstimateList({ estimates }: { estimates: Estimate[] }) {
                     onChange={setOpenOnly}
                 />
                 <SegmentedControl
-                    label="Urutkan estimasi"
+                    label="Urutkan hasil"
                     value={hasDistance ? sort : 'price'}
                     options={[
                         { value: 'price', label: 'Termurah' },
@@ -51,7 +51,7 @@ export function EstimateList({ estimates }: { estimates: Estimate[] }) {
             {shown.length === 0 ? (
                 <EmptyState
                     title="Tidak ada yang buka sekarang"
-                    hint="Matikan sakelar Masih buka saja untuk melihat semuanya."
+                    hint={'Matikan "Masih buka saja" untuk melihat semuanya.'}
                 />
             ) : (
                 <ul className="divide-y overflow-hidden paper-card">

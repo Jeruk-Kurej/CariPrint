@@ -98,8 +98,8 @@ export function PdfAttachment({ pdf }: { pdf: PdfAttachmentState }) {
             )}
 
             <p className="text-xs text-muted-foreground">
-                Opsional. File PDF diperiksa di perangkatmu untuk menghitung
-                halaman warna & hitam-putih, dan tidak diunggah ke server.
+                Opsional. Browsermu menghitung halaman warna dan hitam-putihnya,
+                dan filenya tidak ikut dikirim ke server.
             </p>
         </div>
     );

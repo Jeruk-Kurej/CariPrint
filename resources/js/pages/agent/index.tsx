@@ -85,9 +85,8 @@ export default function AgentIndex({
                     <p className="max-w-xl text-muted-foreground">
                         Ceritakan dengan kalimat biasa: ukuran kertas (A4, F4,
                         A3), hitam-putih atau warna, jumlah rangkap, jilid, atau
-                        halaman tertentu. Asisten menyusun spesifikasinya, lalu
-                        biayanya dihitung dari daftar harga tiap tempat, bukan
-                        ditebak.
+                        halaman tertentu. Asisten mengubahnya jadi spesifikasi,
+                        lalu biaya tiap tempat dihitung dari daftar harganya.
                     </p>
                 </header>
 
@@ -130,7 +129,7 @@ export default function AgentIndex({
                         }
                     >
                         {processing && <Spinner />}
-                        {processing ? 'Menghitung estimasi' : 'Cari estimasi'}
+                        {processing ? 'Menghitung biaya' : 'Hitung biaya'}
                     </Button>
                     <QuotaNote quota={quota} />
                     {location.status !== 'granted' && (
@@ -140,7 +139,7 @@ export default function AgentIndex({
                         >
                             {location.status === 'loading'
                                 ? 'Mencari lokasimu. Jarak tampil kalau lokasi diizinkan.'
-                                : 'Lokasi tidak aktif, jadi jarak tidak ditampilkan.'}
+                                : 'Lokasi tidak aktif, jadi jaraknya tidak muncul.'}
                         </p>
                     )}
                 </form>
@@ -162,20 +161,20 @@ export default function AgentIndex({
                 {estimates && (
                     <section className="flex flex-col gap-3">
                         <h2 className="font-display text-xl font-bold">
-                            Estimasi per tempat
+                            Perkiraan biaya per tempat
                         </h2>
                         <EstimateList estimates={estimates} />
                         <p className="text-sm text-muted-foreground">
-                            Estimasi dari daftar harga yang tersimpan. Harga
-                            bisa berbeda saat dicek langsung di tempat.{' '}
+                            Perkiraan ini dari daftar harga yang tersimpan, jadi
+                            bisa berbeda saat kamu cek langsung di tempatnya.{' '}
                             {estimates.some((shop) => shop.distanceKm !== null)
-                                ? 'Jarak dihitung garis lurus dari lokasimu, dan lokasimu tidak disimpan.'
-                                : 'Izinkan lokasi di browser lalu cari lagi untuk melihat jarak tiap tempat.'}
+                                ? 'Jaraknya garis lurus dari lokasimu, dan lokasimu tidak disimpan.'
+                                : 'Izinkan lokasi di browser, lalu hitung lagi untuk melihat jarak tiap tempat.'}
                         </p>
                         {shopsWithoutPrices > 0 && (
                             <p className="text-sm text-muted-foreground">
-                                {shopsWithoutPrices} tempat lain belum punya
-                                daftar harga, jadi tidak ikut dihitung.
+                                {shopsWithoutPrices} tempat print lain belum
+                                punya daftar harga, jadi tidak ikut dihitung.
                             </p>
                         )}
                     </section>

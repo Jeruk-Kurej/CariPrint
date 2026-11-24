@@ -198,7 +198,8 @@ export function SpecSlip({ spec, coordinates }: Props) {
                 </ul>
             </Row>
             <p className="text-sm text-muted-foreground">
-                {note ?? 'Estimasi dihitung ulang setiap kamu mengubah slip.'}{' '}
+                {note ??
+                    'Biayanya dihitung ulang setiap kamu mengubah pilihan di atas.'}{' '}
                 Jumlah halaman mengikuti tulisan permintaanmu.
             </p>
         </div>
