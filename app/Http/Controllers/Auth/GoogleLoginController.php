@@ -38,7 +38,7 @@ class GoogleLoginController extends Controller
         } catch (Throwable $exception) {
             report($exception);
 
-            return $this->failed('Masuk dengan Google gagal. Coba lagi sebentar lagi.');
+            return $this->failed('Masuk dengan Google gagal. Coba lagi beberapa menit lagi.');
         }
 
         Auth::login($user, remember: true);

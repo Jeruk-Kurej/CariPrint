@@ -11,7 +11,7 @@ class UnreadablePrintRequest extends RuntimeException
 {
     public static function assistantUnavailable(): self
     {
-        return new self('Asisten belum bisa dipakai saat ini. Coba lagi sebentar lagi.');
+        return new self('Asisten belum bisa dipakai saat ini. Coba lagi beberapa menit lagi.');
     }
 
     /**

@@ -7,7 +7,7 @@ import { index as directory } from '@/routes/directory';
 const messages: Record<number, { title: string; intro: string }> = {
     403: {
         title: 'Kamu tidak punya akses',
-        intro: 'Halaman ini hanya untuk pengguna tertentu. Kalau kamu merasa seharusnya bisa membukanya, coba masuk lagi.',
+        intro: 'Halaman ini butuh akun yang sesuai. Coba masuk dengan akun itu.',
     },
     404: {
         title: 'Halaman tidak ditemukan',
@@ -19,7 +19,7 @@ const messages: Record<number, { title: string; intro: string }> = {
     },
     500: {
         title: 'Ada yang salah di sisi kami',
-        intro: 'Ini bukan salahmu. Coba lagi sebentar lagi. Kalau masih begini, kabari tim CariPrint.',
+        intro: 'Coba lagi beberapa menit lagi. Kalau masih begini, kabari tim CariPrint.',
     },
     503: {
         title: 'CariPrint sedang dirawat',

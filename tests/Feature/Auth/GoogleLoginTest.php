@@ -127,7 +127,7 @@ test('an unexpected Google failure is logged so the cause can be found, and the 
 
     $this->get('/masuk/google/callback')
         ->assertRedirect('/login')
-        ->assertSessionHasErrors(['google' => 'Masuk dengan Google gagal. Coba lagi sebentar lagi.']);
+        ->assertSessionHasErrors(['google' => 'Masuk dengan Google gagal. Coba lagi beberapa menit lagi.']);
 
     Exceptions::assertReported(fn (RuntimeException $exception) => $exception->getMessage() === 'invalid_client');
     $this->assertGuest();
