@@ -9,7 +9,7 @@ export function PublicFooter() {
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                     <Link
                         href={homeUrl}
-                        className="inline-flex items-center gap-2 font-display text-base font-bold tracking-tight text-foreground"
+                        className="inline-flex min-h-11 items-center gap-2 font-display text-base font-bold tracking-tight text-foreground"
                     >
                         <BrandMark />
                         CariPrint
@@ -28,7 +28,7 @@ export function PublicFooter() {
                     langsung ke tempat printing ·{' '}
                     <Link
                         href={privacyUrl}
-                        className="font-medium text-foreground hover:underline"
+                        className="-my-3.5 inline-block py-3.5 font-medium text-foreground hover:underline"
                     >
                         Privasi
                     </Link>

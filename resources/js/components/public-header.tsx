@@ -24,8 +24,11 @@ export function PublicHeader() {
 
     return (
         <header className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur">
-            <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-4 px-4 py-3 lg:px-10">
-                <Link href={homeUrl} className="flex items-center gap-2">
+            <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-4 px-4 py-2 md:py-3 lg:px-10">
+                <Link
+                    href={homeUrl}
+                    className="flex min-h-11 items-center gap-2 md:min-h-0"
+                >
                     <BrandMark />
                     <span className="font-display text-lg font-bold tracking-tight">
                         CariPrint
@@ -73,7 +76,7 @@ export function PublicHeader() {
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="md:hidden"
+                            className="size-11 md:hidden"
                             aria-label="Buka menu"
                         >
                             <Menu />
