@@ -5,6 +5,8 @@ import { Fastener, paperFor } from '@/components/directory/flyer-parts';
 import { OpenStatusLine } from '@/components/directory/open-status-line';
 import { OpeningHoursList } from '@/components/directory/opening-hours-list';
 import { PriceTable } from '@/components/directory/price-table';
+import { ReportShop } from '@/components/directory/report-shop';
+import type { ReportingOptions } from '@/components/directory/report-shop';
 import { ShopMap } from '@/components/directory/shop-map';
 import { WhatsAppButton } from '@/components/directory/whatsapp-button';
 import { Tag } from '@/components/tag';
@@ -15,7 +17,13 @@ import { todayKey } from '@/lib/weekday';
 import { index as directory } from '@/routes/directory';
 import type { ShopDetail } from '@/types';
 
-export default function ShopShow({ shop }: { shop: ShopDetail }) {
+export default function ShopShow({
+    shop,
+    reporting,
+}: {
+    shop: ShopDetail;
+    reporting: ReportingOptions;
+}) {
     const { startingPrice } = shop;
     const marker = { ...shop, distanceKm: null };
 
@@ -123,6 +131,8 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                         </div>
                     </div>
                 </section>
+
+                <ReportShop slug={shop.slug} reporting={reporting} />
             </main>
         </>
     );

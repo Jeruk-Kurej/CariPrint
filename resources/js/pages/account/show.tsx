@@ -6,6 +6,7 @@ import { EmptyState } from '@/components/directory/empty-state';
 import { Fastener } from '@/components/directory/flyer-parts';
 import { SectionHeading } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
+import { show } from '@/routes/directory';
 import { logout } from '@/routes';
 import { create as suggest } from '@/routes/suggestions';
 import type { User } from '@/types';
@@ -20,10 +21,26 @@ type Suggestion = {
     sentAt: string;
 };
 
-type Props = { suggestions: Suggestion[]; isAdmin: boolean };
+type Report = {
+    id: number;
+    shopName: string;
+    shopSlug: string;
+    categoryLabel: string;
+    message: string;
+    status: string;
+    statusLabel: string;
+    adminNote: string | null;
+    sentAt: string;
+};
+
+type Props = {
+    suggestions: Suggestion[];
+    reports: Report[];
+    isAdmin: boolean;
+};
 
 /** Halaman akun: sapaan di kertas catatan, lalu usulan tempat yang pernah dikirim beserta statusnya. */
-export default function AccountShow({ suggestions, isAdmin }: Props) {
+export default function AccountShow({ suggestions, reports, isAdmin }: Props) {
     const user = usePage().props.auth.user as User;
     const firstName = user.name.trim().split(/\s+/u)[0] ?? user.name;
 
@@ -126,6 +143,61 @@ export default function AccountShow({ suggestions, isAdmin }: Props) {
                         </ul>
                     )}
                 </section>
+
+                {reports.length > 0 && (
+                    <section
+                        aria-labelledby="laporanmu"
+                        className="flex max-w-3xl flex-col gap-4"
+                    >
+                        <SectionHeading id="laporanmu">
+                            Laporanmu
+                        </SectionHeading>
+                        <ul className="flex flex-col gap-3">
+                            {reports.map((report) => (
+                                <li
+                                    key={report.id}
+                                    className="flex flex-col gap-3 paper-card p-4 sm:flex-row sm:items-start sm:justify-between"
+                                >
+                                    <div className="min-w-0">
+                                        <p className="font-display text-lg leading-snug font-bold">
+                                            <Link
+                                                href={
+                                                    show({
+                                                        shop: report.shopSlug,
+                                                    }).url
+                                                }
+                                                className="hover:underline"
+                                            >
+                                                {report.shopName}
+                                            </Link>
+                                        </p>
+                                        <p className="text-sm font-semibold text-foreground/80">
+                                            {report.categoryLabel}
+                                        </p>
+                                        <p className="mt-1 text-sm text-muted-foreground">
+                                            {report.message}
+                                        </p>
+                                        <p className="mt-1 text-xs text-muted-foreground">
+                                            Dikirim {report.sentAt}
+                                        </p>
+                                        {report.adminNote && (
+                                            <p className="mt-3 rounded-sm bg-secondary px-3 py-2 text-sm">
+                                                <span className="font-semibold">
+                                                    Catatan admin:
+                                                </span>{' '}
+                                                {report.adminNote}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <SuggestionStatusBadge
+                                        status={report.status}
+                                        label={report.statusLabel}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                )}
 
                 {!isAdmin && <DeleteAccount email={user.email} />}
             </main>

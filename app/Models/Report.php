@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ReportCategory;
 use App\Enums\ReportStatus;
 use Database\Factories\ReportFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -14,6 +15,7 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $user_id
  * @property int $shop_id
+ * @property ReportCategory $category
  * @property string $message
  * @property ReportStatus $status
  * @property string|null $admin_note
@@ -21,7 +23,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['shop_id', 'message'])]
+#[Fillable(['shop_id', 'category', 'message'])]
 class Report extends Model
 {
     /** @use HasFactory<ReportFactory> */
@@ -56,6 +58,7 @@ class Report extends Model
     protected function casts(): array
     {
         return [
+            'category' => ReportCategory::class,
             'status' => ReportStatus::class,
             'resolved_at' => 'datetime',
         ];

@@ -3,11 +3,14 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\PriceSource;
+use App\Enums\ReportStatus;
 use App\Enums\ShopStatus;
 use App\Enums\SuggestionStatus;
+use App\Filament\Resources\Reports\ReportResource;
 use App\Filament\Resources\Shops\ShopResource;
 use App\Filament\Resources\ShopSuggestions\ShopSuggestionResource;
 use App\Models\PriceList;
+use App\Models\Report;
 use App\Models\Shop;
 use App\Models\ShopSuggestion;
 use Filament\Widgets\StatsOverviewWidget;
@@ -15,7 +18,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 /**
  * Numbers an admin checks first: how many shops are listed, how many drafts wait for review, how many prices still wait for the owner's
- * confirmation, and how many suggestions wait for a decision.
+ * confirmation, how many suggestions wait for a decision, and how many reports wait for a review.
  */
 class ShopOverview extends StatsOverviewWidget
 {
@@ -27,6 +30,7 @@ class ShopOverview extends StatsOverviewWidget
     {
         $drafts = Shop::where('status', ShopStatus::Draft->value)->count();
         $pending = ShopSuggestion::where('status', SuggestionStatus::Pending->value)->count();
+        $reports = Report::where('status', ReportStatus::Pending->value)->count();
         $unconfirmed = PriceList::where('source', '!=', PriceSource::Verified->value)->count();
 
         return [
@@ -44,6 +48,10 @@ class ShopOverview extends StatsOverviewWidget
                 ->description($pending > 0 ? 'Perlu diputuskan' : 'Semua sudah diputuskan')
                 ->color($pending > 0 ? 'warning' : 'success')
                 ->url(ShopSuggestionResource::getUrl('index')),
+            Stat::make('Laporan menunggu', $reports)
+                ->description($reports > 0 ? 'Perlu diperiksa' : 'Semua sudah diputuskan')
+                ->color($reports > 0 ? 'warning' : 'success')
+                ->url(ReportResource::getUrl('index')),
         ];
     }
 }

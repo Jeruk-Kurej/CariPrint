@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ReportCategory;
 use App\Enums\ReportStatus;
 use App\Models\Report;
 use App\Models\Shop;
@@ -21,6 +22,7 @@ class ReportFactory extends Factory
         return [
             'user_id' => User::factory(),
             'shop_id' => Shop::factory(),
+            'category' => ReportCategory::Other,
             'message' => fake()->sentence(),
             'status' => ReportStatus::Pending,
         ];

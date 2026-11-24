@@ -1,10 +1,11 @@
 const tones: Record<string, string> = {
     pending: 'bg-note-yellow text-foreground',
     accepted: 'bg-note-mint text-status-open',
+    resolved: 'bg-note-mint text-status-open',
     rejected: 'bg-note-pink text-destructive',
 };
 
-/** Status usulan tempat sebagai stiker kecil: kuning menunggu, hijau diterima, merah muda ditolak. */
+/** Status usulan atau laporan sebagai stiker kecil: kuning menunggu, hijau diterima atau selesai, merah muda ditolak. */
 export function SuggestionStatusBadge({
     status,
     label,

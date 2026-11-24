@@ -7,6 +7,7 @@ use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrivacyController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ShopSuggestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::get('/usul-tempat', [ShopSuggestionController::class, 'create'])->name('s
 
 Route::middleware('auth')->group(function () {
     Route::post('/usul-tempat', [ShopSuggestionController::class, 'store'])->middleware('throttle:5,60')->name('suggestions.store');
+    Route::post('/shops/{shop:slug}/laporan', [ReportController::class, 'store'])->middleware('throttle:5,60')->name('reports.store');
 });
 
 Route::inertia('/cara-kerja', 'info/how-it-works')->name('info.how-it-works');
