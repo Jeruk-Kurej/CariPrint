@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NearbyShopsRequest;
 use App\Models\Shop;
 use App\Services\Directory\ShopDirectory;
+use App\Services\Directory\ShopPageMeta;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -17,13 +18,14 @@ class DirectoryController extends Controller
         ]);
     }
 
-    public function show(Shop $shop, ShopDirectory $directory): Response
+    public function show(Shop $shop, ShopDirectory $directory, ShopPageMeta $meta): Response
     {
         abort_unless($shop->isPublished(), 404);
 
-        return Inertia::render('directory/show', [
-            'shop' => $directory->detail($shop),
-        ]);
+        $detail = $directory->detail($shop);
+
+        return Inertia::render('directory/show', ['shop' => $detail])
+            ->withViewData(['meta' => $meta->for($detail)]);
     }
 
     /**
