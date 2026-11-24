@@ -75,7 +75,7 @@ export default function ShopShow({ shop }: { shop: ShopDetail }) {
                             </span>{' '}
                             berarti belum disurvei dan bisa berbeda di lapangan.
                             {shop.updatedAt &&
-                                ` Data terakhir diperbarui ${shop.updatedAt}.`}
+                                ` Terakhir diperbarui ${shop.updatedAt}.`}
                         </p>
                     </section>
 

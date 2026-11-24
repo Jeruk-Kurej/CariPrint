@@ -15,13 +15,13 @@ const notes = [
     },
     {
         title: 'Asisten cetak',
-        text: 'Tulis kebutuhanmu dengan kalimat biasa, lihat estimasi biaya tiap tempat.',
+        text: 'Tulis kebutuhanmu seperti biasa, lalu lihat perkiraan biayanya di tiap tempat.',
         href: agentIndex().url,
         paper: 'bg-note-pink rotate-1',
     },
     {
         title: 'Cara kerja',
-        text: 'Apa arti Buka, Perkiraan, dan jarak, dan siapa yang menghitungnya.',
+        text: 'Arti Buka, Perkiraan, dan jarak, serta siapa yang menghitungnya.',
         href: howItWorks().url,
         paper: 'bg-note-mint -rotate-[0.6deg]',
     },

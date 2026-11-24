@@ -68,14 +68,14 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                         <span className="font-display font-bold text-foreground tabular-nums">
                             {filters.openCount}
                         </span>{' '}
-                        dari {shops.length} tempat masih buka sekarang.
+                        dari {shops.length} tempat print sedang buka sekarang.
                     </p>
                 </header>
 
                 {shops.length === 0 ? (
                     <EmptyState
                         title="Belum ada tempat printing"
-                        hint="Data sedang disiapkan oleh tim survei."
+                        hint="Tim survei masih menyiapkan datanya."
                     />
                 ) : (
                     <>
@@ -90,7 +90,7 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                             {filters.visibleShops.length === 0 ? (
                                 <EmptyState
                                     title="Tidak ada yang cocok"
-                                    hint="Ubah kata pencarian atau kurangi filter yang aktif."
+                                    hint="Coba kata kunci lain atau kurangi filternya."
                                 >
                                     <Link
                                         href={suggest().url}

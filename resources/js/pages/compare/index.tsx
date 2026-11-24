@@ -82,14 +82,13 @@ export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
                 <header className="flex flex-col gap-2">
                     <PageTitle>Bandingkan harga</PageTitle>
                     <p className="max-w-2xl text-muted-foreground">
-                        Satu baris untuk tiap tempat, satu kolom untuk tiap
-                        layanan. Harga paling murah di tiap kolom diberi warna
-                        kuning.
+                        Harga termurah di tiap layanan diberi warna kuning.
                     </p>
                     {withoutPrices > 0 && (
                         <p className="max-w-2xl text-sm text-muted-foreground">
-                            {withoutPrices} tempat lain belum punya daftar harga
-                            dan tidak ikut dibandingkan. Lihat semuanya di{' '}
+                            {withoutPrices} tempat print lain belum punya daftar
+                            harga, jadi tidak ikut dibandingkan. Lihat semuanya
+                            di{' '}
                             <Link
                                 href={directory().url}
                                 className="-my-3 inline-block py-3 font-medium text-foreground underline"
@@ -104,7 +103,7 @@ export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
                 {rows.length === 0 ? (
                     <EmptyState
                         title="Belum ada harga untuk dibandingkan"
-                        hint="Data sedang disiapkan oleh tim survei."
+                        hint="Tim survei masih menyiapkan datanya."
                     />
                 ) : (
                     <>
@@ -152,7 +151,7 @@ export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
                         {visibleShopIndices.length === 0 ||
                         visibleRows.length === 0 ? (
                             <EmptyState
-                                title="Tidak ada data yang cocok dengan filter ini"
+                                title="Tidak ada yang cocok dengan filter ini"
                                 hint="Coba matikan salah satu filter atau pilih Semua layanan."
                             />
                         ) : (
@@ -164,9 +163,9 @@ export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
                         )}
 
                         <p className="text-sm text-muted-foreground">
-                            Harga masih berupa perkiraan dan bisa berbeda saat
-                            dicek langsung. Buka halaman tempatnya untuk melihat
-                            sumber dan tanggal pembaruan tiap harga.
+                            Harga di sini masih perkiraan, jadi bisa berbeda
+                            saat kamu cek langsung. Sumber dan tanggal pembaruan
+                            tiap harga ada di halaman tempatnya.
                         </p>
                     </>
                 )}

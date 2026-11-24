@@ -18,14 +18,14 @@ export function PublicFooter() {
                         ·
                     </span>
                     <span>
-                        Informasi & estimasi biaya tempat printing di sekitar
+                        Harga, jam buka, dan jarak tempat print di sekitar
                         CitraLand Surabaya.
                     </span>
                 </div>
 
                 <p className="text-xs sm:text-sm">
                     © {new Date().getFullYear()} CariPrint · Pesan dan bayar
-                    langsung ke tempat printing ·{' '}
+                    langsung ke tempatnya ·{' '}
                     <Link
                         href={privacyUrl}
                         className="-my-3.5 inline-block py-3.5 font-medium text-foreground hover:underline"

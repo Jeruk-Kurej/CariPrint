@@ -85,8 +85,8 @@ export function HomeHero({
                     Mau print? Cari yang buka dekat kampus.
                 </h1>
                 <p className="max-w-md text-lg text-muted-foreground">
-                    Bandingkan harga dan jarak dulu, baru jalan. Tanpa keliling
-                    dari satu tempat ke tempat lain.
+                    Cek harga dan jaraknya dulu, baru berangkat. Kamu tidak
+                    perlu keliling dari satu tempat print ke tempat lain.
                 </p>
                 <form
                     onSubmit={search}
@@ -124,7 +124,7 @@ export function HomeHero({
                     <span className="font-display text-lg font-extrabold text-foreground tabular-nums">
                         {openCount}
                     </span>{' '}
-                    dari {shops.length} tempat masih buka sekarang.
+                    dari {shops.length} tempat print sedang buka sekarang.
                 </p>
             </div>
             <PinnedStack shops={featured} />
