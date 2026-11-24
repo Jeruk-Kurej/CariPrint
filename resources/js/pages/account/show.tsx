@@ -1,5 +1,6 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { AvatarSticker } from '@/components/account-menu';
+import { DeleteAccount } from '@/components/account/delete-account';
 import { SuggestionStatusBadge } from '@/components/account/suggestion-status-badge';
 import { EmptyState } from '@/components/directory/empty-state';
 import { Fastener } from '@/components/directory/flyer-parts';
@@ -125,6 +126,8 @@ export default function AccountShow({ suggestions, isAdmin }: Props) {
                         </ul>
                     )}
                 </section>
+
+                {!isAdmin && <DeleteAccount email={user.email} />}
             </main>
         </>
     );

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use App\Services\Accounts\AccountDeleter;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,24 +39,26 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('Profile updated.')]);
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Profilmu sudah disimpan.']);
 
         return to_route('profile.edit');
     }
 
     /**
-     * Delete the user's profile.
+     * Delete the signed-in user's account and the suggestions sent from its email.
      */
-    public function destroy(ProfileDeleteRequest $request): RedirectResponse
+    public function destroy(ProfileDeleteRequest $request, AccountDeleter $deleter): RedirectResponse
     {
         $user = $request->user();
 
         Auth::logout();
 
-        $user->delete();
+        $deleter->delete($user);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Akunmu sudah dihapus.']);
 
         return redirect('/');
     }
