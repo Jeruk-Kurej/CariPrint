@@ -69,11 +69,21 @@ export default function Privacy({
                     </p>
                 </Section>
 
+                <Section title="Laporan data salah">
+                    <p>
+                        Kalau kamu melaporkan data tempat yang keliru, kami
+                        menyimpan nama tempatnya, jenis masalah, pesanmu, dan
+                        akunmu. Hanya admin CariPrint yang melihatnya, dan kamu
+                        bisa melihat hasilnya di halaman Akunku.
+                    </p>
+                </Section>
+
                 <Section title="Email">
                     <p>
                         Kami mengirim email tanda terima saat usulanmu masuk dan
                         email hasil saat admin menerima atau menolaknya. Isinya
-                        hanya tentang usulanmu.
+                        hanya tentang usulanmu. Laporan data salah tidak
+                        dikirimi email ke kamu, hanya ke admin.
                     </p>
                 </Section>
 
