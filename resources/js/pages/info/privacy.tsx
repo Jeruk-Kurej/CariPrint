@@ -88,12 +88,13 @@ export default function Privacy({
 
                 <Section title="Menghapus datamu">
                     <p>
-                        Kamu boleh meminta kami menghapus akun dan usulan
-                        tempatmu kapan saja.
+                        Kamu bisa menghapus akun dan usulan tempatmu kapan saja
+                        lewat halaman Akunku. Datanya langsung terhapus permanen
+                        dan tidak bisa dikembalikan.
                     </p>
                     {contactEmail ? (
                         <p>
-                            Kirim permintaannya ke{' '}
+                            Kalau ada kendala, kirim permintaanmu ke{' '}
                             <a
                                 href={`mailto:${contactEmail}`}
                                 className="font-medium text-primary underline underline-offset-2"
@@ -104,14 +105,14 @@ export default function Privacy({
                         </p>
                     ) : (
                         <p>
-                            Hubungi tim pengembang CariPrint, mahasiswa
-                            Universitas Ciputra.
+                            Kalau ada kendala, hubungi tim pengembang CariPrint,
+                            mahasiswa Universitas Ciputra.
                         </p>
                     )}
                 </Section>
 
                 <p className="text-sm text-muted-foreground">
-                    Terakhir diperbarui 17 November 2026.
+                    Terakhir diperbarui 24 November 2026.
                 </p>
             </main>
         </>
