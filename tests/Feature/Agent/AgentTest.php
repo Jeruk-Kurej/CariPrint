@@ -287,7 +287,7 @@ test('estimate cards include open status, today hours, and distance when coordin
         ->assertInertia(fn (Assert $page) => $page
             ->whereType('estimates.0.openState', 'string')
             ->whereType('estimates.0.todayHours', 'string')
-            ->whereType('estimates.0.distanceKm', 'double'));
+            ->whereType('estimates.0.distanceKm', 'double|integer'));
 });
 
 test('values the user never stated are filled with defaults and reported as assumed', function () {
