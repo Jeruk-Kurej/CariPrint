@@ -1,9 +1,11 @@
 import { ChipRow } from '@/components/chip-row';
+import { PriceChoiceFields } from '@/components/directory/price-choice-fields';
 import { FilterChip } from '@/components/filter-chip';
 import { SearchField } from '@/components/search-field';
 import { SegmentedControl } from '@/components/segmented-control';
 import { SwitchField } from '@/components/switch-field';
 import type { DirectoryFilters } from '@/hooks/use-directory-filters';
+import { choiceLabel } from '@/lib/price-choice';
 import {
     distanceOptionsKm,
     serviceGroups,
@@ -16,16 +18,21 @@ type Props = {
     /** Kelompok layanan yang disediakan sedikitnya satu tempat. Yang belum ada tempatnya tidak ditampilkan. */
     offeredServices: ServiceGroup[];
     hasDistance: boolean;
+    /** Jumlah tempat di daftar yang punya harga untuk kertas dan warna terpilih. */
+    pricedCount: number;
     locationStatus: 'loading' | 'granted' | 'denied';
 };
 
-/** Pencarian, sakelar buka, urutan, layanan, dan batas jarak untuk daftar tempat. */
+/** Pencarian, sakelar buka, urutan, kertas dan warna, layanan, dan batas jarak untuk daftar tempat. */
 export function FilterPanel({
     filters,
     offeredServices,
     hasDistance,
+    pricedCount,
     locationStatus,
 }: Props) {
+    const choice = choiceLabel(filters.priceChoice);
+
     const sortOptions = (Object.keys(sortLabels) as ShopSort[]).map(
         (value) => ({
             value,
@@ -42,22 +49,34 @@ export function FilterPanel({
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <SearchField
                     value={filters.query}
-                    onChange={filters.setQuery}
+                    onChange={(query) => filters.update({ query })}
                 />
                 <div className="flex flex-wrap items-center gap-4">
                     <SwitchField
                         label="Masih buka saja"
                         checked={filters.openOnly}
-                        onChange={filters.setOpenOnly}
+                        onChange={(openOnly) => filters.update({ openOnly })}
                     />
                     <SegmentedControl
                         label="Urutkan berdasarkan"
                         value={filters.sort}
                         options={sortOptions}
-                        onChange={filters.setSort}
+                        onChange={(sort) => filters.update({ sort })}
                     />
                 </div>
             </div>
+            <PriceChoiceFields
+                value={filters.priceChoice}
+                onChange={filters.update}
+            />
+            {(choice !== '' || filters.sort === 'price') && (
+                <p aria-live="polite" className="text-xs text-muted-foreground">
+                    {pricedCount} dari {filters.visibleShops.length} tempat di
+                    daftar punya harga print{choice && ` ${choice}`}. Yang belum
+                    punya tetap tampil
+                    {filters.sort === 'price' && ' di urutan bawah'}.
+                </p>
+            )}
             {offeredServices.length > 1 && (
                 <ChipRow label="Layanan yang tersedia">
                     {offeredServices.map((group) => (
@@ -81,9 +100,9 @@ export function FilterPanel({
                             key={km}
                             active={filters.maxKm === km}
                             onClick={() =>
-                                filters.setMaxKm(
-                                    filters.maxKm === km ? null : km,
-                                )
+                                filters.update({
+                                    maxKm: filters.maxKm === km ? null : km,
+                                })
                             }
                         >
                             {`≤ ${km} km`}

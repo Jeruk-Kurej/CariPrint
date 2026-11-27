@@ -15,7 +15,7 @@ export function PriceSourceBadge({ source }: { source: ShopPrice['source'] }) {
     }
 
     return (
-        <Badge variant="outline" className="text-price-estimated">
+        <Badge variant="outline" className="bg-card text-price-estimated">
             Perkiraan
         </Badge>
     );

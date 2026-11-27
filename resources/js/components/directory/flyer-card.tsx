@@ -1,11 +1,14 @@
 import { Link } from '@inertiajs/react';
 import { MapPin, MessageCircle, Navigation, Scissors } from 'lucide-react';
 import { Fastener, paperFor } from '@/components/directory/flyer-parts';
+import { FlyerPrice } from '@/components/directory/flyer-price';
 import { Tag } from '@/components/tag';
 import { OpenStatusBadge } from '@/components/directory/open-status-badge';
-import { formatDistance, formatRupiah } from '@/lib/format';
+import { formatDistance } from '@/lib/format';
 import { serviceLabel } from '@/lib/labels';
 import { directionsUrl } from '@/lib/maps';
+import { anyPrice } from '@/lib/price-choice';
+import type { PriceChoice } from '@/lib/price-choice';
 import { whatsappUrl } from '@/lib/whatsapp';
 import { show } from '@/routes/directory';
 import type { ShopSummary } from '@/types';
@@ -23,6 +26,8 @@ type Props = {
     /** Kalau diisi, pamflet punya sobekan "Di peta" untuk menandai tempat ini di peta. */
     onSelect?: (id: number) => void;
     tilted?: boolean;
+    /** Harga di pamflet mengikuti kertas dan warna ini. */
+    priceChoice?: PriceChoice;
 };
 
 const tab =
@@ -37,6 +42,7 @@ export function FlyerCard({
     selected = false,
     onSelect,
     tilted = true,
+    priceChoice = anyPrice,
 }: Props) {
     const paper = paperFor(shop.id);
     const tilt = tilted ? tilts[(shop.id * 3) % tilts.length] : '';
@@ -82,22 +88,7 @@ export function FlyerCard({
                     aria-hidden
                     className="absolute -top-[11px] left-3 size-5 rotate-0 bg-inherit px-0.5 text-foreground/55"
                 />
-                <p className="flex items-center justify-between gap-2 px-4 pt-2.5 pb-2 sm:pt-3 sm:pb-2.5">
-                    {shop.startingPrice === null ? (
-                        <span className="text-xs font-medium text-foreground/70">
-                            Harga belum tersedia
-                        </span>
-                    ) : (
-                        <>
-                            <span className="text-xs font-medium text-foreground/70">
-                                Print mulai dari
-                            </span>
-                            <span className="rounded-sm bg-highlight px-1.5 font-display text-lg font-extrabold tabular-nums sm:text-xl">
-                                {formatRupiah(shop.startingPrice)}
-                            </span>
-                        </>
-                    )}
-                </p>
+                <FlyerPrice shop={shop} choice={priceChoice} />
                 <div className="flex divide-x-2 divide-dashed divide-foreground/25 border-t-2 border-dashed border-foreground/25">
                     {shop.whatsapp && (
                         <a

@@ -1,5 +1,10 @@
 export type OpenState = 'open' | 'closing_soon' | 'closed';
 
+export type PrintPrice = {
+    price: number;
+    source: 'verified' | 'estimated';
+};
+
 export type ShopSummary = {
     id: number;
     slug: string;
@@ -11,6 +16,8 @@ export type ShopSummary = {
     openState: OpenState;
     distanceKm: number | null;
     startingPrice: number | null;
+    /** Print termurah per pilihan "{kertas}_{warna}", dengan "any" untuk yang tidak dipilih. */
+    printPrices: Partial<Record<string, PrintPrice>>;
     services: string[];
 };
 

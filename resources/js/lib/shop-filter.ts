@@ -1,3 +1,5 @@
+import { anyPrice, priceFor } from '@/lib/price-choice';
+import type { PriceChoice } from '@/lib/price-choice';
 import { matchesShopQuery } from '@/lib/shop-search';
 import type { ShopSummary } from '@/types';
 
@@ -35,6 +37,8 @@ type Options = {
     services?: ServiceGroup[];
     /** Batas jarak dalam km. Diabaikan kalau null. */
     maxKm?: number | null;
+    /** Kertas dan warna yang dipakai untuk urutan Termurah. */
+    priceChoice?: PriceChoice;
 };
 
 /** Tempat tanpa data jarak atau harga selalu ditaruh di bawah. */
@@ -53,19 +57,32 @@ export function ascendingWithMissingLast<T>(
     };
 }
 
-const comparators: Record<
-    ShopSort,
-    (a: ShopSummary, b: ShopSummary) => number
-> = {
-    distance: ascendingWithMissingLast((shop) => shop.distanceKm),
-    price: ascendingWithMissingLast((shop) => shop.startingPrice),
-    name: (a, b) => a.name.localeCompare(b.name, 'id'),
-};
+function comparator(
+    sort: ShopSort,
+    priceChoice: PriceChoice,
+): (a: ShopSummary, b: ShopSummary) => number {
+    if (sort === 'name') {
+        return (a, b) => a.name.localeCompare(b.name, 'id');
+    }
+
+    return ascendingWithMissingLast((shop) =>
+        sort === 'distance'
+            ? shop.distanceKm
+            : (priceFor(shop, priceChoice)?.price ?? null),
+    );
+}
 
 /** "Masih buka" membuang tempat yang sedang tutup, tapi tetap menampilkan yang segera tutup. */
 export function filterAndSortShops(
     shops: ShopSummary[],
-    { openOnly, sort, query = '', services = [], maxKm = null }: Options,
+    {
+        openOnly,
+        sort,
+        query = '',
+        services = [],
+        maxKm = null,
+        priceChoice = anyPrice,
+    }: Options,
 ): ShopSummary[] {
     const visible = shops.filter(
         (shop) =>
@@ -80,7 +97,7 @@ export function filterAndSortShops(
                 (shop.distanceKm !== null && shop.distanceKm <= maxKm)),
     );
 
-    return [...visible].sort(comparators[sort]);
+    return [...visible].sort(comparator(sort, priceChoice));
 }
 
 export const sortLabels: Record<ShopSort, string> = {

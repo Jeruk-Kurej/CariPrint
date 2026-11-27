@@ -6,6 +6,7 @@ use App\Enums\ShopService;
 use App\Models\PriceList;
 use App\Models\Shop;
 use App\Services\Location\DistanceService;
+use App\Services\Pricing\PrintPrices;
 use App\Services\Shops\OpeningStatus;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
@@ -18,6 +19,7 @@ class ShopDirectory
     public function __construct(
         private readonly OpeningStatus $openingStatus,
         private readonly DistanceService $distance,
+        private readonly PrintPrices $printPrices,
     ) {}
 
     /**
@@ -42,6 +44,7 @@ class ShopDirectory
                     ? null
                     : round($this->distance->kilometers($latitude, $longitude, $shop->latitude, $shop->longitude), 2),
                 'startingPrice' => $this->printStartingPrice($shop),
+                'printPrices' => $this->printPrices->byChoice($shop),
                 'services' => $shop->services->map(fn ($service) => $service->name)->values(),
             ];
         });
