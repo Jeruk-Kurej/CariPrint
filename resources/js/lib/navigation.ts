@@ -3,7 +3,7 @@ import { index as agent } from '@/routes/agent';
 import { index as compare } from '@/routes/compare';
 import { index as directory } from '@/routes/directory';
 import { create as contact } from '@/routes/contact';
-import { howItWorks, privacy } from '@/routes/info';
+import { about, faq, howItWorks, privacy } from '@/routes/info';
 
 export type NavLink = { label: string; href: string };
 
@@ -15,7 +15,13 @@ export const mainNav: NavLink[] = [
     { label: 'Cara kerja', href: howItWorks().url },
 ];
 
-export const privacyUrl = privacy().url;
+/** Tautan informasi di footer. */
+export const footerNav: NavLink[] = [
+    { label: 'Tentang', href: about().url },
+    { label: 'Pertanyaan umum', href: faq().url },
+    { label: 'Privasi', href: privacy().url },
+    { label: 'Hubungi kami', href: contact().url },
+];
 
 export const contactUrl = contact().url;
 
