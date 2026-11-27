@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react';
 
-/** Kolom pencarian nama tempat, sama di halaman Cari tempat dan Bandingkan. */
+/** Kolom pencarian nama atau alamat tempat, sama di halaman Cari tempat dan Bandingkan. */
 export function SearchField({
     value,
     onChange,
@@ -18,8 +18,8 @@ export function SearchField({
                 type="search"
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
-                placeholder="Cari nama tempat..."
-                aria-label="Cari nama tempat"
+                placeholder="Cari nama atau alamat..."
+                aria-label="Cari nama atau alamat tempat"
                 className="min-h-11 w-full rounded-full border-2 border-foreground/15 bg-background py-1.5 pr-3 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
         </div>

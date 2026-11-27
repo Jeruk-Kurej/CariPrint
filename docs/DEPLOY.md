@@ -59,7 +59,13 @@ APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://cariprint.lius.my.id
 APP_LOCALE=id
-DB_CONNECTION=sqlite
+DB_CONNECTION=pgsql
+DB_HOST=<host Session pooler Supabase>
+DB_PORT=5432
+DB_DATABASE=postgres
+DB_USERNAME=<username pooler>
+DB_PASSWORD=<kata sandi database>
+DB_SSLMODE=require
 LOG_LEVEL=error
 ADMIN_EMAIL=<email admin>
 ADMIN_NOTIFY_EMAILS=<email penerima notifikasi usulan, dipisah koma>
@@ -81,6 +87,8 @@ Akun admin dibuat dengan `php artisan cariprint:create-admin <email>` (kata sand
 
 Setelah mengubah `.env`, jalankan `php artisan optimize`.
 
+Database production ada di Supabase. Server butuh driver `pdo_pgsql` (paket `php8.4-pgsql` untuk CLI dan `php8.5-pgsql` untuk PHP-FPM), yang dipasang oleh pengelola server.
+
 ### 5. Penyiapan pertama di server
 
 ```bash
@@ -90,7 +98,6 @@ git clone https://github.com/Jeruk-Kurej/CariPrint.git .
 composer install --no-dev --optimize-autoloader
 cp .env.example .env && nano .env   # isi seperti langkah 4
 php artisan key:generate
-touch database/database.sqlite
 php artisan migrate --force
 php artisan db:seed --class=AdminSeeder --force
 npm ci && npm run build

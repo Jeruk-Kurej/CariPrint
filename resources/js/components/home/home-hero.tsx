@@ -94,14 +94,14 @@ export function HomeHero({
                     className="flex gap-2 rounded-full sticker bg-card p-1.5"
                 >
                     <label htmlFor="cari-tempat" className="sr-only">
-                        Cari nama tempat
+                        Cari nama atau alamat tempat
                     </label>
                     <input
                         id="cari-tempat"
                         type="search"
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
-                        placeholder="Cari nama tempat print"
+                        placeholder="Nama atau alamat"
                         className="min-w-0 flex-1 bg-transparent px-4 text-base outline-none"
                     />
                     <Button type="submit" size="lg" className="min-h-11">

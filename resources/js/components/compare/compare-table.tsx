@@ -9,6 +9,7 @@ import type { OpenState } from '@/types';
 export type CompareShop = {
     id: number;
     name: string;
+    address: string;
     slug: string;
     openState: OpenState;
 };

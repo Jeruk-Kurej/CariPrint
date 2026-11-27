@@ -12,6 +12,7 @@ import { ChipRow } from '@/components/chip-row';
 import { FilterChip } from '@/components/filter-chip';
 import { SegmentedControl } from '@/components/segmented-control';
 import { SwitchField } from '@/components/switch-field';
+import { matchesShopQuery } from '@/lib/shop-search';
 import { index as directory } from '@/routes/directory';
 
 type ServiceFilter = 'all' | 'print-a4' | 'print-f4' | 'print-a3' | 'other';
@@ -57,16 +58,10 @@ export default function CompareIndex({ shops, rows, withoutPrices }: Props) {
     const [onlyOpen, setOnlyOpen] = useState(false);
     const [query, setQuery] = useState('');
 
-    const normalizedQuery = query.trim().toLowerCase();
-
     const visibleShopIndices = shops
         .map((shop, index) => ({ shop, index }))
         .filter(({ shop }) => !onlyOpen || shop.openState !== 'closed')
-        .filter(
-            ({ shop }) =>
-                normalizedQuery === '' ||
-                shop.name.toLowerCase().includes(normalizedQuery),
-        )
+        .filter(({ shop }) => matchesShopQuery(shop, query))
         .map(({ index }) => index);
 
     const visibleRows = rows.filter(

@@ -25,7 +25,7 @@ class PriceComparison
      * Only shops with a price list are lined up: a column of dashes would bury the shops that can be compared.
      * How many published shops have no prices yet is returned too, so the page can say so.
      *
-     * @return array{shops: array<int, array{id: int, name: string, slug: string, openState: string}>, rows: list<array<string, mixed>>, withoutPrices: int}
+     * @return array{shops: array<int, array{id: int, name: string, address: string, slug: string, openState: string}>, rows: list<array<string, mixed>>, withoutPrices: int}
      */
     public function forAllShops(): array
     {
@@ -37,7 +37,7 @@ class PriceComparison
 
     /**
      * @param  Collection<int, Shop>  $shops
-     * @return array{shops: array<int, array{id: int, name: string, slug: string, openState: string}>, rows: list<array<string, mixed>>}
+     * @return array{shops: array<int, array{id: int, name: string, address: string, slug: string, openState: string}>, rows: list<array<string, mixed>>}
      */
     public function build(Collection $shops): array
     {
@@ -61,6 +61,7 @@ class PriceComparison
             'shops' => $shops->map(fn (Shop $shop) => [
                 'id' => $shop->id,
                 'name' => $shop->name,
+                'address' => $shop->address,
                 'slug' => $shop->slug,
                 'openState' => $this->openingStatus->evaluate($shop->opening_hours ?? [], $now)->state->value,
             ])->all(),

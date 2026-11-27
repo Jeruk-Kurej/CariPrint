@@ -1,3 +1,4 @@
+import { matchesShopQuery } from '@/lib/shop-search';
 import type { ShopSummary } from '@/types';
 
 export type ShopSort = 'distance' | 'price' | 'name';
@@ -66,11 +67,10 @@ export function filterAndSortShops(
     shops: ShopSummary[],
     { openOnly, sort, query = '', services = [], maxKm = null }: Options,
 ): ShopSummary[] {
-    const needle = query.trim().toLowerCase();
     const visible = shops.filter(
         (shop) =>
             (!openOnly || shop.openState !== 'closed') &&
-            (needle === '' || shop.name.toLowerCase().includes(needle)) &&
+            matchesShopQuery(shop, query) &&
             services.every((group) =>
                 shop.services.some((name) =>
                     serviceGroups[group].services.includes(name),
