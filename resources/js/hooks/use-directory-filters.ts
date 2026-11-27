@@ -70,6 +70,7 @@ export function useDirectoryFilters(
         maxKm,
         priceChoice,
         update,
+        replace: setChoices,
         toggleService,
         visibleShops,
         openCount,

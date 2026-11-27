@@ -66,6 +66,17 @@ export default function Privacy() {
                     </p>
                 </Section>
 
+                <Section title="Cari pakai AI">
+                    <p>
+                        Kalau kamu menekan tombol Cari pakai AI, isi kotak
+                        pencarian dikirim ke Google Gemini supaya diubah menjadi
+                        filter. Lokasimu tidak ikut dikirim, dan fitur ini tidak
+                        menyimpan kalimatmu di database. Teks di kotak pencarian
+                        juga tertulis di alamat halaman, jadi jangan menulis
+                        data pribadi di situ.
+                    </p>
+                </Section>
+
                 <Section title="Laporan data salah">
                     <p>
                         Kalau kamu melaporkan data tempat yang keliru, kami
@@ -88,8 +99,8 @@ export default function Privacy() {
                     <p>
                         Data tidak dijual dan tidak dipakai untuk iklan. Pihak
                         lain yang ikut memproses hanya Google (untuk login dan
-                        asisten cetak), layanan pengiriman email, dan server
-                        tempat CariPrint berjalan.
+                        asisten cetak, dan Cari pakai AI), layanan pengiriman
+                        email, dan server tempat CariPrint berjalan.
                     </p>
                 </Section>
 
@@ -121,7 +132,7 @@ export default function Privacy() {
                 </Section>
 
                 <p className="text-sm text-muted-foreground">
-                    Terakhir diperbarui 24 November 2026.
+                    Terakhir diperbarui 27 November 2026.
                 </p>
             </main>
         </>

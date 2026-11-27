@@ -25,7 +25,7 @@ function ChoiceSelect<T extends string>({
         <Select value={value} onValueChange={(next) => onChange(next as T)}>
             <SelectTrigger
                 aria-label={label}
-                className="w-full rounded-full border-2 border-foreground/15 bg-card px-4 font-semibold data-[size=default]:h-11"
+                className="w-full rounded-full border-2 border-foreground/15 bg-card px-3 font-semibold data-[size=default]:h-11"
             >
                 <SelectValue />
             </SelectTrigger>
