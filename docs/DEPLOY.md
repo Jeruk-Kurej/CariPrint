@@ -72,11 +72,13 @@ ADMIN_NOTIFY_EMAILS=<email penerima notifikasi usulan, dipisah koma>
 GEMINI_API_KEY=<kunci Gemini, opsional>
 
 MAIL_MAILER=smtp
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=<alamat Gmail pengirim>
-MAIL_PASSWORD=<app password Gmail, bukan kata sandi akun>
-MAIL_FROM_ADDRESS=<alamat Gmail pengirim>
+MAIL_SCHEME=smtps
+MAIL_HOST=smtp.purelymail.com
+MAIL_PORT=465
+MAIL_USERNAME=<alamat user Purelymail, mis. noreply@lius.my.id>
+MAIL_PASSWORD=<kata sandi atau app password user Purelymail>
+MAIL_FROM_ADDRESS=<alamat yang sama dengan MAIL_USERNAME>
+MAIL_FROM_NAME=CariPrint
 
 GOOGLE_CLIENT_ID=<dari Google Cloud Console>
 GOOGLE_CLIENT_SECRET=<dari Google Cloud Console>
@@ -84,6 +86,8 @@ GOOGLE_REDIRECT_URI=https://cariprint.lius.my.id/masuk/google/callback
 ```
 
 Akun admin dibuat dengan `php artisan cariprint:create-admin <email>` (kata sandi diketik tersembunyi), bukan lewat `ADMIN_PASSWORD`. Di Google Cloud Console, tambahkan `https://cariprint.lius.my.id/masuk/google/callback` sebagai Authorized redirect URI.
+
+Email dikirim lewat Purelymail milik kelas. Domain pengirim harus sudah terdaftar dan terverifikasi di Purelymail (record MX, SPF, DKIM, dan DMARC dari halaman Domains dipasang di DNS), dan alamat pengirim dibuat sebagai User di Purelymail.
 
 Setelah mengubah `.env`, jalankan `php artisan optimize`.
 
