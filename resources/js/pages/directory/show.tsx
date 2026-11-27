@@ -25,7 +25,6 @@ export default function ShopShow({
     reporting: ReportingOptions;
 }) {
     const { startingPrice } = shop;
-    const marker = { ...shop, distanceKm: null };
 
     return (
         <>
@@ -115,7 +114,7 @@ export default function ShopShow({
                     <SectionHeading>Lokasi</SectionHeading>
                     <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-8">
                         <ShopMap
-                            shops={[marker]}
+                            shops={[shop]}
                             selectedId={shop.id}
                             heightClass="h-64 lg:h-52"
                         />

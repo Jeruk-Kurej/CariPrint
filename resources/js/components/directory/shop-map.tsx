@@ -5,8 +5,13 @@ import { CITRALAND_CENTER } from '@/lib/map';
 import { markerColor, markerRingColor } from '@/lib/map-colors';
 import type { ShopSummary } from '@/types';
 
+type MapShop = Pick<
+    ShopSummary,
+    'id' | 'name' | 'latitude' | 'longitude' | 'openState'
+>;
+
 type Props = {
-    shops: ShopSummary[];
+    shops: MapShop[];
     selectedId: number | null;
     onSelect?: (id: number) => void;
     heightClass?: string;

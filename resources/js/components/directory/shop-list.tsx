@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { FlyerCard } from '@/components/directory/flyer-card';
 import { ShopListSkeleton } from '@/components/directory/shop-list-skeleton';
 import { Pagination } from '@/components/pagination';
+import type { PriceChoice } from '@/lib/price-choice';
 import type { ShopSummary } from '@/types';
 
 const PAGE_SIZE = 12;
 
 type Props = {
     shops: ShopSummary[];
+    priceChoice: PriceChoice;
     selectedId: number | null;
     onSelect: (id: number) => void;
     sorting?: boolean;
@@ -16,6 +18,7 @@ type Props = {
 /** Menampilkan 12 tempat per halaman supaya halaman tetap ringan dan pendek di ponsel. Tempat yang dipilih dari peta membuka halamannya. */
 export function ShopList({
     shops,
+    priceChoice,
     selectedId,
     onSelect,
     sorting = false,
@@ -62,6 +65,7 @@ export function ShopList({
                     <FlyerCard
                         key={shop.id}
                         shop={shop}
+                        priceChoice={priceChoice}
                         selected={shop.id === selectedId}
                         onSelect={onSelect}
                     />

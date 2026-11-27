@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PriceList;
 use App\Models\Shop;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -38,6 +39,15 @@ test('each shop card includes its coordinates for the map', function () {
 test('each shop card lists its services', function () {
     $this->get('/tempat')
         ->assertInertia(fn (Assert $page) => $page->has('shops.0.services'));
+});
+
+test('each shop card carries its print price per paper and colour choice', function () {
+    PriceList::factory()->for(Shop::where('name', 'Alfa Print')->sole())->verified()->create(['price' => 500]);
+
+    $this->get('/tempat')
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('shops.0.printPrices.a4_bw', ['price' => 500, 'source' => 'verified'])
+            ->missing('shops.0.printPrices.f4_bw'));
 });
 
 test('nearby rejects invalid coordinates', function () {

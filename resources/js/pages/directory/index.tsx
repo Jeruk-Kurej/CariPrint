@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useDirectoryFilters } from '@/hooks/use-directory-filters';
 import { useGeolocation } from '@/hooks/use-geolocation';
 import { useSelectedShop } from '@/hooks/use-selected-shop';
+import { priceFor } from '@/lib/price-choice';
 import { offeredServiceGroups } from '@/lib/shop-filter';
 import { nearby } from '@/routes/directory';
 import { create as suggest } from '@/routes/suggestions';
@@ -83,6 +84,13 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                             filters={filters}
                             offeredServices={offeredServiceGroups(shops)}
                             hasDistance={hasDistance}
+                            pricedCount={
+                                filters.visibleShops.filter(
+                                    (shop) =>
+                                        priceFor(shop, filters.priceChoice) !==
+                                        null,
+                                ).length
+                            }
                             locationStatus={location.status}
                         />
 
@@ -102,6 +110,7 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                             ) : (
                                 <ShopList
                                     shops={filters.visibleShops}
+                                    priceChoice={filters.priceChoice}
                                     selectedId={selectedId}
                                     onSelect={showOnMap}
                                     sorting={sorting}
