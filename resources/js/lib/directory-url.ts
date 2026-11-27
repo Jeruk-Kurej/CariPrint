@@ -20,6 +20,16 @@ function oneOf<T extends string>(
     return value !== null && Object.hasOwn(labels, value) ? (value as T) : null;
 }
 
+export const noChoices: DirectoryChoices = {
+    query: '',
+    openOnly: false,
+    sort: null,
+    paper: 'any',
+    color: 'any',
+    services: [],
+    maxKm: null,
+};
+
 /** Filter dibaca dari alamat halaman. Nilai yang tidak dikenal diabaikan. */
 export function readDirectoryChoices(search: string): DirectoryChoices {
     const params = new URLSearchParams(search);

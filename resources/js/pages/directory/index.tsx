@@ -1,6 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { EmptyState } from '@/components/directory/empty-state';
+import type { AiQuota } from '@/components/directory/ai-search';
 import { FilterPanel } from '@/components/directory/filter-panel';
 import { ShopList } from '@/components/directory/shop-list';
 import { ShopMap } from '@/components/directory/shop-map';
@@ -15,7 +16,9 @@ import { nearby } from '@/routes/directory';
 import { create as suggest } from '@/routes/suggestions';
 import type { ShopSummary } from '@/types';
 
-export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
+type Props = { shops: ShopSummary[]; quota: AiQuota };
+
+export default function DirectoryIndex({ shops, quota }: Props) {
     const location = useGeolocation();
     const { selectedId, select } = useSelectedShop();
     const [sorting, setSorting] = useState(false);
@@ -82,6 +85,7 @@ export default function DirectoryIndex({ shops }: { shops: ShopSummary[] }) {
                     <>
                         <FilterPanel
                             filters={filters}
+                            quota={quota}
                             offeredServices={offeredServiceGroups(shops)}
                             hasDistance={hasDistance}
                             pricedCount={

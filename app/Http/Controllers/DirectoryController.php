@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ReportCategory;
 use App\Http\Requests\NearbyShopsRequest;
 use App\Models\Shop;
+use App\Services\Ai\AiQuota;
 use App\Services\Directory\ShopDirectory;
 use App\Services\Directory\ShopPageMeta;
 use App\Services\Reports\ReportHistory;
@@ -14,10 +15,11 @@ use Inertia\Response;
 
 class DirectoryController extends Controller
 {
-    public function index(ShopDirectory $directory): Response
+    public function index(Request $request, ShopDirectory $directory, AiQuota $quota): Response
     {
         return Inertia::render('directory/index', [
             'shops' => $directory->list(),
+            'quota' => $quota->status($request),
         ]);
     }
 

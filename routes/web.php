@@ -10,11 +10,13 @@ use App\Http\Controllers\FileCheckController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ShopSearchController;
 use App\Http\Controllers\ShopSuggestionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/tempat', [DirectoryController::class, 'index'])->name('directory.index');
+Route::post('/tempat/cari-ai', ShopSearchController::class)->name('directory.ai-search');
 Route::get('/shops/{shop:slug}', [DirectoryController::class, 'show'])->name('directory.show');
 Route::post('/shops/nearby', [DirectoryController::class, 'nearby'])->name('directory.nearby');
 Route::get('/bandingkan', [CompareController::class, 'index'])->name('compare.index');

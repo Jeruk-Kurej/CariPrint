@@ -97,6 +97,13 @@ export default function HowItWorks() {
                             server.
                         </p>
                         <p className="text-sm text-foreground/85">
+                            Di halaman Cari tempat, tombol Cari pakai AI
+                            mengubah kalimatmu menjadi filter yang bisa kamu
+                            ubah sendiri. Jatah hariannya sama dengan jatah
+                            asisten cetak. Pencarian dan filter biasa bisa
+                            dipakai tanpa batas.
+                        </p>
+                        <p className="text-sm text-foreground/85">
                             AI tidak pernah menghitung biaya, jarak, atau status
                             buka. Semuanya dihitung dari data tempat dan daftar
                             harga yang tersimpan.
