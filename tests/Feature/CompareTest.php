@@ -40,12 +40,13 @@ test('information pages are public', function (string $path, string $component) 
 ]);
 
 test('compare page lists only shops that have prices and says how many do not', function () {
-    PriceList::factory()->for(Shop::factory()->create(['name' => 'Ada Harga']))->create();
+    PriceList::factory()->for(Shop::factory()->create(['name' => 'Ada Harga', 'address' => 'Jl. Ngagel 1']))->create();
     Shop::factory()->count(2)->create();
     Shop::factory()->draft()->create();
 
     $this->get('/bandingkan')->assertInertia(fn (Assert $page) => $page
         ->has('shops', 1)
         ->where('shops.0.name', 'Ada Harga')
+        ->where('shops.0.address', 'Jl. Ngagel 1')
         ->where('withoutPrices', 2));
 });
